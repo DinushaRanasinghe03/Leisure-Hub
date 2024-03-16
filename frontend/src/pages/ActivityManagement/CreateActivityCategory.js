@@ -4,9 +4,18 @@ import Layout from "../../components/Layout/Layout";
 
 export const CreateActivityCategory = () => {
   return (
-    <div>
-      <h1>Create Activities Category</h1>
-    </div>
+    <Layout>
+      <div className="container-fluid m-3 p-3">
+        <div className="row">
+          <div className="col-md-3">
+            <AdminActivityMenu />
+          </div>
+          <div className="col-md-9">
+            <h1>Create Activity Category </h1>
+          </div>
+        </div>
+      </div>
+    </Layout>
   );
 };
 

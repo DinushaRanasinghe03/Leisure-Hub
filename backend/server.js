@@ -5,7 +5,7 @@ import morgan from "morgan"
 import connectDB from "./config/db.js";
 import movieCategoryRoutes from './routes/movieCategoryRoutes.js'
 import cors from 'cors';
-
+import movieRoutes from './routes/movieRoutes.js'
 
 
 //configure env
@@ -24,6 +24,7 @@ app.use(morgan('dev'));
 
 //routes
 app.use("/api/v1/moviecategory",movieCategoryRoutes);
+app.use("/api/v1/movies",movieRoutes);
 
 
 //rest api

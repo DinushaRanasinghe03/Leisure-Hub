@@ -24,12 +24,7 @@ const Movie = ({ item }) => {
         >
           Buy Tickets
         </Link>
-        <Link
-          className="border border-secondary text-black py-2 px-4 rounded-md mt-2"
-          // onClick={() => onNewsClick(newsItem)}
-        >
-          Watch trailer
-        </Link>
+       
       </div>
     </div>
   );

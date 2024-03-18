@@ -3,12 +3,14 @@ import AdminMovieMenu from '../../components/Layout/AdminMovieMenu'
 import toast from 'react-hot-toast'
 import axios from 'axios'
 import {Select} from 'antd'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
+
 
 const {Option} = Select
 
-const AddMovies = () => {
-  const [moviecategories, setMovieCategories] = useState([])
+const UpdateMovie = () => {
+
+    const [moviecategories, setMovieCategories] = useState([])
   const[name,setName] = useState("")
   const[genre,setMovieCategory] = useState("")
   const[language,setLanguage] = useState("")
@@ -19,6 +21,32 @@ const AddMovies = () => {
   const[description,setDescription] = useState("")
   const[poster_image,setPosterimage] = useState("")
   const navigate = useNavigate();
+  const params = useParams();
+  const [id,setId] = useState("");
+
+  //get single movie
+  const getSingleMovie = async () => {
+    try {
+        const {data} = await axios.get(`http://localhost:8080/api/v1/movies/get-movie/${params.slug}`)
+        setName(data.movie.name);
+        setId(data.movie._id)
+        setMovieCategory(data.movie.genre._id)
+        setLanguage(data.movie.language)
+        setDirector(data.movie.director)
+        setProducer(data.movie.producer)
+        setMusic(data.movie.music)
+        setReleasedate(data.movie.release_date)
+        setDescription(data.movie.description)
+
+    } catch (error) {
+        console.log(error)
+    }
+  }
+
+  useEffect(() =>{
+    getSingleMovie();
+  },[]);
+
 
   //get all category
   const getAllMovieCategory = async() => {
@@ -40,8 +68,8 @@ const AddMovies = () => {
 
 
 
-  //create movie function
-  const handleCreate = async (e) => {
+  //create product function
+  const handleUpdate = async (e) => {
     e.preventDefault()
     
     try {
@@ -54,14 +82,15 @@ const AddMovies = () => {
       movieData.append("music",music)
       movieData.append("release_date",release_date)
       movieData.append("description",description)
-      movieData.append("poster_image",poster_image)
+      poster_image && movieData.append("poster_image",poster_image)
 
-      const {data} = await axios.post("http://localhost:8080/api/v1/movies/create-movie", movieData)
+      const {data} = await axios.put(`http://localhost:8080/api/v1/movies/update-movie/${id}`, movieData)
 
       if(data?.success){
         //**********************
-        toast.success("product created successfully")
-        navigate('/adminmoviedashboard/moviemanagement/movie')
+        toast.success("product updated successfully")
+        navigate("/adminmoviedashboard/moviemanagement/movie")
+        
        
       }else{
         toast.error("something went wrong")
@@ -73,6 +102,22 @@ const AddMovies = () => {
   }
 
 
+//delete a movie
+const handleDelete = async() => {
+    try {
+        let answer = window.prompt("Are you sure you want to remove this movie ?")
+        if(!answer) return
+        const {data} = await axios.delete(`http://localhost:8080/api/v1/movies/delete-movie/${id}`)
+        toast.success("Movie deleted successfully")
+        navigate("/adminmoviedashboard/moviemanagement/movie")
+    } catch (error) {
+        console.log(error)
+        toast.error("Something went wrong")
+    }
+}
+
+
+
   return (
     <div className='container-fluid m-3 p-3'>
     <div className='row'>
@@ -80,7 +125,7 @@ const AddMovies = () => {
             <AdminMovieMenu />
         </div>
         <div className='col-md-9'>
-        <h4 className='text-center'>Add movies</h4>
+        <h4 align="center">Update movies Details</h4>
         <div className='m-1 w-75'>
 
         <div className='mb-3'>
@@ -93,18 +138,59 @@ const AddMovies = () => {
               />            
             </div>
 
+            <div className='mb-3'>
+  <label className='btn btn-outline-secondary col-md-12'>
+    {poster_image ? poster_image.name : "Upload poster image"}
+    <input
+      type="file"
+      name="photo"
+      accept="image/*"
+      onChange={(e) => setPosterimage(e.target.files[0])}
+      hidden
+    />
+  </label>
+</div>
+
+<div className='mb-3'>
+  {poster_image ? (
+    <div className='text-center'>
+      <img
+        src={URL.createObjectURL(poster_image)}
+        alt="poster_image"
+        height={"200px"}
+        className='img img-responsive'
+      />
+    </div>
+  ) : (
+    <div className='text-center'>
+      <img
+        src={`http://localhost:8080/api/v1/movies/movie-posterimage/${id}`} 
+        alt="poster_image"
+        height={"200px"}
+        className='img img-responsive'
+      />
+    </div>
+  )}
+</div>
+
           <Select variant={false} 
           placeholder="select a Genre"
           size="large" 
           showSearch
           className='form-select mb-3'
-          onChange={(value) => {setMovieCategory(value)}} >
+          onChange={(value) => {setMovieCategory(value)}} value = {genre}>
             {moviecategories?.map(c => (
               <Option key={c._id} value={c._id}>{c.name}</Option>
             ))}
           </Select>
+         
 
-         <div className='mb-3'>
+          
+            
+
+           
+
+            <div className='mb-3'>
               <input
               type="text"
               value={language}
@@ -151,8 +237,11 @@ const AddMovies = () => {
               placeholder='Release date'
               className='form-control'
               onChange={(e) => setReleasedate(e.target.value)}
+                 
               />            
             </div>
+
+    
 
             <div className='mb-3'>
             <textarea
@@ -164,42 +253,24 @@ const AddMovies = () => {
              />
             </div>
 
-            <div className='mb-3'>
-  <label className='btn btn-outline-secondary col-md-12'>
-    {poster_image ? poster_image.name : "Upload poster image"}
-    <input
-      type="file"
-      name="photo"
-      accept="image/*"
-      onChange={(e) => setPosterimage(e.target.files[0])}
-      hidden
-    />
-  </label>
-</div>
-
-<div className='mb-3'>
-  {poster_image && (
-    <div className='text-center'>
-      <img
-        src={URL.createObjectURL(poster_image)}
-        alt="poster_image"
-        height={"200px"}
-        className='img img-responsive'
-      />
-    </div>
-  )}
-</div>
+            
 
   
             <div className='mb-3'>
-              <button className='btn btn-primary' onClick={handleCreate}>Add Movie</button>
+              <button className='btn btn-primary' onClick={handleUpdate}>Update Movie</button>
+            </div>
+
+
+            <div className='mb-3'>
+              <button className='btn btn-danger' onClick={handleDelete}>Delete Movie</button>
             </div>
 
         </div>
         </div>
     </div>
     </div>
+  
   )
 }
 
-export default AddMovies
+export default UpdateMovie

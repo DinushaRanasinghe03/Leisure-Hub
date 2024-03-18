@@ -1,17 +1,128 @@
-import React from 'react'
+import React,{useEffect,useState} from 'react'
 import AdminMovieMenu from '../../components/Layout/AdminMovieMenu'
+import toast from 'react-hot-toast'
+import axios from 'axios'
+import MovieCategoryForm from '../../components/Form/MovieCategoryForm';
+import { Modal } from 'antd';
 
-export const CreateMovieCategory = () => {
+const CreateMovieCategory = () => {
+  const [moviecategories,setMovieCategories] = useState([])
+  const [name,setName] = useState("")
+  const [visible,setVisible] = useState(false)
+  const [selected,setSelected] = useState(null)
+  const [updatedName,setUpdatedName] = useState("")
+
+  //handle form
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    try {
+      const {data} = await axios.post("http://localhost:8080/api/v1/moviecategory/create-moviecategory",{name})
+      if(data?.success){
+        toast.success(`${name} is created`)
+        getAllMovieCategory();
+      }else{
+        toast.error(data.message);
+      }
+    } catch (error) {
+      console.log(error)
+      toast.error('Something went wrong in input')
+    }
+  }
+
+  //get all category
+  const getAllMovieCategory = async() => {
+    try {
+      const {data} = await axios.get('http://localhost:8080/api/v1/moviecategory/get-moviecategory')
+      if(data?.success){
+        setMovieCategories(data?.category )
+      }
+    } catch (error) {
+      console.log(error)
+      toast.error('Something wrong in getting category')
+    }
+  }
+
+  useEffect(()=>{
+    getAllMovieCategory();
+  },[])
+
+  //update movie category
+  const handleUpdate = async(e) => {
+    e.preventDefault()
+    try {
+      const {data} = await axios.put(`http://localhost:8080/api/v1/moviecategory/update-moviecategory/${selected._id}`, {name: updatedName})
+      if(data.success){
+        toast.success(`${updatedName} is updated`)
+        setSelected(null)
+        setUpdatedName("")
+        setVisible(false)
+        getAllMovieCategory()
+      }else{
+        toast.error(data.message)
+      }
+    } catch (error) {
+      toast.error("Something went wrong")
+    }
+  }
+
+  //delete movie category
+  const handleDelete = async(mId) => {
+    try {
+      const {data} = await axios.delete(`http://localhost:8080/api/v1/moviecategory/delete-moviecategory/${mId}`)
+      if(data.success){
+        getAllMovieCategory()
+      }else{
+        toast.error("Category is deleted")
+      }
+    } catch (error) {
+      toast.error("Something went wrong")
+    }
+  }
+
+
   return (
     <div className='container-fluid m-3 p-3'>
     <div className='row'>
         <div className='col-md-3'>
             <AdminMovieMenu />
         </div>
+        
         <div className='col-md-9'>
-        <h4>Create Movie Category</h4>
+        <h4>Manage Movie Genres</h4>
+        <div class="p-3 w-50">
+          <MovieCategoryForm handleSubmit={handleSubmit} value={name} setValue={setName}/>
         </div>
+        <div classname="w-70">
+        <table className="table w-50" >
+          <thead>
+          <tr>
+           <th scope="col">Name</th>
+           <th scope="col">Action</th>
+          </tr>
+          </thead>
+          
+          <tbody>
+          {moviecategories?.map((c) => (
+          <>   
+          <tr>
+           <td key={c._id}>{c.name}</td>
+           <td>
+            <button className="btn btn-primary ms-3" onClick={() => {setVisible(true); setUpdatedName(c.name); setSelected(c)}}>Edit</button>
+            <button className="btn btn-danger ms-3" onClick={() => {handleDelete(c._id)}}>Delete</button>
+          </td>
+          </tr>
+          </>
+          ))}
+          </tbody>
+        </table>
+        </div>
+        <Modal onCancel = {() => setVisible(false)} footer={null} visible ={visible}>
+          <MovieCategoryForm value = {updatedName} setValue={setUpdatedName} handleSubmit={handleUpdate}/>
+        </Modal>
+      </div> 
     </div>
-    </div>
+  </div>
   )
-}
+};
+
+export default CreateMovieCategory

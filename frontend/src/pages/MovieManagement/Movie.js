@@ -2,9 +2,11 @@ import React,{useState,useEffect} from 'react'
 import AdminMovieMenu from '../../components/Layout/AdminMovieMenu'
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { Link } from 'react-router-dom';
 
-const AdminMovieDashboard = () => {
-  const[movies,setMovies] = useState([]);
+
+const Movie = () => {
+    const[movies,setMovies] = useState([]);
 
     //get all movies
     const getAllMovies = async () => {
@@ -34,7 +36,7 @@ const AdminMovieDashboard = () => {
               <div className='row row-cols-1 row-cols-md-3 g-4'>
                 {movies?.map(p => (
                   <div key={p._id} className="col">
-                    
+                    <Link to={`/adminmoviedashboard/moviemanagement/movie/${p.slug}`} className='movie-link'>
                       <div className="card m-2" style={{ width: '18rem' }}>
                         <img src={`http://localhost:8080/api/v1/movies/movie-posterimage/${p._id}`} className="card-img-top" alt={p.name} />
                         <div className="card-body">
@@ -42,7 +44,7 @@ const AdminMovieDashboard = () => {
                           <p className="card-text">{p.language}</p>
                         </div>
                       </div>
-                    
+                    </Link>
                   </div>
                 ))}
               </div>
@@ -52,4 +54,4 @@ const AdminMovieDashboard = () => {
       );
 }
 
-export default AdminMovieDashboard
+export default Movie

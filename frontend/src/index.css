@@ -85,3 +85,9 @@
   color: #ffefba;
   border-bottom: 1px solid #ffefba;
 }
+
+/* ================== */
+.movie-link {
+  text-decoration: none !important;
+  color: black !important
+}

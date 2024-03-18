@@ -1,5 +1,5 @@
 import express from 'express'
-import { createMovieController, deleteMovieController, getMovieController, getSingleMovieController, moviePosterimageController, updateMovieController } from '../controllers/movieController.js'
+import { createMovieController, deleteMovieController, getMovieController, getSingleMovieController, movieFiltersController, moviePosterimageController, searchMovieController, updateMovieController } from '../controllers/movieController.js'
 import formidable from 'express-formidable'
 
 const router = express.Router()
@@ -22,5 +22,13 @@ router.delete('/delete-movie/:mid',deleteMovieController )
 
 //update movie
 router.put('/update-movie/:mid',formidable(),updateMovieController )
+
+//filter movie
+router.post('/movie-filters',movieFiltersController )
+
+//search movie
+router.get('/search-movie/:keyword', searchMovieController )
+
+
 
 export default router

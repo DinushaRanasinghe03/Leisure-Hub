@@ -1,8 +1,10 @@
 import slugify from "slugify"
 import movieModel from "../models/movieModel.js"
 import fs from 'fs'
+//import { useParams } from 'react-router-dom';
+//import { Select } from 'antd';
 
-//agg movies
+//add movies
 export const createMovieController = async(req,res) => {
     try {
         const {name,slug,genre,language,director,producer,music,release_date,description} = req.fields
@@ -178,3 +180,50 @@ export const updateMovieController =async(req,res) =>{
         })
     }
 }
+
+//filter movies
+export const movieFiltersController = async(req,res) => {
+    try {
+        const { checked} =req.body;
+        let args = {};
+        if (checked.length > 0) args.genre = checked;
+
+        const movies = await movieModel.find(args)
+        res.status(200).send({
+            success:true,
+            movies,
+        });
+    } catch (error) {
+        console.log(error)
+        res.status(400).send({
+            success:false,
+            message:"Error while filtering products",
+            error
+        })
+    }
+} 
+
+
+//search movie
+export const searchMovieController =async (req,res) => {
+    try {
+        const {keyword} = req.params;
+        const results = await movieModel.find({
+            $or: [
+                {name:{$regex :keyword, $options:"i"}},
+                {language:{$regex :keyword, $options:"i"}},
+                {description:{$regex :keyword, $options:"i"}}
+            ]
+        }).select("-poster_image");
+        res.json(results);
+    } catch (error) {
+        console.log(error)
+        res.status(400).send({
+            success:false,
+            message: 'Error in searching movie',
+            error
+        })
+    }
+}
+
+

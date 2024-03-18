@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Poppins:wght@300;400&display=swap');
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+}
+
+
+/*
+==========page not found css==========
+*/
+.pnf{
+  display: flex;
+  min-height: 65vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.pnf-title{
+  font-size: 100px;
+  font-weight: 700;
+}
+
+.pnf-heading{
+  font-weight: normal;
+}
+
+.pnf-btn{
+  color:black;
+  border: 1px solid black;
+  text-decoration: none;
+  padding: 10px;
+  margin-top: 10px;
+}

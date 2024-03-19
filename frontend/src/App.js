@@ -3,7 +3,7 @@ import HomePage from './pages/HomePage';
 import About from './pages/About';
 import Notfound from './pages/Notfound';
 //import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+//import 'react-toastify/dist/ReactToastify.css';
 import  AdminMovieDashboard  from './pages/MovieManagement/AdminMovieDashboard';
 import AddMovies from './pages/MovieManagement/AddMovies';
 import  CreateMovieCategory  from './pages/MovieManagement/CreateMovieCategory';

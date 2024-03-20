@@ -15,6 +15,7 @@ const Register = () => {
   const [dob, setDOB] = useState("");
   const [password, setPassword] = useState("");
   const [membership, setMembership] = useState("");
+  const [answer, setAnswer] = useState("");
   const navigate = useNavigate();
 
   //form function
@@ -35,6 +36,7 @@ const Register = () => {
         dob,
         password,
         membership,
+        answer,
       });
       if (res && res.data.success) {
         navigate("/login");
@@ -176,6 +178,18 @@ const Register = () => {
             />
             <label htmlFor="family">Family Membership</label>
             <br />
+          </div>
+
+          <div className="mb-3">
+            <input
+              type="text"
+              value={answer}
+              onChange={(e) => setAnswer(e.target.value)}
+              className="form-control"
+              id="InputPassword1"
+              placeholder="What is your favorite sport? "
+              required
+            />
           </div>
 
           <button type="submit" className="btn btn-primary">

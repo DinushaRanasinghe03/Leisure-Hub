@@ -5,7 +5,7 @@ const UserMenu = () => {
     <div>
       <div className="text-center dashboard-menu">
         <div className="list-group">
-          <h4>Dashboard</h4>
+          <h4>User Profile</h4>
           <NavLink
             to="/dashboard/user/profile"
             className="list-group-item list-group-item-action"
@@ -13,10 +13,16 @@ const UserMenu = () => {
             Profile
           </NavLink>
           <NavLink
-            to="/dashboard/user/orders"
+            to="/dashboard/user/booked-movies"
             className="list-group-item list-group-item-action"
           >
-            Orders
+            Booked Movies
+          </NavLink>
+          <NavLink
+            to="/dashboard/user/booked-activities"
+            className="list-group-item list-group-item-action"
+          >
+            Booked Activities and Games
           </NavLink>
         </div>
       </div>

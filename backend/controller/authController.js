@@ -250,3 +250,53 @@ export const updateProfileController = async (req, res) => {
     });
   }
 };
+
+// //view all users from admin side controller
+// export const getAllUsersController = async (req, res) => {
+//   try {
+//     const users = await userModel.find({});
+//     res.json(users);
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).send({
+//       success: false,
+//       message: "Error WHile Geting Users.",
+//       error,
+//     });
+//   }
+// };
+
+//import userModel from '../models/userModel'; // Importing the user model
+
+// Controller function to get all users
+export const getAllUsersController = async (req, res) => {
+  try {
+    // Attempt to find all users in the database
+    const users = await userModel.find({});
+
+    // Check if any users were found
+    if (!users || users.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No users found.",
+      });
+    }
+
+    // Send the users as a JSON response
+    res.status(200).json({
+      success: true,
+      message: "Users found successfully.",
+      data: users,
+    });
+  } catch (error) {
+    // If an error occurs during the process
+    console.log(error); // Log the error to the console for debugging
+
+    // Send a detailed error response
+    res.status(500).json({
+      success: false,
+      message: "Error while getting users.",
+      error: error.message, // Only sending error message for security reasons
+    });
+  }
+};

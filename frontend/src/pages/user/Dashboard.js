@@ -6,7 +6,7 @@ import { useAuth } from "../../context/auth";
 const Dashboard = () => {
   const [auth] = useAuth();
   return (
-    <Layout title={"User Dashboard - Ecommerce App"}>
+    <Layout title={"User Dashboard - Leisure Hub"}>
       <div className="container-flui m-3 p-3 dashboard">
         <div className="row">
           <div className="col-md-3">
@@ -17,11 +17,13 @@ const Dashboard = () => {
               <h3>
                 Name: {auth?.user?.fname} {auth?.user?.lname}
               </h3>
-              <h3>{auth?.user?.email}</h3>
-              <h3>{auth?.user?.phone}</h3>
-              <h3>{auth?.user?.address}</h3>
-              <h3>{auth?.user?.bod}</h3>
-              <h3>{auth?.user?.membership}</h3>
+              <h3>Email: {auth?.user?.email}</h3>
+              <h3>Phone: {auth?.user?.phone}</h3>
+              <h3>
+                Address: {auth?.user?.address1} {auth?.user?.address2}
+              </h3>
+              {/* <h3>DOB: {auth?.user?.dob}</h3> */}
+              <h3>Membership Type: {auth?.user?.membership}</h3>
             </div>
           </div>
         </div>

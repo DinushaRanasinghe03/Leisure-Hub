@@ -201,3 +201,52 @@ export const testController = (req, res) => {
     res.send({ error });
   }
 };
+
+//update prfole
+export const updateProfileController = async (req, res) => {
+  try {
+    const {
+      fname,
+      lname,
+      email,
+      phone,
+      address1,
+      address2,
+      dob,
+      password,
+      membership,
+    } = req.body;
+    const user = await userModel.findById(req.user._id);
+    //password
+    if (password && password.length < 6) {
+      return res.json({ error: "Passsword is required and 6 character long" });
+    }
+    const hashedPassword = password ? await hashPassword(password) : undefined;
+    const updatedUser = await userModel.findByIdAndUpdate(
+      req.user._id,
+      {
+        fname: fname || user.fname,
+        lname: lname || user.lname,
+        phone: phone || user.phone,
+        address1: address1 || user.address1,
+        address2: address2 || user.address2,
+        dob: dob || user.dob,
+        membership: membership || user.membership,
+        password: hashedPassword || user.password,
+      },
+      { new: true }
+    );
+    res.status(200).send({
+      success: true,
+      message: "Profile Updated SUccessfully",
+      updatedUser,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({
+      success: false,
+      message: "Error WHile Update profile",
+      error,
+    });
+  }
+};

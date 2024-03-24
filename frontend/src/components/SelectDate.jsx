@@ -1,63 +1,100 @@
-import React, { useEffect, useState } from 'react'
-import { selectDate, selectShowTime } from '../recoil/atom/commonState';
-import { useRecoilState } from 'recoil';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import {
+  moviesSchedules,
+  selectDate,
+  selectShowTime,
+} from "../recoil/atom/commonState";
+import { useRecoilState } from "recoil";
+import axios from "axios";
+import axiosInstance from "../axiosInstance";
 
 const SelectDate = ({ state }) => {
   // Initialize state for selected date and dates array
   const [selectedDate, setSelectedDate] = useRecoilState(selectDate);
+  const [movieSchedules, setMovieSchedules] = useRecoilState(moviesSchedules);
   const [dates, setDates] = useState([]);
 
-  const [showtimes, setShowtimes] = useState([
-    "10:00 AM",
-    "1:00 PM",
-    "4:00 PM",
-    "7:00 PM",
-    "10:00 PM",
-  ]);
-  const [selectedShowtime, setSelectedShowtime] = useRecoilState(selectShowTime);
+  const [showtimes, setShowtimes] = useState([]);
+  const [selectedShowtime, setSelectedShowtime] =
+    useRecoilState(selectShowTime);
 
-  // Function to format date to "Day, DD MMM" format
-  const formatDate = (date) => {
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axiosInstance.get(
+          `/movies/movie-schedules/${state?._id}`
+        );
+        setMovieSchedules(res?.data?.movieSchedules);
+
+        // Extract unique dates, format them, and add original values
+        const uniqueDates = res?.data?.movieSchedules.reduce(
+          (unique, schedule) => {
+            const date = schedule.date;
+            const dateString = new Date(schedule.date).toDateString();
+            const formattedDate = formatDate(new Date(dateString));
+            const existingDateIndex = unique.findIndex(
+              (entry) => entry.formattedDate === formattedDate
+            );
+            if (existingDateIndex === -1) {
+              unique.push({
+                formattedDate,
+                date,
+                showtimes: [
+                  {
+                    time: schedule.from,
+                    scheduleId: schedule._id,
+                    unavailableSeats: schedule.unavailable_seats,
+                  },
+                ],
+              });
+            } else {
+              unique[existingDateIndex].showtimes.push({
+                time: schedule.from,
+                scheduleId: schedule._id,
+                unavailableSeats: schedule.unavailable_seats,
+              });
+            }
+            return unique;
+          },
+          []
+        );
+
+        setDates(uniqueDates);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // Function to format date to "Day, MMM DD" format
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
     const options = { weekday: "short", month: "short", day: "2-digit" };
     return new Intl.DateTimeFormat("en-US", options).format(date);
   };
 
-  // Function to get an array of dates starting from today
-  const getDatesFromToday = (numDays) => {
-    const datesArray = [];
-    const today = new Date();
-    for (let i = 0; i < numDays; i++) {
-      const date = new Date(today);
-      date.setDate(today.getDate() + i);
-      datesArray.push(date);
-    }
-    return datesArray;
-  };
-
-  // Set dates array when component mounts
-  useEffect(() => {
-    fetchShowtimes(selectedDate);
-    setDates(getDatesFromToday(5)); // Change 5 to the number of days you want to display
-  }, [selectedDate]);
-
-  const fetchShowtimes = async (date) => {
-    try {
-      const response = await axios.get("api-url", {
-        params: {
-          date: date.toISOString(),
-        },
-      });
-      setShowtimes(response.data.showtimes);
-    } catch (error) {
-      console.error("Error fetching showtimes:", error);
-    }
+  const handleDateClick = (date) => {
+    setSelectedDate(date);
+    setSelectedShowtime([]);
+    // Find the selected date's showtimes
+    const selectedDateShowtimes = dates.find(
+      (dateObj) => dateObj.date === date
+    )?.showtimes;
+    console.log("selectedDateShowtimes", selectedDateShowtimes);
+    // Update showtimes based on selected date
+    setShowtimes(selectedDateShowtimes || []);
   };
 
   const handleShowtimeClick = (showtime) => {
     setSelectedShowtime(showtime);
   };
 
+  console.log("dates", dates);
+  console.log("selectedShowtime", selectedShowtime);
+  console.log("selectedDate", selectedDate);
+  console.log("showtimes", showtimes);
 
   return (
     <div className="grid place-items-center min-h-0">
@@ -66,23 +103,24 @@ const SelectDate = ({ state }) => {
           <div className="flex flex-col justify-start lg:justify-start md:justify-start md:items-end">
             <img
               className="lg:w-[75%] xl:w-[75%] h-auto block rounded-lg mb-3"
-              src={`${state?.poster_path}`}
+              src={`${state?.imageUrl}`}
               alt={state?.name}
             />
-            <div className='flex items-start justify-start'>
-            <h2 className="text-start text-black font-bold text-base md:text-center sm:text-left lg:text-left xl:text-base lg:text-base md:text-base mb-6">
-              {state?.name}
-            </h2>
-
+            <div className="flex items-start justify-start">
+              <h2 className="text-start text-black font-bold text-base md:text-center sm:text-left lg:text-left xl:text-base lg:text-base md:text-base mb-6">
+                {state?.name}
+              </h2>
             </div>
           </div>
         </div>
         <div className="lg:col-span-3 md:col-span-3">
           <div className="flex flex-col gap-4">
             <div>
-              <h4 className="text-center font-bold md:text-xl md:text-center lg:text-start mb-3">
-                Select a Date for Ticket Booking
-              </h4>
+              {movieSchedules.length > 0 && (
+                <h4 className="text-center font-bold md:text-xl md:text-center lg:text-start mb-3">
+                  Select a Date for Ticket Booking
+                </h4>
+              )}
 
               <div className="flex justify-center lg:justify-start md:justify-center">
                 <div className="flex flex-wrap gap-4">
@@ -90,13 +128,13 @@ const SelectDate = ({ state }) => {
                     <button
                       key={index}
                       className={`py-2 px-4 rounded-lg ${
-                        date.getDate() === selectedDate.getDate()
+                        date?.date === selectedDate
                           ? "bg-secondary text-white"
                           : "bg-gray-200"
                       }`}
-                      onClick={() => setSelectedDate(date)}
+                      onClick={() => handleDateClick(date?.date)}
                     >
-                      {index === 0 ? "Today" : formatDate(date)}
+                      {date?.formattedDate}
                     </button>
                   ))}
                 </div>
@@ -104,9 +142,11 @@ const SelectDate = ({ state }) => {
             </div>
 
             <div>
-              <h4 className="text-center font-bold md:text-xl md:text-center lg:text-start mb-3">
-                Select a showtime
-              </h4>
+              {showtimes?.length > 0 && (
+                <h4 className="text-center font-bold md:text-xl md:text-center lg:text-start mb-3">
+                  Select a showtime
+                </h4>
+              )}
 
               <div className="flex justify-center lg:justify-start md:justify-center">
                 <div className="flex flex-wrap gap-4">
@@ -114,13 +154,19 @@ const SelectDate = ({ state }) => {
                     <button
                       key={index}
                       className={`py-2 px-4 rounded-lg ${
-                        selectedShowtime === showtime
+                        selectedShowtime?.time === showtime?.time
                           ? "bg-secondary text-white"
                           : "bg-gray-200 hover:bg-gray-300"
                       }`}
-                      onClick={() => handleShowtimeClick(showtime)}
+                      onClick={() =>
+                        handleShowtimeClick({
+                          time: showtime?.time,
+                          scheduleId: showtime?.scheduleId,
+                          unavailableSeats: showtime.unavailableSeats,
+                        })
+                      }
                     >
-                      {showtime}
+                      {showtime?.time}
                     </button>
                   ))}
                 </div>
@@ -136,7 +182,7 @@ const SelectDate = ({ state }) => {
                 </p>
                 {selectedShowtime && (
                   <p className="font-bold">
-                    Selected Show time: {selectedShowtime}
+                    Selected Show time: {selectedShowtime?.time}
                   </p>
                 )}
               </div>
@@ -148,4 +194,4 @@ const SelectDate = ({ state }) => {
   );
 };
 
-export default SelectDate
+export default SelectDate;

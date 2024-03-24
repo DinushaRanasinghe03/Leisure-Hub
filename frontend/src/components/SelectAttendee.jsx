@@ -43,9 +43,21 @@ const SelectAttendee = ({ state }) => {
       ...prevValues,
       ...values,
       adultSubTotal: values.adultCount * values.adultTicketPrice,
+      childSubTotal: values.childCount * values.childTicketPrice,
     }));
   }, [values]);
-    
+
+  useEffect(() => {
+    setValues((prevValues) => ({
+      ...prevValues,
+      ...values,
+      adultCount: selectedSeatsCount,
+      childCount: selectedChildSeatsCount,
+    }));
+  }, [selectedSeatsCount, selectedChildSeatsCount]);
+
+  // console.log("values", values);
+  // console.log("selectedSeatsCount", selectedSeatsCount);
 
   return (
     <div>
@@ -81,9 +93,15 @@ const SelectAttendee = ({ state }) => {
                         adultCount,
                         adultSubTotal: adultCount * prevValues.adultTicketPrice,
                       }));
-                      if (selectedSeatsCount > selectedSeats.length) {
-                        setSelectedChildSeatsCount(selectedChildSeatsCount - 1);
-                        setSelectedSeatsCount(selectedSeatsCount - 1);
+                      // Decrease childCount if necessary
+                      if (adultCount < values.adultCount) {
+                        setSelectedChildSeatsCount(
+                          (prevChildCount) => prevChildCount + 1
+                        );
+                      } else {
+                        setSelectedChildSeatsCount(
+                          (prevChildCount) => prevChildCount - 1
+                        );
                       }
                     }}
                     // onBlur={handleBlur}
@@ -159,9 +177,15 @@ const SelectAttendee = ({ state }) => {
                         childCount,
                         childSubTotal: childCount * prevValues.childTicketPrice,
                       }));
-                      if (selectedChildSeatsCount > selectedSeats.length) {
-                        setSelectedChildSeatsCount(selectedChildSeatsCount - 1);
-                        setSelectedSeatsCount(selectedSeatsCount - 1);
+                      // Decrease adultCount if necessary
+                      if (childCount < values.childCount) {
+                        setSelectedSeatsCount(
+                          (prevAdultCount) => prevAdultCount + 1
+                        );
+                      } else {
+                        setSelectedSeatsCount(
+                          (prevAdultCount) => prevAdultCount - 1
+                        );
                       }
                     }}
                     // onBlur={handleBlur}

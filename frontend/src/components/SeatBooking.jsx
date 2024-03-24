@@ -1,55 +1,46 @@
 import React, { useEffect, useState } from "react";
-import { seatsCount, selectSeats } from "../recoil/atom/commonState";
-import { useRecoilState } from "recoil";
+import {
+  moviesSchedules,
+  seatsCount,
+  selectSeats,
+  selectShowTime,
+} from "../recoil/atom/commonState";
+import { useRecoilState, useRecoilValue } from "recoil";
 import axios from "axios";
 
-const generateSampleSeats = () => {
+const generateSampleSeats = (unavailableSeats) => {
   const seats = [];
   for (let i = 1; i <= 50; i++) {
-    let isAvailable = true;
-    // Mark some seats as unavailable based on their ID
-    if (i === 10 || i === 20 || i === 30) {
-      isAvailable = false;
-    }
+    const isAvailable = !unavailableSeats.includes(i.toString());
     seats.push({ id: i, isAvailable });
   }
   return seats;
 };
 
-
 const SeatBooking = () => {
   const [seats, setSeats] = useState([]);
   const [selectedSeats, setSelectedSeats] = useRecoilState(selectSeats);
-  const [selectedSeatsCount, setSelectedSeatsCount] = useRecoilState(seatsCount);
+  const [selectedSeatsCount, setSelectedSeatsCount] =
+    useRecoilState(seatsCount);
   const [availableSeatsCount, setAvailableSeatsCount] = useState(0);
   const [unavailableSeatsCount, setUnavailableSeatsCount] = useState(0);
-  // useEffect(() => {
-  //   // Fetch seat data and counts from the backend API
-  //   async function fetchData() {
-  //     try {
-  //       const response = await axios.get("backend-api-url/seats");
-  //       const { seats, availableSeatsCount, unavailableSeatsCount } =
-  //         response.data;
-  //       setSeats(seats);
-  //       setAvailableSeatsCount(availableSeatsCount);
-  //       setUnavailableSeatsCount(unavailableSeatsCount);
-  //     } catch (error) {
-  //       console.error("Error fetching seat data:", error);
-  //     }
-  //   }
-  //   fetchData();
-  // }, []);
+
+  const selectedShowtime = useRecoilValue(selectShowTime);
+
+  console.log("selectedShowtime", selectedShowtime?.unavailableSeats);
 
   useEffect(() => {
     // Set sample seat data and counts
-    const sampleSeatsData = generateSampleSeats();
+    const sampleSeatsData = generateSampleSeats(
+      selectedShowtime?.unavailableSeats || []
+    );
     setSeats(sampleSeatsData);
     const availableCount = sampleSeatsData.filter(
       (seat) => seat.isAvailable
     ).length;
     setAvailableSeatsCount(availableCount);
     setUnavailableSeatsCount(sampleSeatsData.length - availableCount);
-  }, []);
+  }, [selectedShowtime]);
 
   const handleSeatClick = (seatId) => {
     const seat = seats.find((seat) => seat.id === seatId);
@@ -73,10 +64,8 @@ const SeatBooking = () => {
       if (selectedSeats) {
         setSelectedSeatsCount(updatedSelectedSeats?.length);
       }
-      
     }
   };
-
 
   return (
     <>

@@ -8,7 +8,7 @@ export const selectDate = atom({
 
 export const selectShowTime = atom({
   key: "selectShowTime",
-  default: null,
+  default: [],
 });
 
 export const selectSeats = atom({
@@ -18,12 +18,12 @@ export const selectSeats = atom({
 
 export const seatsCount = atom({
   key: "seatsCount",
-  default: null,
+  default: 0,
 });
 
 export const seatsChildCount = atom({
   key: "seatsChildCount",
-  default: null,
+  default: 0,
 });
 
 export const userInfo = atom({
@@ -36,6 +36,7 @@ export const priceDetails = atom({
   default: [],
 });
 
-
-
-
+export const moviesSchedules = atom({
+  key: "moviesSchedules",
+  default: [],
+});

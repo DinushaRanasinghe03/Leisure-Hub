@@ -16,8 +16,6 @@ const Summary = ({ state }) => {
   const selectedSeats = useRecoilValue(selectSeats);
   const selectedPriceDetails = useRecoilValue(priceDetails);
 
-
-
   const date = new Date(selectedDate);
 
   // Get day, month, and year
@@ -40,7 +38,6 @@ const Summary = ({ state }) => {
   // Construct the formatted date string
   const formattedDate = `${day}-${month}-${year} - ${dayOfWeek}`;
 
-
   return (
     <>
       <h2 className="font-semibold text-2xl mb-2">Summary</h2>
@@ -61,7 +58,7 @@ const Summary = ({ state }) => {
             </div>
 
             <div className=" text-black font-semibold">
-              {formattedDate} - {selectedShowtime}
+              {formattedDate} - {selectedShowtime?.time}
             </div>
           </div>
         </div>
@@ -117,17 +114,19 @@ const Summary = ({ state }) => {
             </div>
           </div>
 
-          <div className="flex justify-start items-center gap-8">
-            <div className="bg-secondary text-white font-semibold px-8 py-3 text-end w-44 tracking-wider">
-              Adults
-            </div>
+          {selectedPriceDetails.adultCount > 0 && (
+            <div className="flex justify-start items-center gap-8">
+              <div className="bg-secondary text-white font-semibold px-8 py-3 text-end w-44 tracking-wider">
+                Adults
+              </div>
 
-            <div className=" text-black font-semibold">
-              {selectedPriceDetails.adultCount} x LKR{" "}
-              {formatAmount(selectedPriceDetails?.adultTicketPrice)} - LKR{" "}
-              {formatAmount(selectedPriceDetails?.adultSubTotal)}
+              <div className=" text-black font-semibold">
+                {selectedPriceDetails.adultCount} x LKR{" "}
+                {formatAmount(selectedPriceDetails?.adultTicketPrice)} - LKR{" "}
+                {formatAmount(selectedPriceDetails?.adultSubTotal)}
+              </div>
             </div>
-          </div>
+          )}
 
           {selectedPriceDetails.childCount > 0 && (
             <div className="flex justify-center items-center gap-8">

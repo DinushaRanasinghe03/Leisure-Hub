@@ -8,6 +8,7 @@ import SelectSeat from "../components/SeatBooking";
 import SeatBooking from "../components/SeatBooking";
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
+  priceDetails,
   seatsChildCount,
   seatsCount,
   selectSeats,
@@ -18,6 +19,7 @@ import {
 import { Slide, toast } from "react-toastify";
 import SelectAttendee from "../components/SelectAttendee";
 import Summary from "../components/Summary";
+import axiosInstance from "../axiosInstance";
 
 const TicketBooking = () => {
   const location = useLocation();
@@ -29,8 +31,7 @@ const TicketBooking = () => {
   const selectedChildSeatsCount = useRecoilValue(seatsChildCount);
   const infoRef = useRef();
   const [userDetails, setUserDetails] = useRecoilState(userInfo);
-
-
+  const selectedPriceDetails = useRecoilValue(priceDetails);
 
   const [step, setStep] = useState(1);
 
@@ -98,7 +99,7 @@ const TicketBooking = () => {
     const isValid = await validateForm();
     if (isValid && step == 2) {
       handleSubmit();
-    } else if (selectedShowtime == null && step == 1) {
+    } else if (selectedShowtime.length == 0 && step == 1) {
       infoRef.current = toast.error("Please select a show time", {
         position: "top-right",
         autoClose: 2000,
@@ -125,22 +126,46 @@ const TicketBooking = () => {
           transition: Slide,
         }
       );
-    } else if (selectedSeats?.length > 0 && step == 4 && (selectedSeatsCount == 0 && selectedChildSeatsCount == 0)) {
-      infoRef.current = toast.error("Please select a seat to continue",
-        {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          transition: Slide,
-        }
-      );
+    } else if (
+      selectedSeats?.length > 0 &&
+      step == 4 &&
+      selectedSeatsCount == 0 &&
+      selectedChildSeatsCount == 0
+    ) {
+      infoRef.current = toast.error("Please select a seat to continue", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Slide,
+      });
     } else {
       handleNextStep();
+    }
+  };
+
+  const submitSummaryData = async (data) => {
+    try {
+      const response = await axiosInstance.post("/buytickets", {
+        schedule_id: selectedShowtime?.scheduleId,
+        name: userDetails.name,
+        email: userDetails.email,
+        mobile: userDetails.contactNo,
+        seats: selectedSeats,
+        adults: selectedSeatsCount,
+        adults_price: selectedPriceDetails?.adultTicketPrice,
+        children: selectedChildSeatsCount,
+        children_price: selectedPriceDetails?.childTicketPrice,
+      });
+      // Handle success response
+      console.log("Booking data submitted successfully:", response.data);
+    } catch (error) {
+      // Handle error
+      console.error("Error submitting booking data:", error);
     }
   };
 
@@ -249,13 +274,23 @@ const TicketBooking = () => {
         >
           Previous
         </button>
-        <button
-          type="submit"
-          className="py-2 px-4 rounded-lg bg-secondary border border-secondary text-white w-48 hover:bg-white hover:text-secondary"
-          onClick={handleNextButtonClick}
-        >
-          Next
-        </button>
+        {step === 5 ? (
+          <button
+            type="submit"
+            className="py-2 px-4 rounded-lg bg-secondary border border-secondary text-white w-48 hover:bg-white hover:text-secondary"
+            onClick={submitSummaryData}
+          >
+            Submit
+          </button>
+        ) : (
+          <button
+            type="submit"
+            className="py-2 px-4 rounded-lg bg-secondary border border-secondary text-white w-48 hover:bg-white hover:text-secondary"
+            onClick={handleNextButtonClick}
+          >
+            Next
+          </button>
+        )}
       </div>
     </div>
   );

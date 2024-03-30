@@ -37,6 +37,7 @@ const Search = () => {
             </div>
         </div> 
         <br/>
+        <br/><br/>
     </Layout>
   )
 }

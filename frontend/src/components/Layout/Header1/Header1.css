@@ -1,0 +1,23 @@
+/* Header1.css */
+
+/* Style for the navbar */
+.navbar {
+  display: flex; /* Use flexbox */
+  justify-content: space-between; /* Align items horizontally */
+}
+
+/* Style for the navbar items */
+.navbar-nav {
+  display: flex; /* Use flexbox */
+  align-items: center; /* Center items vertically */
+}
+
+/* Style for the navbar links */
+.navbar-nav .nav-item {
+  margin-right: 10px; /* Add spacing between navbar items */
+}
+
+/* Style for the navbar brand */
+.navbar-brand {
+  margin-right: auto; /* Push the brand to the left */
+}

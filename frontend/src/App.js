@@ -1,12 +1,21 @@
 import logo from './logo.svg';
 import './App.css';
-import BasicExample from './pages/paymentDetails/personalDetails.js'
+import Header1 from './components/Layout/Header1/Header1.js'
+import personalDetails from './pages/paymentDetails/personalDetails.js'
+import { Route, Router } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
 
 function App() {
   return (
-    <div className="App">
-      <BasicExample/>
+    <Router>
+       <div className="App">
+      <Header1/>
+      <Route path="/personaldetails" exact component={personalDetails}/>
+     
     </div>
+
+    </Router>
+   
   );
 }
 

@@ -1,0 +1,48 @@
+/* personalDetails.css */
+
+/* Style for the form container */
+.form-container {
+    background-color: #aed9e0; /* Background color */
+    padding: 20px; /* Padding for spacing */
+    border-radius: 10px; /* Rounded corners for a nicer look */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Box shadow for depth */
+    width: 60%; /* Set the width of the container */
+    margin: 0 auto; /* Center the container horizontally */
+}
+
+/* Style for form elements */
+.form-container form {
+    width: 100%; /* Ensure the form takes up full width */
+}
+
+/* Style for form group elements */
+.form-container .form-group {
+    margin-bottom: 20px; /* Add spacing between form groups */
+}
+
+/* Style for form labels */
+.form-container label {
+    font-weight: bold; /* Make labels bold */
+}
+
+/* Style for form inputs */
+.form-container input[type="text"],
+.form-container input[type="email"] {
+    width: 100%; /* Ensure inputs take up full width */
+    padding: 10px; /* Add padding for better appearance */
+    border: 1px solid #cccccc; /* Add border */
+    border-radius: 5px; /* Add border radius */
+}
+
+/* Style for form checkbox */
+.form-container .form-check-label {
+    font-weight: normal; /* Make checkbox label normal */
+}
+.form-container input[type="text"],
+.form-container input[type="email"] {
+    width: calc(100% - 16px); /* Reduce width by 16px to account for padding */
+    padding: 6px; /* Adjust padding for better appearance */
+    border: 1px solid #cccccc; /* Add border */
+    border-radius: 5px; /* Add border radius */
+    height: 26px; /* Set the height of the input fields */
+}

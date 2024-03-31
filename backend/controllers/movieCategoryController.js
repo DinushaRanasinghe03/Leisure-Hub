@@ -89,24 +89,7 @@ export const singleMovieCategoryController = async (req,res) => {
     }
 };
 
-//delete category
-//export const deleteMovieCategoryController = async(req,res) => {
-  //  try {
-    //    const {id} = req.params
-      //  await movieCategoryModel.findByIdAndDelete(id)
-        //req.status(200).send({
-          //  success : true,
-            //message: "Category deleted successfully"
-        //})
-    //} catch (error) {
-      //  console.log(error)
-        //res.status(500).send({
-          //  success:false,
-            //message:'Error while deleting category',
-            //error
-        //})
-    //}
-//};
+
 
 export const deleteMovieCategoryController = async (req, res) => {
     try {

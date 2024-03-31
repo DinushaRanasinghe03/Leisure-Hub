@@ -4,7 +4,7 @@ import movieScheduleModel from "../models/movieScheduleModel.js"
 // Controller function for creating a movie schedule
 export const createMovieScheduleController = async (req, res) => {
     try {
-        const {date,from,to,movie,unavailable_seats} = req.fields
+        const {date,from,to,movie} = req.fields
 
         //validation
         switch(true){
@@ -16,8 +16,7 @@ export const createMovieScheduleController = async (req, res) => {
                 return res.status(500).send({error: 'showtime_2 is required'})
             case !movie:
                 return res.status(500).send({error: 'showtime_3 is required'}) 
-            case !unavailable_seats:
-                return res.status(500).send({error: 'showtime_3 is required'})                
+                            
         }
 
         const movieschedule = new movieScheduleModel({...req.fields})
@@ -84,10 +83,51 @@ export const getMovieScheduleController = async(req,res) => {
 
 
 
+
+ // Controller function to get schedules based on date
+export const getMovieSchedulesByDateController = async (req, res) => {
+    try {
+        const { date } = req.params;
+
+        // Validate if date is provided
+        if (!date) {
+            return res.status(400).send({ error: 'Date is required' });
+        }
+
+        // Find all movie schedules for the given date
+        const movieSchedules = await movieScheduleModel.find({ date });
+
+        res.status(200).send({
+            success: true,
+            countTotal: movieSchedules.length,
+            message: `Movie schedules for ${date}`,
+            movieSchedules
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send({
+            success: false,
+            message: 'Error in getting movie schedules by date',
+            error: error.message
+        });
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
 //update movie schedule
 export const updateMovieScheduleController = async (req, res) => {
     try {
-        const { date, from, to, movie,unavailable_seats } = req.fields;
+        const { date, from, to, movie,unavailable_seats} = req.fields;
 
         // Validation
         switch (true) {
@@ -99,8 +139,6 @@ export const updateMovieScheduleController = async (req, res) => {
                 return res.status(400).send({ error: 'Showtime "to" is required' });
             case !movie:
                 return res.status(400).send({ error: 'Movie is required' });
-            case !unavailable_seats:
-               return res.status(500).send({error: 'showtime_3 is required'})    
         }
 
 

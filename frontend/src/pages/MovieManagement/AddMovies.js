@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react'
 import AdminMovieMenu from '../../components/Layout/AdminMovieMenu'
-import toast from 'react-hot-toast'
+import toast, { Toaster } from 'react-hot-toast'
 import axios from 'axios'
 import {Select} from 'antd'
 import { useNavigate } from 'react-router-dom'
@@ -198,6 +198,7 @@ const AddMovies = () => {
         </div>
         </div>
     </div>
+    <Toaster />
     </div>
   )
 }

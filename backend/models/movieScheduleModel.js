@@ -15,12 +15,12 @@ const scheduleSchema = new mongoose.Schema({
     },
     movie:{
         type:mongoose.ObjectId,
-        ref:'moviename',
+        ref:'movies',
         required:true
     },
     unavailable_seats: {
         type: [String], 
-        required:true
+        
       }      
 },{timestamps:true}
 );

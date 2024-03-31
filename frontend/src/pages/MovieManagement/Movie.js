@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import AdminMovieMenu from '../../components/Layout/AdminMovieMenu'
 import axios from 'axios';
-import toast from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 
 
@@ -50,6 +50,7 @@ const Movie = () => {
               </div>
             </div>
           </div>
+          <Toaster />
         </div>
       );
 }

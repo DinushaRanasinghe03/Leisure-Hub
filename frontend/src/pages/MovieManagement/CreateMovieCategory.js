@@ -1,6 +1,7 @@
 import React,{useEffect,useState} from 'react'
 import AdminMovieMenu from '../../components/Layout/AdminMovieMenu'
-import toast from 'react-hot-toast'
+//import {toast} from 'react-toastify'
+import toast, { Toaster } from 'react-hot-toast'
 import axios from 'axios'
 import MovieCategoryForm from '../../components/Form/MovieCategoryForm';
 import { Modal } from 'antd';
@@ -18,7 +19,7 @@ const CreateMovieCategory = () => {
     try {
       const {data} = await axios.post("http://localhost:8080/api/v1/moviecategory/create-moviecategory",{name})
       if(data?.success){
-        toast.success(`${name} is created`)
+        toast.success(`${name} genre is created`)
         getAllMovieCategory();
       }else{
         toast.error(data.message);
@@ -52,7 +53,7 @@ const CreateMovieCategory = () => {
     try {
       const {data} = await axios.put(`http://localhost:8080/api/v1/moviecategory/update-moviecategory/${selected._id}`, {name: updatedName})
       if(data.success){
-        toast.success(`${updatedName} is updated`)
+        toast.success(`${updatedName} genre is updated`)
         setSelected(null)
         setUpdatedName("")
         setVisible(false)
@@ -72,7 +73,7 @@ const CreateMovieCategory = () => {
       if(data.success){
         getAllMovieCategory()
       }else{
-        toast.error("Category is deleted")
+        toast.error("Movie genre is deleted")
       }
     } catch (error) {
       toast.error("Something went wrong")
@@ -121,6 +122,7 @@ const CreateMovieCategory = () => {
         </Modal>
       </div> 
     </div>
+    <Toaster />
   </div>
   )
 };

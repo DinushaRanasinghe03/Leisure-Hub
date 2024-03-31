@@ -21,7 +21,9 @@ const Header = () => {
             <Link 
                 to ="/" 
                 className="navbar-brand" 
-                >LEISUREHUB
+                >
+                    
+                    LEISUREHUB
             </Link>
 
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
@@ -44,9 +46,9 @@ const Header = () => {
 
             <li className="nav-item">
             <NavLink 
-                to ="/showtime" 
+                to ="/schedules" 
                 className="nav-link" 
-                >Show Time & Scheduling
+                >Movie Show Times
             </NavLink>
             </li>
 

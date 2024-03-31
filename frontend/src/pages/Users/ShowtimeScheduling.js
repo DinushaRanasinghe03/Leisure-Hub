@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import AdminMovieMenu from '../../components/Layout/AdminMovieMenu';
+import Layout from '../../components/Layout/Layout'
 import DatePicker from 'react-date-picker';
-import 'react-date-picker/dist/DatePicker.css';
+import 'react-calendar/dist/Calendar.css';
 
-const ShowtimeSchedule = () => {
-    const [schedules, setSchedules] = useState([]);
+
+const ShowtimeScheduling = () => {
+
+  const [schedules, setSchedules] = useState([]);
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [loading, setLoading] = useState(false);
 
@@ -31,16 +33,16 @@ const ShowtimeSchedule = () => {
         }
     };
 
-    return (
-        <div className='container-fluid m-3 p-3'>
+
+  return (
+    <Layout title={"ShowTimes"}>
+    <div className='container-fluid m-3 p-3'>
             <div className='row'>
-                <div className='col-md-3'>
-                    <AdminMovieMenu />
-                </div>
-                <div className='col-md-9 '>
-                    <h3 className="text-center">Movie Showtime Schedule</h3>
+            <h3 className="text-center">Movie Showtimes</h3><br/>
+                <div className='col-md-10 mx-auto '>
+                    
                     <div className="mb-3">
-                        <label className="form-label">Select Date:</label>
+                        <label className="form-label"><h5>Select Your Preferred Date:</h5></label>
                         <DatePicker
                             value={selectedDate}
                             onChange={(date) => setSelectedDate(date)}
@@ -48,7 +50,7 @@ const ShowtimeSchedule = () => {
                             className="form-control"
                         />
                     </div>
-                    <br /><br /><br /><br/><br/><br/>
+                    <br /><br /><br /><br/>
                     <h5><center>Showtime Schedule for {selectedDate.toLocaleDateString('en-US')}</center></h5>
                     <br/>
                     
@@ -57,16 +59,16 @@ const ShowtimeSchedule = () => {
                     ) : (
                         <>
                             {schedules.length === 0 ? (
-                                <p>No schedules available for the selected date.</p>
+                                <p>No showtime available for the selected date.</p>
                             ) : (
-                                <table className="table table-striped">
+                                <table className="table table-striped ">
                                     <thead>
                                         <tr>
                                             
                                             <th>From</th>
                                             <th>To</th>
                                             <th>Movie</th>
-                                            <th>Unavailable Seats</th>
+                                            
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -76,7 +78,7 @@ const ShowtimeSchedule = () => {
                                                 <td>{schedule.from}</td>
                                                 <td>{schedule.to}</td>
                                                 <td>{schedule.movie}</td>
-                                                <td>{schedule.unavailable_seats.join(', ')}</td>
+                                                
                                             </tr>
                                         ))}
                                     </tbody>
@@ -87,7 +89,9 @@ const ShowtimeSchedule = () => {
                 </div>
             </div>
         </div>
-    );
-};
+        <br/><br/><br/><br/><br/>
+        </Layout>
+  )
+}
 
-export default ShowtimeSchedule;
+export default ShowtimeScheduling

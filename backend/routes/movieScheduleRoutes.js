@@ -1,5 +1,5 @@
 import express from 'express'
-import { createMovieScheduleController, deleteMovieScheduleController, getMovieScheduleController, getSingleMovieScheduleController, updateMovieScheduleController } from '../controllers/movieScheduleController.js'
+import { createMovieScheduleController, deleteMovieScheduleController, getMovieScheduleController, getMovieSchedulesByDateController, getSingleMovieScheduleController, updateMovieScheduleController } from '../controllers/movieScheduleController.js'
 import formidable from 'express-formidable'
 
 const router = express.Router()
@@ -10,6 +10,9 @@ router.post('/create-schedule',formidable(),createMovieScheduleController )
 
 //get single movie schedule
 router.get('/get-singleschedule/:id',getSingleMovieScheduleController )
+
+//get schedules based on date
+router.get('/get-schedule-date/:date',getMovieSchedulesByDateController )
 
 //get movie schedule
 router.get('/get-movieschedule', getMovieScheduleController )

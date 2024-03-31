@@ -54,7 +54,7 @@ const MovieDetails = () => {
               height="450"
               width={"250px"} />
           </div>
-          <div className='col-md-6'>
+          <div className='col-md-6' style={{ marginLeft: '20px' }}>
             <h2 className='text-center'>Movie Details</h2>
             <p><b>Movie Title : </b>{movie.name}</p>
             <p><b>Language : </b>{movie.language}</p>

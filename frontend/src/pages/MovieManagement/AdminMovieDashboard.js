@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import AdminMovieMenu from '../../components/Layout/AdminMovieMenu'
 import axios from 'axios';
-import toast from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
 
 const AdminMovieDashboard = () => {
   const[movies,setMovies] = useState([]);
@@ -48,6 +48,7 @@ const AdminMovieDashboard = () => {
               </div>
             </div>
           </div>
+          <Toaster />
         </div>
       );
 }

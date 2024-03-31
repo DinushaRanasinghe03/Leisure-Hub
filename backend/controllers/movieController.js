@@ -94,6 +94,24 @@ export const getSingleMovieController = async(req,res) => {
     }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //get poster image
 export const moviePosterimageController = async (req,res) => {
     try {
@@ -226,4 +244,29 @@ export const searchMovieController =async (req,res) => {
     }
 }
 
+
+//similar movies
+export const relatedMovieController = async (req,res) => {
+    try {
+        const {mid,cid} = req.params
+        const movies = await movieModel.find({
+            genre:cid,
+            _id:{$ne:mid},
+        })
+        .select("-poster_image")
+        .limit(3)
+        .populate("genre");
+        res.status(200).send({
+            success:true,
+            movies
+        })
+    } catch (error) {
+        console.log(error)
+        res.status(400).send({
+            success:false,
+            message:'error while getting related movies',
+            error
+        })
+    }
+}
 

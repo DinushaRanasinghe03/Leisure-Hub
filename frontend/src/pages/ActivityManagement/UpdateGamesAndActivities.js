@@ -4,11 +4,11 @@ import Layout from "../../components/Layout/Layout";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { Select } from "antd";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+
 const { Option } = Select;
 
-export const AddGamesAndActivities = () => {
-  const navigate = useNavigate();
+export const UpdateGamesAndActivities = () => {
   const [categories, setCategories] = useState([]);
   const [activityimage, setaImage] = useState("");
   const [name, setName] = useState("");
@@ -16,6 +16,33 @@ export const AddGamesAndActivities = () => {
   const [gameoractivitycategory, setGameoractivitycategory] = useState("");
   const [guidelines, setGuidelines] = useState("");
   const [instructors, setInstructor] = useState("");
+  const navigate = useNavigate();
+  const params = useParams();
+  const [id, setId] = useState("");
+
+  //get single activity
+  const getSingleActivity = async () => {
+    try {
+      const { data } = await axios.get(
+        `/api/v1/gameandactivity/get-gameandactivity/${params.slug}`
+      );
+      setName(data.gamesandactivities.name);
+      setId(data.gamesandactivities._id);
+      setGameoractivitycategory(
+        data.gamesandactivities.gameoractivitycategory._id
+      );
+      setaImage(data.gamesandactivities.activityimage);
+      setDescription(data.gamesandactivities.description);
+      setGuidelines(data.gamesandactivities.guidelines);
+      setInstructor(data.gamesandactivities.instructors);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getSingleActivity();
+    //eslint-disable-next-line
+  }, []);
 
   //get all games categories
   const getAllCategory = async () => {
@@ -38,28 +65,32 @@ export const AddGamesAndActivities = () => {
   }, []);
 
   //add games and activities function
-  const handleCreate = async (e) => {
+  const handleUpdate = async (e) => {
     e.preventDefault();
     try {
       const gameandactivityData = new FormData();
-      gameandactivityData.append("name", name);
-      gameandactivityData.append("description", description);
-      gameandactivityData.append("guidelines", guidelines);
-      gameandactivityData.append("instructors", instructors);
-      gameandactivityData.append("activityimage", activityimage);
       gameandactivityData.append(
         "gameoractivitycategory",
         gameoractivitycategory
       );
-      const { data } = await axios.post(
-        "http://localhost:8080/api/v1/gameandactivity/create-gameandactivity",
+      gameandactivityData.append("name", name);
+      gameandactivityData.append("description", description);
+      gameandactivityData.append("guidelines", guidelines);
+      gameandactivityData.append("instructors", instructors);
+      activityimage &&
+        gameandactivityData.append("activityimage", activityimage);
+
+      const { data } = await axios.put(
+        ` /api/v1/gameandactivity/update-gameandactivity/${id}`,
         gameandactivityData
       );
       if (data?.success) {
-        toast.success("Game or Activity Added Successfully");
         navigate("/adminactivitydashboard/activitymanagement/activities");
+        setTimeout(() => {
+          toast.success("Game or Activity Updated Successfully");
+        }, 1000);
       } else {
-        toast.error("Somthing");
+        toast.error("something went wrong");
       }
     } catch (error) {
       console.log(error);
@@ -67,6 +98,26 @@ export const AddGamesAndActivities = () => {
     }
   };
 
+  //delete a product
+  const handleDelete = async () => {
+    try {
+      //prompt message  to delete game or activity
+      let answer = window.prompt(
+        "Are you sure, want to delete this game or activity?"
+      );
+      if (!answer) return;
+      const { data } = await axios.delete(
+        `/api/v1/gameandactivity/delete-gameandactivity/${id}`
+      );
+      navigate("/adminactivitydashboard/activitymanagement/activities");
+      setTimeout(() => {
+        toast.success("Game or Activity Deleted successefully");
+      }, 1000);
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong");
+    }
+  };
   return (
     <Layout>
       <div className="container-fluid m-3 p-3">
@@ -75,7 +126,7 @@ export const AddGamesAndActivities = () => {
             <AdminActivityMenu />
           </div>
           <div className="col-md-9">
-            <h1>Add Games And Activities</h1>
+            <h1>Update Games And Activities</h1>
             <div className="m-1 w-75">
               <Select
                 bordered={false}
@@ -86,6 +137,7 @@ export const AddGamesAndActivities = () => {
                 onChange={(value) => {
                   setGameoractivitycategory(value);
                 }}
+                value={gameoractivitycategory}
               >
                 {categories?.map((c) => (
                   <Option key={c._id} value={c._id}>
@@ -109,10 +161,19 @@ export const AddGamesAndActivities = () => {
                 </label>
               </div>
               <div className="mb-3">
-                {activityimage && (
+                {activityimage ? (
                   <div className="text-center">
                     <img
                       src={URL.createObjectURL(activityimage)}
+                      alt="gameandactivity_activityimage"
+                      height={"200px"}
+                      className="img img-responsive"
+                    />
+                  </div>
+                ) : (
+                  <div className="text-center">
+                    <img
+                      src={`/api/v1/gameandactivity/gameandactivity-activityimage/${id}`}
                       alt="gameandactivity_activityimage"
                       height={"200px"}
                       className="img img-responsive"
@@ -157,14 +218,24 @@ export const AddGamesAndActivities = () => {
                   onChange={(value) => {
                     setInstructor(value);
                   }}
+                  value={
+                    instructors
+                      ? "Instructor Available"
+                      : "Instructor Not Available"
+                  }
                 >
                   <Option value="1">Instructor Available</Option>
                   <Option value="0">Instructor Not Available</Option>
                 </Select>
               </div>
               <div className="mb-3">
-                <button className="btn btn-primary" onClick={handleCreate}>
-                  ADD GAME OR ACTIVITY
+                <button className="btn btn-primary" onClick={handleUpdate}>
+                  UPDATE GAME OR ACTIVITY
+                </button>
+              </div>
+              <div className="mb-3">
+                <button className="btn btn-danger" onClick={handleDelete}>
+                  DELETE GAME OR ACTIVITY
                 </button>
               </div>
             </div>
@@ -175,4 +246,4 @@ export const AddGamesAndActivities = () => {
   );
 };
 
-export default AddGamesAndActivities;
+export default UpdateGamesAndActivities;

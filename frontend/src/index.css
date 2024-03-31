@@ -12,10 +12,11 @@
   font-family: 'Poppins', sans-serif;
   font-size:17px;
   line-height: 26px;
+  background-color:#A6C4D1!important;
   text-transform: uppercase;
-  box-shadow: 0 8px 6px -6px gray;
-  --webkit-box-shadow:0 8px 6px -6px gray;
-  border-bottom: 0.3px solid gray !important;
+  box-shadow: 0 8px 6px -6px  navy;
+  --webkit-box-shadow:0 8px 6px -6px  navy;
+  border-bottom: 0.3px solid  navy !important;
 }
 .nav-link{
   font-weight: 300 !important;
@@ -38,10 +39,9 @@
   background: #000000;/*fallback for old browsers*/
   background: -webkit-linear-gradient(
     to right,
-    #434343,
-    #000000
+    #A6C4D1,#20255A
   );/*chrome 10-25,safari 5.1-6*/
-  background: linear-gradient(to right,#434343,#000000);
+  background: linear-gradient(to right,#A6C4D1,#20255A);
 }
 /*footer tabs*/
 .footer a{
@@ -51,8 +51,8 @@
 }
 /*footer hover*/
 .footer a:hover{
-  columns: #ffefba;
-  border-bottom: 1px solid #ffefba;
+  columns:  navy;
+  border-bottom: 1px solid  navy;
 
 }
 /*====================================
@@ -77,4 +77,11 @@
   text-decoration: none;
   padding: 10px;
   margin-top: 10px;
+}
+
+/*===========================================
+==========games and activities-link=======*/
+.gamesandactivities-link{
+  text-decoration: none !important;
+  color: black !important;
 }

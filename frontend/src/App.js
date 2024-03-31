@@ -10,6 +10,9 @@ import Dashboard from "./pages/user/Dashboard";
 import { AdminActivityDashboard } from "./pages/ActivityManagement/AdminActivityDashboard";
 import { CreateActivityCategory } from "./pages/ActivityManagement/CreateActivityCategory";
 import { AddGamesAndActivities } from "./pages/ActivityManagement/AddGamesAndActivities";
+import { AllGamesAndActivities } from "./pages/ActivityManagement/AllGamesAndActivities";
+import { ViewAllRequests } from "./pages/ActivityManagement/ViewAllRequests";
+import { UpdateGamesAndActivities } from "./pages/ActivityManagement/UpdateGamesAndActivities";
 
 function App() {
   return (
@@ -32,6 +35,18 @@ function App() {
         <Route
           path="/adminactivitydashboard/activitymanagement/add-activities"
           element={<AddGamesAndActivities />}
+        />
+        <Route
+          path="/adminactivitydashboard/activitymanagement/activities"
+          element={<AllGamesAndActivities />}
+        />
+        <Route
+          path="/adminactivitydashboard/activitymanagement/allgamesandactivities/:slug"
+          element={<UpdateGamesAndActivities />}
+        />
+        <Route
+          path="/adminactivitydashboard/activitymanagement/requests"
+          element={<ViewAllRequests />}
         />
       </Routes>
     </>

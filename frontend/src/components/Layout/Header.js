@@ -1,5 +1,7 @@
 import React from 'react'
 import {NavLink,Link} from "react-router-dom"
+//import LEISUREHUB_LOGO from '../assets/LEISUREHUB_LOGO.jpg'
+import LEISUREHUB_LOGO from '../../assets/LEISUREHUB_LOGO.jpg';
 
 const Header = () => {
   return (
@@ -18,13 +20,14 @@ const Header = () => {
         
         <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
 
-            <Link 
-                to ="/" 
-                className="navbar-brand" 
-                >
-                    
-                    LEISUREHUB
+        <Link
+              to="/"
+              className="navbar-brand"
+              style={{ display: 'flex', alignItems: 'center' }}>
+              <img src={LEISUREHUB_LOGO} alt="logo" style={{ maxHeight: '50px', marginRight: '10px' }} />
+              <span style={{ marginTop: '5px' }}>LEISUREHUB</span>
             </Link>
+
 
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
 
@@ -95,6 +98,7 @@ const Header = () => {
         </div>
     </div>
 </nav>
+
 
     </>
   )

@@ -1,6 +1,7 @@
 import slugify from "slugify";
 import GamesAndActivitiesModel from "../models/GamesAndActivitiesModel.js";
 import fs from "fs";
+import { response } from "express";
 
 export const createGameAndActivityController = async (req, res) => {
   try {
@@ -223,6 +224,29 @@ export const updateGameAndActivityController = async (req, res) => {
       success: false,
       error,
       message: "Error in updating Games and Activities",
+    });
+  }
+};
+
+//filter
+
+//search games and actvities
+export const searchGameAndActivityController = async (req, res) => {
+  try {
+    const { keyword } = req.params;
+    const gameandactivity = await GamesAndActivitiesModel.find({
+      $or: [
+        { name: { $regex: keyword, $option: "i" } },
+        { description: { $regex: keyword, $option: "i" } },
+      ],
+    }).select("-activityimage");
+    res.json(results);
+  } catch (error) {
+    crossOriginIsolated.log(error);
+    res.status(400).send({
+      success: false,
+      message: "Error in Search Game or Activity",
+      error,
     });
   }
 };

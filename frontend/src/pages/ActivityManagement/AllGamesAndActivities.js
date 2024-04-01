@@ -26,33 +26,37 @@ export const AllGamesAndActivities = () => {
   }, []);
   return (
     <Layout>
-      <div className="row">
-        <div className="col-md-3">
-          <AdminActivityMenu />
-        </div>
-        <div className="col-md-9 ">
-          <h1 className="text-center">All Games And Activities</h1>
-          <div className="d-flex">
-            {gamesandactivities?.map((g) => (
-              <Link
-                key={g._id}
-                to={`/adminactivitydashboard/activitymanagement/allgamesandactivities/${g.slug}`}
-                className="gamesandactivities-link"
-              >
-                <div className="card m-4" style={{ width: "18rem" }}>
-                  <img
-                    src={`/api/v1/gameandactivity/gameandactivity-activityimage/${g._id}`}
-                    className="card-img-top"
-                    alt={g.name}
-                  />
-                  <div className="card-body">
-                    <h5 className="card-title">{g.name}</h5>
-                    <p className="card-text">{g.description}</p>
-                    <p className="card-text">{g.guidelines}</p>
-                  </div>
-                </div>
-              </Link>
-            ))}
+      <div className="container-fluid m-3 p-3">
+        <div className="row">
+          <div className="col-md-3">
+            <AdminActivityMenu />
+          </div>
+          <div className="col-md-9 ">
+            <div className="row mt-3">
+              <h1 className="text-center">All Games And Activities</h1>
+              <div className="d-flex flex-wrap">
+                {gamesandactivities?.map((g) => (
+                  <Link
+                    key={g._id}
+                    to={`/adminactivitydashboard/activitymanagement/allgamesandactivities/${g.slug}`}
+                    className="gamesandactivities-link"
+                  >
+                    <div className="card m-4" style={{ width: "18rem" }}>
+                      <img
+                        src={`/api/v1/gameandactivity/gameandactivity-activityimage/${g._id}`}
+                        className="card-img-top"
+                        alt={g.name}
+                      />
+                      <div className="card-body">
+                        <h5 className="card-title">{g.name}</h5>
+                        <p className="card-text">{g.description}</p>
+                        <p className="card-text">{g.guidelines}</p>
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>

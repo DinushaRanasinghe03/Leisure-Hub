@@ -5,6 +5,7 @@ import {
   gameandactivityImageController,
   getGameAndActivityController,
   getSingleGameAndActivityController,
+  searchGameAndActivityController,
   updateGameAndActivityController,
 } from "../controllers/gamesAndActivityController.js";
 import formidable from "express-formidable";
@@ -39,6 +40,7 @@ router.get(
 //delete gameandactivity
 router.delete("/delete-gameandactivity/:apid", deleteGameAndActivityController);
 
-//filter game or activity category
+//search games and activities
+router.get("search/:keyword", searchGameAndActivityController);
 
 export default router;

@@ -13,12 +13,14 @@ import { AddGamesAndActivities } from "./pages/ActivityManagement/AddGamesAndAct
 import { AllGamesAndActivities } from "./pages/ActivityManagement/AllGamesAndActivities";
 import { ViewAllRequests } from "./pages/ActivityManagement/ViewAllRequests";
 import { UpdateGamesAndActivities } from "./pages/ActivityManagement/UpdateGamesAndActivities";
+import GamesAndActivities from "./pages/user/GamesAndActivities";
 
 function App() {
   return (
     <>
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/gamesandactivities" element={<GamesAndActivities />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />

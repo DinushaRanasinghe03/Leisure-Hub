@@ -218,11 +218,7 @@ export const UpdateGamesAndActivities = () => {
                   onChange={(value) => {
                     setInstructor(value);
                   }}
-                  value={
-                    instructors
-                      ? "Instructor Available"
-                      : "Instructor Not Available"
-                  }
+                  value={instructors}
                 >
                   <Option value="1">Instructor Available</Option>
                   <Option value="0">Instructor Not Available</Option>

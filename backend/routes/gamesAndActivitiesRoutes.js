@@ -38,4 +38,7 @@ router.get(
 
 //delete gameandactivity
 router.delete("/delete-gameandactivity/:apid", deleteGameAndActivityController);
+
+//filter game or activity category
+
 export default router;

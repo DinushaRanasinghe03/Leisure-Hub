@@ -39,7 +39,7 @@ export const AllGamesAndActivities = () => {
                 to={`/adminactivitydashboard/activitymanagement/allgamesandactivities/${g.slug}`}
                 className="gamesandactivities-link"
               >
-                <div className="card m-2" style={{ width: "18rem" }}>
+                <div className="card m-4" style={{ width: "18rem" }}>
                   <img
                     src={`/api/v1/gameandactivity/gameandactivity-activityimage/${g._id}`}
                     className="card-img-top"

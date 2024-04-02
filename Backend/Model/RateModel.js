@@ -5,23 +5,23 @@ const Schema = mongoose.Schema; //schema set karanna
 const RateSchema = new Schema({
   filmname: {
     type: String, //type
-    required: true,
+    required: true, //validation
   },
   name: {
     type: String, //type
-    required: true,
+    required: true, //validation
   },
   gmail: {
     type: String, //type
-    required: true,
+    required: true, //validation
   },
   ratestar: {
     type: String, //type
-    required: true,
+    required: true, //validation
   },
   comment: {
     type: String, //type
-    required: true,
+    required: true, //validation
   },
 });
 

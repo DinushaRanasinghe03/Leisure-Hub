@@ -1,5 +1,6 @@
 import React from "react";
 import { NavLink, Link } from "react-router-dom";
+import SearchInput from "../Form/SearchInput";
 
 const Header = () => {
   return (

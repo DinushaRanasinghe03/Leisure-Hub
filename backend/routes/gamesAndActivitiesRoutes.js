@@ -2,9 +2,11 @@ import express from "express";
 import {
   createGameAndActivityController,
   deleteGameAndActivityController,
+  gameandactivityFiltersController,
   gameandactivityImageController,
   getGameAndActivityController,
   getSingleGameAndActivityController,
+  relatedGameAndActivityController,
   searchGameAndActivityController,
   updateGameAndActivityController,
 } from "../controllers/gamesAndActivityController.js";
@@ -40,7 +42,16 @@ router.get(
 //delete gameandactivity
 router.delete("/delete-gameandactivity/:apid", deleteGameAndActivityController);
 
+//filter by category
+router.post("/gameandactivity-filters", gameandactivityFiltersController);
+
 //search games and activities
-router.get("search/:keyword", searchGameAndActivityController);
+router.get("/search-gameandactivity/:keyword", searchGameAndActivityController);
+
+//similar games and activities
+router.get(
+  "/related-gameandactivity/:apid/:cid",
+  relatedGameAndActivityController
+);
 
 export default router;

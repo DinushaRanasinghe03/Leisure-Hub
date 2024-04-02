@@ -1,11 +1,23 @@
 import React from "react";
-import { useSearch } from "../../context/Search";
+import { useSearch } from "../../context/search";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 const SearchInput = () => {
   const [values, setValues] = useSearch();
+  const navigate = useNavigate();
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
-    } catch {}
+      const { data } = await axios.get(
+        `http://localhost:8080/api/v1/gameandactivity/search-gameandactivity/${values.keyword}`
+      );
+      setValues({ ...values, results: data });
+      navigate("/gamesandactivities/search");
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <div>

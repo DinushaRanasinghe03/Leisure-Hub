@@ -1,3 +1,4 @@
+//correct gamesandactivitiesController
 import slugify from "slugify";
 import GamesAndActivitiesModel from "../models/GamesAndActivitiesModel.js";
 import fs from "fs";
@@ -8,7 +9,6 @@ export const createGameAndActivityController = async (req, res) => {
     const {
       gameoractivitycategory,
       name,
-      slug,
       description,
       guidelines,
       instructors,
@@ -202,7 +202,7 @@ export const updateGameAndActivityController = async (req, res) => {
 
     const gamesandactivities = await GamesAndActivitiesModel.findByIdAndUpdate(
       req.params.apid,
-      { ...req.fields, slug: slugify(name) },
+      { ...req.fields, slug },
       { new: true }
     );
 
@@ -229,23 +229,67 @@ export const updateGameAndActivityController = async (req, res) => {
 };
 
 //filter
+export const gameandactivityFiltersController = async (req, res) => {
+  try {
+    const { checked } = req.body;
+    let args = {};
+    if (checked) args.gameoractivitycategory = checked;
+    const gamesandactivities = await GamesAndActivitiesModel.find(args);
+    res.status(200).send({
+      success: true,
+      gamesandactivities,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({
+      success: false,
+      message: "Error while filtering Games and Activities",
+      error,
+    });
+  }
+};
 
 //search games and actvities
 export const searchGameAndActivityController = async (req, res) => {
   try {
     const { keyword } = req.params;
-    const gameandactivity = await GamesAndActivitiesModel.find({
+    const results = await GamesAndActivitiesModel.find({
       $or: [
-        { name: { $regex: keyword, $option: "i" } },
-        { description: { $regex: keyword, $option: "i" } },
+        { name: { $regex: keyword, $options: "i" } },
+        { description: { $regex: keyword, $options: "i" } },
       ],
     }).select("-activityimage");
     res.json(results);
   } catch (error) {
-    crossOriginIsolated.log(error);
+    console.log(error);
     res.status(400).send({
       success: false,
       message: "Error in Search Game or Activity",
+      error,
+    });
+  }
+};
+
+//similar games and activities
+export const relatedGameAndActivityController = async (req, res) => {
+  try {
+    const { apid, cid } = req.params;
+    const gamesandactivities = await GamesAndActivitiesModel.find({
+      gameoractivitycategory: cid,
+      _id: { $ne: apid },
+    })
+      .select("-activityimage")
+      .limit(3)
+      .populate("gameoractivitycategory");
+    res.status(200).send({
+      success: true,
+      gamesandactivities,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({
+      success: false,
+      message: "Error while getting similar Games and Activities ",
       error,
     });
   }

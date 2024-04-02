@@ -4,6 +4,7 @@ import Layout from "../../components/Layout/Layout";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
+import SearchInput from "../../components/Form/SearchInput";
 export const AllGamesAndActivities = () => {
   const [gamesandactivities, setGameandactivity] = useState([]);
 

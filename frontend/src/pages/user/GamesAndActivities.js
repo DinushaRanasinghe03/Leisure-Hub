@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../../components/Layout/Layout";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { Checkbox } from "antd";
+import { Radio } from "antd";
+import SearchInput from "../../components/Form/SearchInput";
 
 const GamesAndActivities = () => {
+  const navigate = useNavigate();
   const [gamesandactivities, setGameandactivity] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [checked, setChecked] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
-  //get all games categories
+  // Get all games categories
   const getAllCategory = async () => {
     try {
       const { data } = await axios.get(
@@ -26,7 +29,7 @@ const GamesAndActivities = () => {
     getAllCategory();
   }, []);
 
-  //get games and activities
+  // Get games and activities
   const getAllGamesAndActivities = async () => {
     try {
       const { data } = await axios.get(
@@ -37,43 +40,56 @@ const GamesAndActivities = () => {
       console.log(error);
     }
   };
-  //filter by categories
-  const handleFilter = (value, id) => {
-    let all = [...checked];
-    if (value) {
-      all.push(id);
+
+  // Filter by category
+  const handleCategoryChange = async (e) => {
+    const categoryId = e.target.value;
+    setSelectedCategory(categoryId);
+    if (!categoryId) {
+      getAllGamesAndActivities();
     } else {
-      all = all.filter((c) => c !== id);
+      try {
+        const { data } = await axios.post(
+          `/api/v1/gameandactivity/gameandactivity-filters`,
+          { checked: [categoryId] }
+        );
+        setGameandactivity(data?.gamesandactivities);
+      } catch (error) {
+        console.log(error);
+      }
     }
-    setChecked(all);
   };
-  useEffect(() => {
-    getAllGamesAndActivities();
-  }, []);
 
   return (
     <Layout title="All Games and Activities">
       <div className="row mt-3">
         <div className="col-md-2">
-          <h4 className="text-ceneter">Filter By Game or Activity Category</h4>
+          <h4 className="text-center">Filter By Game or Activity Category</h4>
           <div className="d-flex flex-column">
-            {categories?.map((c) => (
-              <Checkbox
-                key={c._id}
-                onChange={(e) => handleFilter(e.target.checked, c._id)}
-              >
-                {c.name}
-              </Checkbox>
-            ))}
+            <Radio.Group
+              onChange={handleCategoryChange}
+              value={selectedCategory}
+            >
+              <Radio.Button value={null}>All</Radio.Button>
+              {categories?.map((c) => (
+                <Radio.Button key={c._id} value={c._id}>
+                  {c.name}
+                </Radio.Button>
+              ))}
+            </Radio.Group>
           </div>
         </div>
         <div className="col-md-9">
           <div className="row mt-3">
-            {JSON.stringify(checked, null, 4)}
+            <SearchInput />
             <h1 className="text-center">All Games and Activities</h1>
             <div className="d-flex flex-wrap">
               {gamesandactivities?.map((g) => (
-                <div className="card m-4" style={{ width: "18rem" }}>
+                <div
+                  className="card m-4"
+                  style={{ width: "18rem" }}
+                  key={g._id}
+                >
                   <img
                     src={`/api/v1/gameandactivity/gameandactivity-activityimage/${g._id}`}
                     className="card-img-top"
@@ -81,10 +97,19 @@ const GamesAndActivities = () => {
                   />
                   <div className="card-body">
                     <h5 className="card-title">{g.name}</h5>
-                    <p className="card-text">{g.description}</p>
-                    <p className="card-text">{g.guidelines}</p>
-                    <button class="btn btn-primary ms-2">More Details</button>
-                    <button class="btn btn-secondary ms-2">Request</button>
+                    <p className="card-text">
+                      {g.description.substring(0, 30)}...
+                    </p>
+                    <p className="card-text">
+                      {g.guidelines.substring(0, 30)}...
+                    </p>
+                    <button
+                      className="btn btn-primary ms-2"
+                      onClick={() => navigate(`/activity/${g.slug}`)}
+                    >
+                      More Details
+                    </button>
+                    <button className="btn btn-secondary ms-2">Request</button>
                   </div>
                 </div>
               ))}

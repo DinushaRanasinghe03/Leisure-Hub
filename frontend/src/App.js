@@ -14,12 +14,16 @@ import { AllGamesAndActivities } from "./pages/ActivityManagement/AllGamesAndAct
 import { ViewAllRequests } from "./pages/ActivityManagement/ViewAllRequests";
 import { UpdateGamesAndActivities } from "./pages/ActivityManagement/UpdateGamesAndActivities";
 import GamesAndActivities from "./pages/user/GamesAndActivities";
+import Search from "./pages/Search";
+import ActivityDetails from "./pages/ActivityDetails";
 
 function App() {
   return (
     <>
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/activity/:slug" element={<ActivityDetails />} />
+        <Route path="/gamesandactivities/search" element={<Search />} />
         <Route path="/gamesandactivities" element={<GamesAndActivities />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/about" element={<About />} />

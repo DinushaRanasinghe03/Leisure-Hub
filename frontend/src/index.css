@@ -1,76 +1,72 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Poppins:wght@300;400&display=swap');
+
 *{
-   margin: 0;
-   padding: 0;
-   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-/*font-family: 'Poppins', sans-serif;*/
-/*font-family: 'Playfair Display', serif;*/
+
+/*font-family: "Poppins", sans-serif;*/
+/*font-family: "Playfair Display", serif;*/
 
 /* //navbar css*/
-.navbar{
-  font-family: 'Poppins', sans-serif;
-  font-size:17px;
+.navbar {
+  font-family: "Poppins", sans-serif;
+  font-size: 17px;
   line-height: 26px;
-  background-color:#A6C4D1!important;
-  text-transform: uppercase;
-  box-shadow: 0 8px 6px -6px  navy;
-  --webkit-box-shadow:0 8px 6px -6px  navy;
-  border-bottom: 0.3px solid  navy !important;
+  /* text-transform: lowercase; */
+  box-shadow: 0 8px 6px -6px gray;
+  --webkit-box-shadow: 0 8px 6px --6px gray;
+  border-bottom: solid gray !important;
+  background-color: #52589e !important;
+  
 }
+
+.navbar .nav-link:active,
+.navbar .nav-link:visited {
+  color: white; /* Set font color to white for active and visited links */
+}
+
+
+
+.navbar .navbar-brand {
+  color: white; /* Set font color to white */
+}
+
+.navbar .nav-link {
+  color: white; /* Set font color to white */
+}
+
 .nav-link{
   font-weight: 300 !important;
 }
-/*active under line*/
-.active{
-  border-bottom: 2px solid navy;
-}
-.navbar-brand{
-  font-weight: 700;
-  font-family: 'roboto',sans-serif;
-  letter-spacing:3px ;
-}
-/*===================================
-===========footer==================*/
-/*main footer*/
-.footer{
-  color: white;
-  padding: 25px;
-  background: #000000;/*fallback for old browsers*/
-  background: -webkit-linear-gradient(
-    to right,
-    #A6C4D1,#20255A
-  );/*chrome 10-25,safari 5.1-6*/
-  background: linear-gradient(to right,#A6C4D1,#20255A);
-}
-/*footer tabs*/
-.footer a{
-  text-decoration:none;
-  color:white;
-  padding: 10px;
-}
-/*footer hover*/
-.footer a:hover{
-  columns:  navy;
-  border-bottom: 1px solid  navy;
 
+.active{
+  border-bottom: 2px solid white;
 }
-/*====================================
-========Page Not Found css===========*/
+
+
+
+/*
+==========page not found css==========
+*/
 .pnf{
   display: flex;
   min-height: 65vh;
   flex-direction: column;
   align-items: center;
-  justify-content:center;
+  justify-content: center;
 }
+
 .pnf-title{
   font-size: 100px;
   font-weight: 700;
 }
+
 .pnf-heading{
   font-weight: normal;
 }
+
 .pnf-btn{
   color:black;
   border: 1px solid black;
@@ -79,9 +75,33 @@
   margin-top: 10px;
 }
 
-/*===========================================
-==========games and activities-link=======*/
-.gamesandactivities-link{
+
+/*
+==========footer==============
+*/
+
+.footer {
+  color: white;
+  padding: 25px;
+  background: #26294e !important;
+  background: -webkit-linear-gradient(to right, #937bd3, #380463);
+  background: linear-gradient(to right, #937bd3, #380463);
+}
+
+
+.footer a{
+  text-decoration: none;
+  color: #949CE3;
+  padding: 10px;
+}
+
+.footer a:hover{
+  color: #949CE3 ;
+  border-bottom: 1px solid #949CE3;
+}
+
+/* ================== */
+.movie-link {
   text-decoration: none !important;
-  color: black !important;
+  color: black !important
 }

@@ -202,7 +202,7 @@ export const testController = (req, res) => {
   }
 };
 
-//update prfole
+// Controller function to update user profile
 export const updateProfileController = async (req, res) => {
   try {
     const {
@@ -216,37 +216,96 @@ export const updateProfileController = async (req, res) => {
       password,
       membership,
     } = req.body;
-    const user = await userModel.findById(req.user._id);
-    //password
-    if (password && password.length < 6) {
-      return res.json({ error: "Passsword is required and 6 character long" });
+
+    // Check if req.user exists and has the _id property
+    if (!req.user || !req.user._id) {
+      return res.status(400).json({
+        success: false,
+        message: "User ID not provided in request",
+      });
     }
-    const hashedPassword = password ? await hashPassword(password) : undefined;
-    const updatedUser = await userModel.findByIdAndUpdate(
-      req.user._id,
-      {
-        fname: fname || user.fname,
-        lname: lname || user.lname,
-        phone: phone || user.phone,
-        address1: address1 || user.address1,
-        address2: address2 || user.address2,
-        dob: dob || user.dob,
-        membership: membership || user.membership,
-        password: hashedPassword || user.password,
-      },
-      { new: true }
-    );
-    res.status(200).send({
+
+    // Find the user by ID
+    const user = await userModel.findById(req.user._id);
+
+    // Check if the user exists
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    // Update user fields
+    user.fname = fname || user.fname;
+    user.lname = lname || user.lname;
+    user.phone = phone || user.phone;
+    user.address1 = address1 || user.address1;
+    user.address2 = address2 || user.address2;
+    user.dob = dob || user.dob;
+    user.membership = membership || user.membership;
+
+    // Update password if provided
+    if (password) {
+      // Validate password length
+      if (password.length < 6) {
+        return res.status(400).json({
+          success: false,
+          message: "Password must be at least 6 characters long",
+        });
+      }
+      // Hash the password
+      const hashedPassword = await hashPassword(password);
+      user.password = hashedPassword;
+    }
+
+    // Save the updated user
+    const updatedUser = await user.save();
+
+    // Respond with success message and updated user
+    res.status(200).json({
       success: true,
-      message: "Profile Updated SUccessfully",
+      message: "Profile updated successfully",
       updatedUser,
     });
   } catch (error) {
-    console.log(error);
-    res.status(400).send({
+    // Handle errors
+    console.error("Error updating profile:", error);
+    res.status(500).json({
       success: false,
-      message: "Error WHile Update profile",
-      error,
+      message: "Failed to update profile",
+      error: error.message,
+    });
+  }
+};
+//delete profile
+export const deleteProfileController = async (req, res) => {
+  try {
+    // Get user ID from request parameters or JWT token
+    //const userId = req.params.userId; // Assuming the user ID is passed as a route parameter
+
+    // Check if user exists
+    const user = await userModel.findById(req.user._id);
+    if (!user) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
+    }
+
+    // Delete the user
+    await userModel.findByIdAndDelete(user._id);
+
+    // Optionally, perform any additional cleanup or related actions here
+
+    res
+      .status(200)
+      .json({ success: true, message: "User deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting user:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to delete user",
+      error: error.message,
     });
   }
 };

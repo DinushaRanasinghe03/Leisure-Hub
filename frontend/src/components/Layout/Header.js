@@ -4,15 +4,18 @@ import { useAuth } from "../../context/auth";
 import toast from "react-hot-toast";
 
 const Header = () => {
-  const [auth, setAuth] = useAuth();
+  const [auth, setAuth] = useAuth(); //const [auth, setAuth] = useAuth();
   const handleLogout = () => {
-    setAuth({
-      ...auth,
-      user: null,
-      token: "",
-    });
-    localStorage.removeItem("auth");
-    toast.success("Logout Successfully");
+    //Check if auth is null before accessing its properties
+    if (auth && auth.user) {
+      setAuth({
+        ...auth,
+        user: null,
+        token: "",
+      });
+      localStorage.removeItem("auth");
+      toast.success("Logout Successfully");
+    }
   };
   return (
     <>
@@ -40,7 +43,7 @@ const Header = () => {
                 </NavLink>
               </li>
 
-              {!auth.user ? (
+              {!auth || !auth.user ? (
                 <>
                   <li className="nav-item">
                     <NavLink to="/register" className="nav-link">
@@ -65,7 +68,7 @@ const Header = () => {
                       aria-expanded="false"
                       //style={{ border: "none" }}
                     >
-                      {auth?.user?.fname}
+                      {auth && auth.user && auth.user.fname}
                     </NavLink>
                     <ul className="dropdown-menu">
                       <li>

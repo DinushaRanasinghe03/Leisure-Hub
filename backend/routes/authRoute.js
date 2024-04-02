@@ -6,6 +6,7 @@ import {
   forgotPasswordController,
   updateProfileController,
   getAllUsersController,
+  deleteProfileController,
 } from "../controller/authController.js";
 import { isAdmin, requireSignIn } from "../middlewares/authMiddleware.js";
 
@@ -38,7 +39,10 @@ router.get("/admin-auth", requireSignIn, isAdmin, (req, res) => {
 //update profile
 router.put("/profile", requireSignIn, updateProfileController);
 
-export default router;
+// Delete profile
+router.delete("/profile", requireSignIn, deleteProfileController);
 
 //view users from Admin side
 router.get("/users", requireSignIn, isAdmin, getAllUsersController);
+
+export default router;

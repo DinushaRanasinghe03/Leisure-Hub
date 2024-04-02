@@ -74,7 +74,7 @@ import { Form, Button, Col, Row } from "react-bootstrap";
         ///showLoadingSpinner();
 
         try{
-          const response = await fetch('http://localhost:8080/api/v1/Employee/addEmployee', {
+          const response = await fetch('http://localhost:8070/api/v1/Employee/addEmployee', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'

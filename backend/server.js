@@ -4,6 +4,7 @@ import dotenv from 'dotenv'
 import morgan from 'morgan'
 import connectDB from './config/db.js'
 import EmployeeRouter from './routes/EmployeeRouter.js'
+import EmployeeLeaveRouter from './routes/EmployeeLeaveRouter.js'
 import cors from 'cors';
 
 //configure env
@@ -22,10 +23,12 @@ app.use(morgan('dev'));
 
 //throw API to EmployeeRouter class
 //app.use('/employee', EmployeeRouter);
-
 app.use("/api/v1/employee",EmployeeRouter);
 
-//rest API
+//throw API to EmployeeLeaveRouter class
+app.use("/api/v1/employeeleave", EmployeeLeaveRouter);
+
+//rest API / connect with frontend
 app.get('/',(req,res) => {
     res.send(
         "<h1>Welcome to Leisure Hub</h1>"
@@ -33,7 +36,7 @@ app.get('/',(req,res) => {
 });
 
 //port
-const PORT = process.env.PORT || 8080
+const PORT = process.env.PORT || 8070
 
 app.listen(PORT, () => {
     console.log(`Server running on ${process.env.DEV_MODE}mode on port ${PORT}`)

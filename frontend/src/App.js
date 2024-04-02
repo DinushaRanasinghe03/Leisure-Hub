@@ -1,6 +1,6 @@
 import {Routes,Route} from 'react-router-dom'
 import React, { useEffect, useState } from "react";
-import EmployeeForm from './pages/EmployeeForm/EmployeeForm.js';
+import EmployeeForm from './pages/Employee/EmployeeForm.js';
 import Axios from "axios";
 
 function App() {
@@ -26,3 +26,4 @@ function App() {
 }
 
 export default App;
+

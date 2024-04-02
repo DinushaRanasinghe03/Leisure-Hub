@@ -1,0 +1,50 @@
+/* Styles for EmployeeForm component */
+
+/* Body styles */
+#Body {
+    margin: 0; /* Remove default body margin */
+    padding: 0; /* Remove default body padding */
+    font-family: Arial, sans-serif; /* Use Arial font family */
+  }
+  
+  /* Section styles */
+  .employeeForm {
+    display: flex; /* Use flexbox for layout */
+    justify-content: center; /* Center the form horizontally */
+    align-items: center; /* Center the form vertically */
+    height: 100vh; /* Set the height of the form to full viewport height */
+    background-color: #f5f5f5; /* Background color for the form */
+  }
+  
+  /* Form container styles */
+  .form {
+    background-color: #ffffff; /* Background color for the form */
+    padding: 20px; /* Add padding to the form */
+    border-radius: 8px; /* Add border radius for rounded corners */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add shadow effect */
+    width: 400px; /* Set the width of the form */
+  }
+  
+  /* Title styles */
+  .title {
+    text-align: center; /* Center the title text */
+    margin-bottom: 20px; /* Add spacing below the title */
+    color: #333333; /* Title text color */
+    font-size: 24px; /* Title font size */
+  }
+  
+  /* Form input styles */
+  .form-input {
+    margin-bottom: 15px; /* Add spacing between form inputs */
+  }
+  
+  /* Error message styles */
+  .error {
+    color: #ff0000; /* Error message color */
+    font-size: 14px; /* Error message font size */
+  }
+  
+  /* Submit button styles */
+  #form-submit-button {
+    text-align: center; /* Center the submit button */
+  }

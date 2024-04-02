@@ -1,0 +1,40 @@
+.full_box_feedback {
+  padding: 50px 18%;
+}
+
+.feed_tbl {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+.details_admin_tble_col {
+  border: 2px solid #65a4da;
+  padding: 8px; /* Adjust padding to desired value */
+  text-align: center; /* Align text to the left */
+}
+
+.dwon_report {
+  background-color: #4890ad;
+  border: 2px solid #4890ad;
+  font-family: roboto;
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+  margin-left: 12px;
+  font-size: 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 4px 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.dwon_report:hover {
+  background-color: #ffffff;
+  border: 2px solid #4890ad;
+  color: #4890ad;
+}
+.action_bar {
+  display: flex;
+  margin: 0 0 25px 0;
+  justify-content: space-between;
+}

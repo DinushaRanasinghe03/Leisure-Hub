@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "../../components/Layout/Layout";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -18,9 +18,17 @@ const Register = () => {
   const [answer, setAnswer] = useState("");
   const navigate = useNavigate();
 
-  //form function
+  const location = window.location.pathname;
+
+  // Use useEffect to set membership state based on URL parameter
+  useEffect(() => {
+    if (location.state && location.state.membershipType) {
+      setMembership(location.state.membershipType);
+    }
+  }, [location.state]);
+
   const handleMembershipChange = (event) => {
-    setMembership(event.target.value); // Update state with the value of the selected radio button
+    setMembership(event.target.value);
   };
 
   const handleSubmit = async (e) => {
@@ -38,10 +46,23 @@ const Register = () => {
         membership,
         answer,
       });
+
+      // if (res && res.data.success) {
+      //   // Redirect to payment pathway with membership payment value
+      //   if (membership === "individual") {
+      //     window.location.href = "payment?amount=5000"; // Redirect to payment page with the payment amount
+      //   } else if (membership === "family") {
+      //     window.location.href = "payment?amount=15000"; // Redirect to payment page with the payment amount
+      //   } else if (membership === "Corporate standared") {
+      //     window.location.href = "payment?amount=40000"; // Redirect to payment page with the payment amount
+      //   } else if (membership === "Corporate max") {
+      //     window.location.href = "payment?amount=40000"; // Redirect to payment page with the payment amount
+      //   }
+      //   toast.success(res.data && res.data.message);
+
       if (res && res.data.success) {
         navigate("/login");
         toast.success(res.data && res.data.message);
-        // navigate("/login");
       } else {
         toast.error(res.data.message);
       }
@@ -51,151 +72,255 @@ const Register = () => {
     }
   };
 
-  //console.log(process.env.REACT_APP_API);
-
   return (
     <Layout title="Register-Leisure Hub">
-      <div className="form-container">
-        <form onSubmit={handleSubmit}>
-          <h4 className="title">REGISTER FORM</h4>
-          <div className="mb-3">
-            <input
-              type="text"
-              value={fname}
-              onChange={(e) => setFname(e.target.value)}
-              className="form-control"
-              id="Inputfname"
-              placeholder="Enter Your First name "
-              required
-            />
-          </div>
+      <div className="register">
+        <table>
+          <tr>
+            <td>
+              <div className="register-container">
+                <div className="form-container">
+                  <form onSubmit={handleSubmit}>
+                    <h4 className="title">REGISTER FORM</h4>
+                    <div className="row mb-3">
+                      <div className="col-md-6">
+                        <input
+                          type="text"
+                          value={fname}
+                          onChange={(e) => setFname(e.target.value)}
+                          className="form-control"
+                          placeholder="First name"
+                          aria-label="First name"
+                          required
+                        />
+                      </div>
+                      <div className="col-md-6">
+                        <input
+                          type="text"
+                          value={lname}
+                          onChange={(e) => setLname(e.target.value)}
+                          className="form-control"
+                          placeholder="Last name"
+                          aria-label="Last name"
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div className="row mb-3">
+                      <div className="col-md-6">
+                        <input
+                          type="email"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          className="form-control"
+                          placeholder="Email"
+                          aria-label="Email"
+                          required
+                        />
+                      </div>
+                      <div className="col-md-6">
+                        <input
+                          type="tel"
+                          value={phone}
+                          onChange={(e) => setPhone(e.target.value)}
+                          className="form-control"
+                          placeholder="Phone number"
+                          aria-label="Phone number"
+                        />
+                      </div>
+                    </div>
+                    <div className="row mb-3">
+                      <div className="col-md-6">
+                        <input
+                          type="text"
+                          value={address1}
+                          onChange={(e) => setAddress1(e.target.value)}
+                          className="form-control"
+                          placeholder="Address line 1"
+                          aria-label="Address line 1"
+                        />
+                      </div>
+                      <div className="col-md-6">
+                        <input
+                          type="text"
+                          value={address2}
+                          onChange={(e) => setAddress2(e.target.value)}
+                          className="form-control"
+                          placeholder="Address line 2"
+                          aria-label="Address line 2"
+                        />
+                      </div>
+                    </div>
+                    <div className="row mb-3">
+                      <div className="col-md-6">
+                        <input
+                          type="date"
+                          value={dob}
+                          onChange={(e) => setDOB(e.target.value)}
+                          className="form-control"
+                          placeholder="Date of Birth"
+                          aria-label="Date of Birth"
+                        />
+                      </div>
 
-          <div className="mb-3">
-            <input
-              type="text"
-              value={lname}
-              onChange={(e) => setLname(e.target.value)}
-              className="form-control"
-              id="Inputlname"
-              placeholder="Enter Your Last name "
-              required
-            />
-          </div>
+                      <div className="col-md-6">
+                        <input
+                          type="text"
+                          value={answer}
+                          onChange={(e) => setAnswer(e.target.value)}
+                          className="form-control"
+                          id="InputPassword1"
+                          placeholder="What is your favorite sport? "
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div className="row mb-3">
+                      <div className="col">
+                        <input
+                          type="password"
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
+                          className="form-control"
+                          placeholder="Password"
+                          aria-label="Password"
+                          required
+                        />
+                      </div>
+                    </div>
 
-          <div className="mb-3">
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="form-control"
-              id="InputEmail1"
-              placeholder="Enter Your Email "
-              required
-            />
-          </div>
+                    <div className="additional-content">
+                      <h5>Membership Types</h5>
+                      <div>
+                        <input
+                          type="radio"
+                          value="individual"
+                          checked={membership === "individual"}
+                          onChange={handleMembershipChange}
+                        />
+                        <label htmlFor="individual">
+                          <b>Individual Membership</b>
+                        </label>
+                        <br />
+                      </div>
+                      <div>
+                        <input
+                          type="radio"
+                          value="family"
+                          checked={membership === "family"}
+                          onChange={handleMembershipChange}
+                        />
+                        <label htmlFor="family">
+                          <b>Family Membership</b>
+                        </label>
+                        <br />
+                      </div>
+                      &nbsp;&nbsp;&nbsp; Corporate memberships
+                      <div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input
+                          type="radio"
+                          value="corporate standared"
+                          checked={membership === "corporate standared"}
+                          onChange={handleMembershipChange}
+                        />
+                        <label htmlFor="Corporate standared">
+                          <b>Corporate standared</b>
+                        </label>
+                        <br />
+                      </div>
+                      <div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input
+                          type="radio"
+                          value="corporate max"
+                          checked={membership === "corporate max"}
+                          onChange={handleMembershipChange}
+                        />
+                        <label htmlFor="Corporate max">
+                          <b>Corporate max</b>
+                        </label>
+                        <br />
+                      </div>
+                    </div>
+                    <br />
 
-          <div className="mb-3">
-            <input
-              type="text"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              className="form-control"
-              id="Inputphone"
-              placeholder="Enter Your Phone"
-              //required
-            />
-          </div>
+                    <button type="submit" className="">
+                      Submit
+                    </button>
+                  </form>
+                  <br />
+                </div>
+              </div>
+            </td>
 
-          <div className="mb-3">
-            <input
-              type="text"
-              value={address1}
-              onChange={(e) => setAddress1(e.target.value)}
-              className="form-control"
-              id="Inputaddress1"
-              placeholder="Enter Your Address line 1 "
-              //required
-            />
-          </div>
+            <td>
+              <div className="membership-details">
+                <div class="register-container text-center">
+                  <div class="col">
+                    <div class="row">
+                      <br />
 
-          <div className="mb-3">
-            <input
-              type="text"
-              value={address2}
-              onChange={(e) => setAddress2(e.target.value)}
-              className="form-control"
-              id="Inputaddress2"
-              placeholder="Enter Your Address line 2 "
-              //required
-            />
-          </div>
+                      <b>Individual membership</b>
+                      <center>
+                        Unlimited access to in-complex swimming pool and Gym.
+                        <br />
+                        Unlimited Movies and Activities.
+                        <br />
+                        <div class="red-text">LKR.5000 monthly</div>
+                        <br />
+                        <br />
+                      </center>
+                    </div>
+                    <div class="row">
+                      <b>Family membership</b>
 
-          <div className="mb-3">
-            <input
-              type="date"
-              value={dob}
-              onChange={(e) => setDOB(e.target.value)}
-              className="form-control"
-              id="Inputdob"
-              //placeholder="Enter Your Address line 2 "
-              //required
-            />
-          </div>
-
-          <div className="mb-3">
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="form-control"
-              id="InputPassword1"
-              placeholder="Enter Your Password "
-              required
-            />
-          </div>
-
-          <div>
-            <input
-              type="radio"
-              //id="individual"
-              //name="membership"
-              value="individual"
-              checked={membership === "individual"}
-              onChange={handleMembershipChange}
-            />
-            <label htmlFor="individual">Individual Membership</label>
-            <br />
-          </div>
-
-          <div>
-            <input
-              type="radio"
-              //id="family"
-              //name="membership"
-              value="family"
-              checked={membership === "family"}
-              onChange={handleMembershipChange}
-            />
-            <label htmlFor="family">Family Membership</label>
-            <br />
-          </div>
-
-          <div className="mb-3">
-            <input
-              type="text"
-              value={answer}
-              onChange={(e) => setAnswer(e.target.value)}
-              className="form-control"
-              id="InputPassword1"
-              placeholder="What is your favorite sport? "
-              required
-            />
-          </div>
-
-          <button type="submit" className="btn btn-primary">
-            Submit
-          </button>
-        </form>
+                      <center>
+                        Equivalent to 4 Individual Memberships. <br />
+                        Unlimited access to in-complex swimming pool and Gym.
+                        <br />
+                        Unlimited Movies and Activities
+                        <br />
+                        <div class="red-text">LKR.15000 monthly</div>
+                        <br />
+                      </center>
+                    </div>
+                    <div class="row">
+                      <b>Corporate membership</b>
+                      <center>
+                        Get a corporate membership for your organisation.
+                        <br />
+                        Unlimited access to in-complex swimming pool and Gym.
+                        <br />
+                        Unlimited Movies and Activities.
+                        <br />
+                        <br />
+                        <table>
+                          <tr>
+                            <td class="red-text">
+                              Standard
+                              package&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </td>
+                            <td class="red-text">staff&lt;=20</td>
+                            <td class="red-text">LKR.40,000</td>
+                          </tr>
+                          <tr>
+                            <td class="red-text">Max package</td>
+                            <td class="red-text">
+                              20&lt;staff&lt;50&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </td>
+                            <td class="red-text">LKR.40,000</td>
+                          </tr>
+                        </table>
+                        <br />
+                      </center>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </table>
       </div>
     </Layout>
   );

@@ -310,23 +310,6 @@ export const deleteProfileController = async (req, res) => {
   }
 };
 
-// //view all users from admin side controller
-// export const getAllUsersController = async (req, res) => {
-//   try {
-//     const users = await userModel.find({});
-//     res.json(users);
-//   } catch (error) {
-//     console.log(error);
-//     res.status(500).send({
-//       success: false,
-//       message: "Error WHile Geting Users.",
-//       error,
-//     });
-//   }
-// };
-
-//import userModel from '../models/userModel'; // Importing the user model
-
 // Controller function to get all users
 export const getAllUsersController = async (req, res) => {
   try {

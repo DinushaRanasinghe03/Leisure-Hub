@@ -15,6 +15,7 @@ import Users from "./pages/Admin/Users";
 import Profile from "./pages/user/Profile";
 import BookedMovies from "./pages/user/BookedMovies";
 import BookedActivities from "./pages/user/BookedActivities";
+import Memberships from "./pages/Memberships";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPasssword />} />
         <Route path="/login" element={<Login />} />
         <Route path="/about" element={<About />} />
+        <Route path="/memberships" element={<Memberships />} />
         <Route path="/*" element={<Pagenotfound />} />
       </Routes>
     </>

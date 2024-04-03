@@ -3,17 +3,21 @@ import Layout from "../../components/Layout/Layout";
 import AdminMenu from "../../components/Layout/AdminMenu";
 import { useAuth } from "../../context/auth";
 import axios from "axios";
+import { jsPDF } from "jspdf"; // Import jsPDF for PDF generation
+import "jspdf-autotable"; // Import autotable plugin for tabular data
+import ReportGenerator from "./ReportGenerator";
 
 const Users = () => {
   const [auth] = useAuth();
   const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(true); // Add loading state to show loading indicator
-  const [error, setError] = useState(null); // Add error state to handle errors
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   useEffect(() => {
     const fetchUsers = async () => {
       try {
         const { data } = await axios.get("/api/v1/auth/users");
-        console.log("Fetched users data:", data.users); // Check fetched data
+        console.log("Fetched users data:", data.users);
         setUsers(data.data);
         setLoading(false);
       } catch (error) {
@@ -34,10 +38,12 @@ const Users = () => {
             <AdminMenu />
           </div>
           <div className="col-md-9">
+            <ReportGenerator users={users} />{" "}
+            {/* Render the ReportGenerator component */}
             {loading ? (
-              <p>Loading...</p> // Show loading indicator while fetching data
+              <p>Loading...</p>
             ) : error ? (
-              <p>{error}</p> // Show error message if there's an error
+              <p>{error}</p>
             ) : users && users.length > 0 ? (
               <table className="table">
                 <thead>

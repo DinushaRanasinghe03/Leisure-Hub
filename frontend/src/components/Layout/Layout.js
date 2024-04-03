@@ -29,7 +29,6 @@ Layout.defaultProps = {
   title: "LEISURE HUB app ",
   description: "mern stack project",
   keywords: "mern,react,node,mongodb",
-  //author: "Techinfoyt",
 };
 
 export default Layout;

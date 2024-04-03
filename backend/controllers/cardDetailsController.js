@@ -3,11 +3,12 @@ const nodemailer = require('nodemailer');
 const CardPayment = require('../models/cardDetails');
 
 const transporter = nodemailer.createTransport({
-    host: "gmail",
+    host: 'app.debugmail.io',
+    port: 25,
     auth: {
-        user: "email@gmail.com",
-        pass: "password",
-    },
+      user: 'f4185e42-cff0-447f-ae38-b3ab49d43e6c',
+      pass: '4fe878b5-0930-439a-94e1-96ed4e2b67f1'
+    }
 });
 
 //get all
@@ -115,7 +116,7 @@ async function sendOTPByEmail(email, otp) {
     // Create a SMTP transporter
     // Setup email data
     let mailOptions = {
-        from: 'wickcha95@gmail.com', // Enter sender email
+        from: 'f4185e42-cff0-447f-ae38-b3ab49d43e6c@debugmail.io', // Enter sender email
         to: email, // Enter receiver email
         subject: 'Your OTP', // Email subject
         text: `Your OTP is: ${otp} `// Email body

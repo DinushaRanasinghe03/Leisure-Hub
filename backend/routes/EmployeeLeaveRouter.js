@@ -12,7 +12,7 @@ router.post('/addEmployeeLeave', addEmployeeLeave);
 router.get('/getAllEmployeeLeave', getAllEmployeeLeave);
 
 //get one employee's leave by id
-router.get('/getEmployeeLeave/:id',  )
+router.get('/getEmployeeLeave/:id',  getEmployeeLeave);
 
 //delete employee leave by id
 router.delete('/deleteEmployeeLeave/:id', deleteEmployeeLeave);

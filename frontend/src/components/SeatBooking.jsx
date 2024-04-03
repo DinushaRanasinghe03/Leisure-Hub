@@ -75,9 +75,9 @@ const SeatBooking = () => {
           {seats.map((seat) => (
             <div
               key={seat.id}
-              className={`seat bg-secondary cursor-pointer rounded-lg px-4 py-3 w-20 text-center font-semibold ${
-                selectedSeats.includes(seat.id) ? "bg-selected" : ""
-              } ${seat.isAvailable ? "bg-secondary" : "bg-unavailable"}`}
+              className={`seat !bg-secondary cursor-pointer rounded-lg px-4 py-3 w-20 text-center font-semibold ${
+                selectedSeats.includes(seat.id) ? "!bg-selected" : ""
+              } ${seat.isAvailable ? "!bg-secondary" : "!bg-unavailable"}`}
               onClick={() => handleSeatClick(seat.id)}
             >
               {seat.id}
@@ -87,17 +87,17 @@ const SeatBooking = () => {
       </div>
       <div className="flex justify-center items-center gap-10">
         <div className="flex items-center gap-2">
-          <div className="bg-secondary h-5 w-5"></div>
+          <div className="!bg-secondary h-5 w-5"></div>
           <span className="font-semibold text-base">Available</span>
         </div>
 
         <div className="flex items-center gap-2">
-          <div className="bg-unavailable h-5 w-5"></div>
+          <div className="!bg-unavailable h-5 w-5"></div>
           <span className="font-semibold text-base">Unavailable</span>
         </div>
 
         <div className="flex items-center gap-2">
-          <div className="bg-selected h-5 w-5"></div>
+          <div className="!bg-selected h-5 w-5"></div>
           <span className="font-semibold text-base">Selected</span>
         </div>
       </div>

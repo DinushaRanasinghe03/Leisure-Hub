@@ -21,6 +21,8 @@ import SelectAttendee from "../components/SelectAttendee";
 import Summary from "../components/Summary";
 import axiosInstance from "../axiosInstance";
 
+import Layout from "./../components/Layout/Layout";
+
 const TicketBooking = () => {
   const location = useLocation();
   const { state } = location;
@@ -162,7 +164,12 @@ const TicketBooking = () => {
         children_price: selectedPriceDetails?.childTicketPrice,
       });
       // Handle success response
-      console.log("Booking data submitted successfully:", response.data);
+      console.log(
+        "Booking data submitted successfully:",
+        response.data.booking
+      );
+
+      navigate(`/payment/${response.data.booking._id}`);
     } catch (error) {
       // Handle error
       console.error("Error submitting booking data:", error);
@@ -170,129 +177,131 @@ const TicketBooking = () => {
   };
 
   return (
-    <div
-      className={`w-full text-black flex flex-col justify-start items-center gap-10 ${
-        step === 3 || step === 1 || step === 5 ? "" : "h-[500px]"
-      }`}
-    >
-      {step === 1 && <SelectDate state={state} />}
+    <Layout title={"Booking Page"}>
+      <div
+        className={`w-full text-black flex flex-col justify-start items-center gap-10 my-40 ${
+          step === 3 || step === 1 || step === 5 ? "" : "h-[500px]"
+        }`}
+      >
+        {step === 1 && <SelectDate state={state} />}
 
-      {step === 2 && (
-        <div className="p-4 flex flex-col">
-          {/* User details input */}
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-            <div className="flex justify-start items-baseline gap-10">
-              <label className=" w-44" htmlFor="">
-                Your Name
-              </label>
-              <div className="flex flex-col">
-                <input
-                  type="text"
-                  name="name"
-                  value={values.name}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  placeholder=""
-                  className={`border-gray-400 border rounded-lg px-4 py-2 focus:outline-none w-96 ${
-                    errors.name && touched.name ? "border-red-500" : ""
-                  }`}
-                  required
-                />
-                {touched.name && errors.name && (
-                  <span className="flex justify-start text-sm font-medium text-red-500 py-2">
-                    {errors.name}
-                  </span>
-                )}
+        {step === 2 && (
+          <div className="p-4 flex flex-col">
+            {/* User details input */}
+            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+              <div className="flex justify-start items-baseline gap-10">
+                <label className=" w-44" htmlFor="">
+                  Your Name
+                </label>
+                <div className="flex flex-col">
+                  <input
+                    type="text"
+                    name="name"
+                    value={values.name}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    placeholder=""
+                    className={`border-gray-400 border rounded-lg px-4 py-2 focus:outline-none w-96 ${
+                      errors.name && touched.name ? "border-red-500" : ""
+                    }`}
+                    required
+                  />
+                  {touched.name && errors.name && (
+                    <span className="flex justify-start text-sm font-medium text-red-500 py-2">
+                      {errors.name}
+                    </span>
+                  )}
+                </div>
               </div>
-            </div>
 
-            <div className="flex justify-start items-baseline gap-10">
-              <label className=" w-44" htmlFor="">
-                Your Email
-              </label>
-              <div className="flex flex-col">
-                <input
-                  type="email"
-                  name="email"
-                  value={values.email}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  placeholder=""
-                  className={`border-gray-400 border rounded-lg px-4 py-2 focus:outline-none w-96 ${
-                    errors.email && touched.email ? "border-red-500" : ""
-                  }`}
-                  required
-                />
-                {touched.email && errors.email && (
-                  <span className="flex justify-start text-sm font-medium text-red-500 py-2">
-                    {errors.email}
-                  </span>
-                )}
+              <div className="flex justify-start items-baseline gap-10">
+                <label className=" w-44" htmlFor="">
+                  Your Email
+                </label>
+                <div className="flex flex-col">
+                  <input
+                    type="email"
+                    name="email"
+                    value={values.email}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    placeholder=""
+                    className={`border-gray-400 border rounded-lg px-4 py-2 focus:outline-none w-96 ${
+                      errors.email && touched.email ? "border-red-500" : ""
+                    }`}
+                    required
+                  />
+                  {touched.email && errors.email && (
+                    <span className="flex justify-start text-sm font-medium text-red-500 py-2">
+                      {errors.email}
+                    </span>
+                  )}
+                </div>
               </div>
-            </div>
 
-            <div className="flex justify-start items-baseline gap-10">
-              <label className=" w-44" htmlFor="">
-                Your Mobile Number
-              </label>
-              <div className="flex flex-col">
-                <input
-                  type="tel"
-                  name="contactNo"
-                  value={values.contactNo}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  placeholder=""
-                  className={`border-gray-400 border rounded-lg px-4 py-2 focus:outline-none w-96 ${
-                    errors.contactNo && touched.contactNo
-                      ? "border-red-500"
-                      : ""
-                  }`}
-                  required
-                />
-                {errors.contactNo && touched.contactNo && (
-                  <span className="flex justify-start text-sm font-medium text-red-500 py-2">
-                    {errors.contactNo}
-                  </span>
-                )}
+              <div className="flex justify-start items-baseline gap-10">
+                <label className=" w-44" htmlFor="">
+                  Your Mobile Number
+                </label>
+                <div className="flex flex-col">
+                  <input
+                    type="tel"
+                    name="contactNo"
+                    value={values.contactNo}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    placeholder=""
+                    className={`border-gray-400 border rounded-lg px-4 py-2 focus:outline-none w-96 ${
+                      errors.contactNo && touched.contactNo
+                        ? "border-red-500"
+                        : ""
+                    }`}
+                    required
+                  />
+                  {errors.contactNo && touched.contactNo && (
+                    <span className="flex justify-start text-sm font-medium text-red-500 py-2">
+                      {errors.contactNo}
+                    </span>
+                  )}
+                </div>
               </div>
-            </div>
-          </form>
-        </div>
-      )}
-
-      {step === 3 && <SeatBooking />}
-
-      {step === 4 && <SelectAttendee state={state} />}
-
-      {step === 5 && <Summary state={state} />}
-
-      <div className="flex gap-10">
-        <button
-          className="py-2 px-4 rounded-lg border border-secondary text-secondary w-48 hover:bg-secondary hover:text-white"
-          onClick={handlePreviousStep}
-        >
-          Previous
-        </button>
-        {step === 5 ? (
-          <button
-            type="submit"
-            className="py-2 px-4 rounded-lg bg-secondary border border-secondary text-white w-48 hover:bg-white hover:text-secondary"
-            onClick={submitSummaryData}
-          >
-            Submit
-          </button>
-        ) : (
-          <button
-            type="submit"
-            className="py-2 px-4 rounded-lg bg-secondary border border-secondary text-white w-48 hover:bg-white hover:text-secondary"
-            onClick={handleNextButtonClick}
-          >
-            Next
-          </button>
+            </form>
+          </div>
         )}
+
+        {step === 3 && <SeatBooking />}
+
+        {step === 4 && <SelectAttendee state={state} />}
+
+        {step === 5 && <Summary state={state} />}
+
+        <div className="flex gap-10">
+          <button
+            className="py-2 px-4 rounded-lg border border-secondary text-black w-48 "
+            onClick={handlePreviousStep}
+          >
+            Previous
+          </button>
+          {step === 5 ? (
+            <button
+              type="submit"
+              className="py-2 px-4 rounded-lg bg-success border border-success text-white w-48"
+              onClick={submitSummaryData}
+            >
+              Submit
+            </button>
+          ) : (
+            <button
+              type="submit"
+              className="py-2 px-4 rounded-lg bg-primary border border-primary text-white w-48"
+              onClick={handleNextButtonClick}
+            >
+              Next
+            </button>
+          )}
+        </div>
       </div>
-    </div>
+    </Layout>
   );
 };
 

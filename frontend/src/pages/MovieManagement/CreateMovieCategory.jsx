@@ -1,6 +1,5 @@
 import React from 'react'
-import AdminMovieMenu from '../../components/AdminMovieMenu'
-
+import AdminMovieMenu from '../../components/Layout/AdminMovieMenu'
 export const CreateMovieCategory = () => {
   return (
     <div className='container-fluid m-3 p-3'>

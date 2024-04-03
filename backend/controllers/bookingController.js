@@ -72,6 +72,8 @@ export const newBookingController = async (req, res) => {
     schedule.unavailable_seats = [...schedule.unavailable_seats, ...seats];
     schedule.save();
 
+    const total = adults * adults_price + children * children_price;
+    
     const booking = await new bookingModel({
       movie: schedule.movie,
       schedule: schedule_id,
@@ -83,6 +85,7 @@ export const newBookingController = async (req, res) => {
       adults_price,
       children,
       children_price,
+      total,
     }).save();
     res.status(201).send({
       success: true,

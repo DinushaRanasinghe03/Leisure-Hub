@@ -57,12 +57,17 @@ const Movie = ({ item }) => {
           <div className="mt-2 flex justify-start gap-4">
             <Link
               to={`/booking/${_id}`}
-              className="border bg-secondary text-black py-2 px-4 rounded-md mt-2"
+              className="border bg-primary text-white py-2 px-4 rounded-md mt-2"
               state={{ ...item, imageUrl }}
             >
               Buy Tickets
             </Link>
-            
+            <Link
+              className="border border-secondary text-black py-2 px-4 rounded-md mt-2"
+              // onClick={() => onNewsClick(newsItem)}
+            >
+              Watch trailer
+            </Link>
           </div>
         </div>
       )}

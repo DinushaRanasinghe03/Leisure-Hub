@@ -1,5 +1,5 @@
 import React from 'react'
-import AdminMovieMenu from '../../components/AdminMovieMenu'
+import AdminMovieMenu from '../../components/Layout/AdminMovieMenu'
 
 const AddMovies = () => {
   return (

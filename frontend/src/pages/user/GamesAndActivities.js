@@ -116,7 +116,14 @@ const GamesAndActivities = () => {
                       >
                         More Details
                       </button>
-                      <button className="btn btn-secondary ms-2">
+                      <button
+                        className="btn btn-secondary ms-2"
+                        onClick={() =>
+                          navigate(`/gamesandactivitiesrequests/${g.slug}`, {
+                            state: { name: g.name },
+                          })
+                        }
+                      >
                         Request
                       </button>
                     </div>

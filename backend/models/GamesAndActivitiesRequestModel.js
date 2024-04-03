@@ -3,8 +3,7 @@ import mongoose from "mongoose";
 const gamesandactivitiesRequestSchema = new mongoose.Schema(
   {
     name: {
-      type: mongoose.ObjectId,
-      ref: "gamesandactivities",
+      type: String,
       required: true,
     },
     MemberName: {

@@ -33,7 +33,7 @@ const ActivityDetails = () => {
   const getSimilarGameAndActivity = async (apid, cid) => {
     try {
       const { data } = await axios.get(
-        `/api/v1/gameandactivity/relatedd-gameandactivity/${apid}/${cid}`
+        `/api/v1/gameandactivity/related-gameandactivity/${apid}/${cid}`
       );
       setRelatedGameAndActivity(data?.gamesandactivities);
     } catch (error) {
@@ -49,8 +49,7 @@ const ActivityDetails = () => {
             src={`/api/v1/gameandactivity/gameandactivity-activityimage/${gameandactivity._id}`}
             className="card-img-top"
             alt={gameandactivity.name}
-            height="300"
-            width="350"
+            style={{ maxWidth: "100%", height: "auto !important" }} // Set max width and auto height
           />
         </div>
         <div className="col-md-6 ">
@@ -63,7 +62,7 @@ const ActivityDetails = () => {
           <br />
           <h6>Category: {gameandactivity?.gameoractivitycategory?.name}</h6>
           <br />
-          <h6>Instructors: {gameandactivity?.instructors?.name}</h6>
+          <h6>Instructors: {gameandactivity?.instructors}</h6>
           <button className="btn btn-secondary ms-2">Request</button>
         </div>
       </div>
@@ -81,6 +80,7 @@ const ActivityDetails = () => {
                 src={`/api/v1/gameandactivity/gameandactivity-activityimage/${g._id}`}
                 className="card-img-top"
                 alt={g.name}
+                style={{ maxWidth: "100%", height: "auto" }} // Set max width and auto height
               />
               <div className="card-body">
                 <h5 className="card-title">{g.name}</h5>

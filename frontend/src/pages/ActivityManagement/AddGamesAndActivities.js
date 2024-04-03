@@ -56,8 +56,10 @@ export const AddGamesAndActivities = () => {
         gameandactivityData
       );
       if (data?.success) {
-        toast.success("Game or Activity Added Successfully");
         navigate("/adminactivitydashboard/activitymanagement/activities");
+        setTimeout(() => {
+          toast.success("Game or Activity Added Successfully");
+        }, 1000);
       } else {
         toast.error("Somthing");
       }

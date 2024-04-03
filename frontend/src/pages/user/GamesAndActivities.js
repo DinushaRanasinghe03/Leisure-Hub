@@ -62,57 +62,67 @@ const GamesAndActivities = () => {
 
   return (
     <Layout title="All Games and Activities">
-      <div className="row mt-3">
-        <div className="col-md-2">
-          <h4 className="text-center">Filter By Game or Activity Category</h4>
-          <div className="d-flex flex-column">
-            <Radio.Group
-              onChange={handleCategoryChange}
-              value={selectedCategory}
-            >
-              <Radio.Button value={null}>All</Radio.Button>
-              {categories?.map((c) => (
-                <Radio.Button key={c._id} value={c._id}>
-                  {c.name}
-                </Radio.Button>
-              ))}
-            </Radio.Group>
+      <div className="container-fluid mt-3">
+        <div className="row">
+          <div className="col-md-2">
+            <h5 className="text-left">
+              Explore Games and Activities by Category
+            </h5>
+            <div className="d-flex flex-column">
+              <Radio.Group
+                onChange={handleCategoryChange}
+                value={selectedCategory}
+              >
+                <Radio.Button value={null}>All</Radio.Button>
+                {categories?.map((c) => (
+                  <Radio.Button key={c._id} value={c._id}>
+                    {c.name}
+                  </Radio.Button>
+                ))}
+              </Radio.Group>
+            </div>
           </div>
-        </div>
-        <div className="col-md-9">
-          <div className="row mt-3">
-            <SearchInput />
-            <h1 className="text-center">All Games and Activities</h1>
-            <div className="d-flex flex-wrap">
-              {gamesandactivities?.map((g) => (
-                <div
-                  className="card m-4"
-                  style={{ width: "18rem" }}
-                  key={g._id}
-                >
-                  <img
-                    src={`/api/v1/gameandactivity/gameandactivity-activityimage/${g._id}`}
-                    className="card-img-top"
-                    alt={g.name}
-                  />
-                  <div className="card-body">
-                    <h5 className="card-title">{g.name}</h5>
-                    <p className="card-text">
-                      {g.description.substring(0, 30)}...
-                    </p>
-                    <p className="card-text">
-                      {g.guidelines.substring(0, 30)}...
-                    </p>
-                    <button
-                      className="btn btn-primary ms-2"
-                      onClick={() => navigate(`/activity/${g.slug}`)}
-                    >
-                      More Details
-                    </button>
-                    <button className="btn btn-secondary ms-2">Request</button>
+          <div className="col-md-10">
+            <div className="row mt-3">
+              <SearchInput />
+              <h1 className="text-center">Games and Activities</h1>
+              <h6 className="text-center">
+                Elevate your leisure with our streamlined online scheduling for
+                games and activities.
+              </h6>
+              <div className="d-flex flex-wrap">
+                {gamesandactivities?.map((g) => (
+                  <div
+                    className="card m-4"
+                    style={{ width: "18rem" }}
+                    key={g._id}
+                  >
+                    <img
+                      src={`/api/v1/gameandactivity/gameandactivity-activityimage/${g._id}`}
+                      className="card-img-top"
+                      alt={g.name}
+                    />
+                    <div className="card-body">
+                      <h5 className="card-title">{g.name}</h5>
+                      <p className="card-text">
+                        {g.description.substring(0, 30)}...
+                      </p>
+                      <p className="card-text">
+                        {g.guidelines.substring(0, 30)}...
+                      </p>
+                      <button
+                        className="btn btn-primary ms-2"
+                        onClick={() => navigate(`/activity/${g.slug}`)}
+                      >
+                        More Details
+                      </button>
+                      <button className="btn btn-secondary ms-2">
+                        Request
+                      </button>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         </div>

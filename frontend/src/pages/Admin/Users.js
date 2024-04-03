@@ -10,15 +10,19 @@ import ReportGenerator from "./ReportGenerator";
 const Users = () => {
   const [auth] = useAuth();
   const [users, setUsers] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState([]); // State for filtered users
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedMembership, setSelectedMembership] = useState(""); // State for selected membership type
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
         const { data } = await axios.get("/api/v1/auth/users");
         console.log("Fetched users data:", data.users);
-        setUsers(data.data);
+        // Filter out users with role "admin"
+        const regularUsers = data.data.filter((user) => user.role !== 1);
+        setUsers(regularUsers);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching users:", error);
@@ -30,6 +34,22 @@ const Users = () => {
     fetchUsers();
   }, []);
 
+  useEffect(() => {
+    // Filter users based on selectedMembership
+    if (selectedMembership) {
+      const filtered = users.filter(
+        (user) => user.membership === selectedMembership
+      );
+      setFilteredUsers(filtered);
+    } else {
+      setFilteredUsers(users);
+    }
+  }, [selectedMembership, users]);
+
+  const handleMembershipChange = (event) => {
+    setSelectedMembership(event.target.value);
+  };
+
   return (
     <Layout title={"Membership Holders-Leisure Hub"}>
       <div className="container-fluid m-3 p-3 dashboard">
@@ -38,41 +58,62 @@ const Users = () => {
             <AdminMenu />
           </div>
           <div className="col-md-9">
-            <ReportGenerator users={users} />{" "}
+            <ReportGenerator users={filteredUsers} />{" "}
             {/* Render the ReportGenerator component */}
             {loading ? (
               <p>Loading...</p>
             ) : error ? (
               <p>{error}</p>
             ) : users && users.length > 0 ? (
-              <table className="table">
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                    <th>Address</th>
-                    <th>DOB</th>
-                    <th>Membership Type</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {users.map((user) => (
-                    <tr key={user.id}>
-                      <td>
-                        {user.fname} {user.lname}
-                      </td>
-                      <td>{user.email}</td>
-                      <td>{user.phone}</td>
-                      <td>
-                        {user.address1} {user.address2}
-                      </td>
-                      <td>{user.dob}</td>
-                      <td>{user.membership}</td>
+              <div>
+                <div>
+                  <label htmlFor="membershipFilter">
+                    Filter by Membership Type:
+                  </label>
+                  <select
+                    id="membershipFilter"
+                    value={selectedMembership}
+                    onChange={handleMembershipChange}
+                  >
+                    <option value="">All</option>
+                    <option value="individual">Individual</option>
+                    <option value="family">Family</option>
+                    <option value="corporate standared">
+                      Corporate Standered
+                    </option>
+                    <option value="corporate max">Corporate Max</option>
+                    {/* Add more options if needed */}
+                  </select>
+                </div>
+                <table className="table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Phone</th>
+                      <th>Address</th>
+                      <th>DOB</th>
+                      <th>Membership Type</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {filteredUsers.map((user) => (
+                      <tr key={user._id}>
+                        <td>
+                          {user.fname} {user.lname}
+                        </td>
+                        <td>{user.email}</td>
+                        <td>{user.phone}</td>
+                        <td>
+                          {user.address1} {user.address2}
+                        </td>
+                        <td>{user.dob}</td>
+                        <td>{user.membership}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             ) : (
               <p>No users found.</p>
             )}

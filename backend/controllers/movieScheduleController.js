@@ -1,5 +1,5 @@
 import movieScheduleModel from "../models/movieScheduleModel.js"
-
+import movieModel from "../models/movieModel.js";
 
 // Controller function for creating a movie schedule
 export const createMovieScheduleController = async (req, res) => {
@@ -11,11 +11,11 @@ export const createMovieScheduleController = async (req, res) => {
             case !date:
                 return res.status(500).send({error: 'date is required'})
             case !from:
-                return res.status(500).send({error: 'showtime_1 is required'})
+                return res.status(500).send({error: 'from time is required'})
             case !to:
-                return res.status(500).send({error: 'showtime_2 is required'})
+                return res.status(500).send({error: 'to time is required'})
             case !movie:
-                return res.status(500).send({error: 'showtime_3 is required'}) 
+                return res.status(500).send({error: 'movie is required'}) 
                             
         }
 
@@ -83,8 +83,7 @@ export const getMovieScheduleController = async(req,res) => {
 
 
 
-
- // Controller function to get schedules based on date
+// Controller function to get schedules based on date
 export const getMovieSchedulesByDateController = async (req, res) => {
     try {
         const { date } = req.params;
@@ -94,8 +93,8 @@ export const getMovieSchedulesByDateController = async (req, res) => {
             return res.status(400).send({ error: 'Date is required' });
         }
 
-        // Find all movie schedules for the given date
-        const movieSchedules = await movieScheduleModel.find({ date });
+        // Find all movie schedules for the given date and populate the movie field with movie details
+        const movieSchedules = await movieScheduleModel.find({ date }).populate('movie');
 
         res.status(200).send({
             success: true,
@@ -112,15 +111,6 @@ export const getMovieSchedulesByDateController = async (req, res) => {
         });
     }
 };
-
-
-
-
-
-
-
-
-
 
 
 
@@ -196,6 +186,82 @@ export const deleteMovieScheduleController = async (req, res) => {
         res.status(500).send({
             success: false,
             message: 'Error while deleting movie schedule',
+            error: error.message
+        });
+    }
+};
+
+
+
+//generate report
+// Function to generate the report
+export const generateMovieReport = async (req, res) => {
+    try {
+        // Retrieve all movies
+        const movies = await movieModel.find({}, '_id name');
+
+        // Retrieve all movie schedules
+        const movieSchedules = await movieScheduleModel.find({}, 'date movie');
+
+        // Initialize an empty object to store movie schedule counts
+        const movieScheduleCounts = {};
+
+        // Iterate through each movie schedule
+        movieSchedules.forEach(schedule => {
+            // Extract month and year from the schedule date
+            const monthYear = `${schedule.date.getFullYear()}-${schedule.date.getMonth() + 1}`;
+
+            // If the month-year key doesn't exist in the movie schedule counts object, initialize it
+            if (!movieScheduleCounts[monthYear]) {
+                movieScheduleCounts[monthYear] = {};
+            }
+
+            // If the movie ID doesn't exist in the month-year object, initialize it
+            if (!movieScheduleCounts[monthYear][schedule.movie]) {
+                movieScheduleCounts[monthYear][schedule.movie] = 0;
+            }
+
+            // Increment the count for the movie in that month
+            movieScheduleCounts[monthYear][schedule.movie]++;
+        });
+
+        // Prepare the report data
+        const report = [];
+
+        // Iterate through each month-year
+        for (const monthYear in movieScheduleCounts) {
+            const monthReport = {
+                monthYear,
+                movies: []
+            };
+
+            // Iterate through each movie and its count in that month
+            for (const movie of movies) {
+                const movieId = movie._id.toString();
+                const movieName = movie.name;
+                const movieCount = movieScheduleCounts[monthYear][movieId] || 0;
+
+                // Add movie details to the month report
+                monthReport.movies.push({
+                    name: movieName,
+                    count: movieCount
+                });
+            }
+
+            // Add the month report to the overall report
+            report.push(monthReport);
+        }
+
+        // Send the report as response
+        res.status(200).json({
+            success: true,
+            report
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send({
+            success: false,
+            message: 'Error in generating movie report',
             error: error.message
         });
     }

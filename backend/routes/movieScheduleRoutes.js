@@ -1,5 +1,5 @@
 import express from 'express'
-import { createMovieScheduleController, deleteMovieScheduleController, getMovieScheduleController, getMovieSchedulesByDateController, getSingleMovieScheduleController, updateMovieScheduleController } from '../controllers/movieScheduleController.js'
+import { createMovieScheduleController, deleteMovieScheduleController, generateMovieReport, getMovieScheduleController, getMovieSchedulesByDateController, getSingleMovieScheduleController, updateMovieScheduleController } from '../controllers/movieScheduleController.js'
 import formidable from 'express-formidable'
 
 const router = express.Router()
@@ -23,4 +23,10 @@ router.put('/update-movieschedule/:id',formidable(),updateMovieScheduleControlle
 //delete movie schedule
 router.delete('/delete-movieschedule/:id',deleteMovieScheduleController )
 
+//generate report
+router.get('/generate-movie-report', generateMovieReport );
+
 export default router
+
+
+

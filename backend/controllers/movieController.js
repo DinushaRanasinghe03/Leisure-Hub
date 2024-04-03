@@ -1,8 +1,6 @@
 import slugify from "slugify"
 import movieModel from "../models/movieModel.js"
 import fs from 'fs'
-//import { useParams } from 'react-router-dom';
-//import { Select } from 'antd';
 
 //add movies
 export const createMovieController = async(req,res) => {
@@ -93,24 +91,6 @@ export const getSingleMovieController = async(req,res) => {
         })
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //get poster image
 export const moviePosterimageController = async (req,res) => {
@@ -269,4 +249,3 @@ export const relatedMovieController = async (req,res) => {
         })
     }
 }
-

@@ -5,7 +5,7 @@ const Schema = mongoose.Schema; //schema set karanna
 const FeedbackSchema = new Schema({
   name: {
     type: String, //type
-    required: true,
+    required: true, //validate
   },
   gmail: {
     type: String, //type

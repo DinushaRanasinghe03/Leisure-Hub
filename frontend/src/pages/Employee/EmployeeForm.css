@@ -1,50 +1,105 @@
-/* Styles for EmployeeForm component */
+#form-submit-button button{
+  /* float: left; */
+  transition: all .5s ease;
+  color: white;
+  border: 3px solid white;
+  font-family:"Roboto", "Helvetica", "Arial", sans-serif;
+  text-transform: capitalize;
+  text-align: center;
+  line-height: 1;
+  font-size: 16px;
+  background-color : #0069d9;
+  padding: 10px;
+  outline: none;
+  border-radius: 4px;
+  width: 100px;
+  font-weight: bold
+  
+}
 
-/* Body styles */
-#Body {
-    margin: 0; /* Remove default body margin */
-    padding: 0; /* Remove default body padding */
-    font-family: Arial, sans-serif; /* Use Arial font family */
-  }
+#form-submit-button button:hover{
+  color: white;
+  background-color: #0069d988;
+  border-color: #0069d9;
+}
+#form-cancel-button{
+  /* float: left; */
+  /* float:right; */
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  margin: 0px;
+  /* background-color: red; */
   
-  /* Section styles */
-  .employeeForm {
-    display: flex; /* Use flexbox for layout */
-    justify-content: center; /* Center the form horizontally */
-    align-items: center; /* Center the form vertically */
-    height: 100vh; /* Set the height of the form to full viewport height */
-    background-color: #f5f5f5; /* Background color for the form */
-  }
-  
-  /* Form container styles */
-  .form {
-    background-color: #ffffff; /* Background color for the form */
-    padding: 20px; /* Add padding to the form */
-    border-radius: 8px; /* Add border radius for rounded corners */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add shadow effect */
-    width: 400px; /* Set the width of the form */
-  }
-  
-  /* Title styles */
-  .title {
-    text-align: center; /* Center the title text */
-    margin-bottom: 20px; /* Add spacing below the title */
-    color: #333333; /* Title text color */
-    font-size: 24px; /* Title font size */
-  }
-  
-  /* Form input styles */
-  .form-input {
-    margin-bottom: 15px; /* Add spacing between form inputs */
-  }
-  
-  /* Error message styles */
-  .error {
-    color: #ff0000; /* Error message color */
-    font-size: 14px; /* Error message font size */
-  }
-  
-  /* Submit button styles */
-  #form-submit-button {
-    text-align: center; /* Center the submit button */
-  }
+}
+#form-cancel-button button{
+  /* float: left; */
+  /* float:right; */
+  transition: all .5s ease;
+  color: white;
+  border: 3px solid white;
+  font-family:"Roboto", "Helvetica", "Arial", sans-serif;
+  text-transform: capitalize;
+  text-align: center;
+  line-height: 1;
+  font-size: 16px;
+  background-color : #e74c3c;
+  padding: 10px;
+  outline: none;
+  border-radius: 4px;
+  width: 100px;
+  font-weight: bold;
+}
+#form-cancel-button button:hover{
+  color: white;
+  background-color: #e74d3cab;
+  border-color: #e74c3c;
+}
+#form-cancel-button.row{
+  padding-right: 1%;
+}
+#form-cancel-button button:focus{
+  /* float: left; */
+  /* float:right; */
+outline: 0;
+box-shadow: 0;
+}
+#form{
+  /* background-color: blue; */
+  position: relative;
+  margin: 0;
+  font-size: 15px;
+}
+#role-form-outer-div{
+  width: 80%;
+  margin:30px auto;
+}
+.form-input{
+  margin-bottom: 10px;
+}
+
+#role-form-title {
+margin: 20px;
+color:rgb(233, 233, 233)
+}
+
+.error{
+  font-size: 15px;
+  font-weight: bold;
+  color: rgb(183, 8, 8);
+  margin-top: 2px;
+  margin-bottom: 10px;
+}
+
+/* .form-control{
+  background: transparent !important;
+  color: white !important;
+} */
+
+section.employeeForm{
+  width: 80% !important;
+}
+
+.col-form-label{
+  font-weight: bold;
+}

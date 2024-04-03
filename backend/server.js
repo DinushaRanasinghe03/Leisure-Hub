@@ -5,6 +5,7 @@ import morgan from 'morgan'
 import connectDB from './config/db.js'
 import EmployeeRouter from './routes/EmployeeRouter.js'
 import EmployeeLeaveRouter from './routes/EmployeeLeaveRouter.js'
+import EmployeeSalaryRouter from './routes/EmployeeSalaryRouter.js'
 import cors from 'cors';
 
 //configure env
@@ -28,6 +29,9 @@ app.use("/api/v1/employee",EmployeeRouter);
 //throw API to EmployeeLeaveRouter class
 app.use("/api/v1/employeeleave", EmployeeLeaveRouter);
 
+//throw API to EmployeeSalaryRouter class
+app.use("/api/v1/employeeSalary", EmployeeSalaryRouter);
+
 //rest API / connect with frontend
 app.get('/',(req,res) => {
     res.send(
@@ -36,7 +40,7 @@ app.get('/',(req,res) => {
 });
 
 //port
-const PORT = process.env.PORT || 8070
+const PORT = process.env.PORT || 8080
 
 app.listen(PORT, () => {
     console.log(`Server running on ${process.env.DEV_MODE}mode on port ${PORT}`)

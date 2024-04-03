@@ -1,27 +1,18 @@
-import {Routes,Route} from 'react-router-dom'
-import React, { useEffect, useState } from "react";
-import EmployeeForm from './pages/Employee/EmployeeForm.js';
+import React from 'react'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import Axios from "axios";
 
+import EmployeeForm from './pages/Employee/EmployeeForm.js';
+
 function App() {
-
-  //const [data, setData] = useState();
-
-  //const getData = async () => {
-      //const response = await Axios.get("http://localhost:8080/api/v1/employee");
-      //setData(response.data)
-  //}
-
- // useEffect(() => {
-      //getData()
-
-  //}, []);
-
   return (
-    <div className="App">
-      <EmployeeForm/>
-    </div>
-    
+    <Routes>
+
+        {/* Employee Management pages routing */}
+        
+        <Route path="/employeeRegister" element={<EmployeeForm />} />
+
+    </Routes>
   );
 }
 

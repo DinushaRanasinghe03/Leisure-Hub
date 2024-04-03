@@ -105,3 +105,38 @@
   text-decoration: none !important;
   color: black !important
 }
+
+
+/*============homepage================*/
+.box {
+  background-color: #8590f5; /* Light blue */
+  border: 2px solid #8590f5;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.box-text {
+  font-size: 1.2em;
+  font-style: italic;
+  font-weight: 500;
+}
+
+.box-text2 {
+  font-size: 1.1em;
+  font-weight: 500;
+  text-align: left;
+}
+
+.register-button {
+  background-color: white;
+  color: black;
+  padding: 10px 20px;
+  border: 2px solid black;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.register-button:hover {
+  background-color: #f0f0f0; /* Light gray on hover */
+}

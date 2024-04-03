@@ -15,7 +15,7 @@
   font-size: 17px;
   line-height: 26px;
   /*text-transform: lowercase;*/
-  box-shadow: 0 8px 6px -6px rgb(126, 67, 67);
+  box-shadow: 0 8px 6px -6px gray;
   --webkit-box-shadow: 0 8px 6px --6px gray;
   border-bottom: solid gray !important;
 }

@@ -5,6 +5,7 @@ import morgan from "morgan";
 import connectDB from "./config/db.js";
 import activityCategoryRoutes from "./routes/activityCategoryRoutes.js";
 import gamesAndActivitiesRoutes from "./routes/gamesAndActivitiesRoutes.js";
+import gamesAndActivitiesRequestRoutes from "./routes/gamesAndActivitiesRequestRoutes.js";
 import cors from "cors";
 
 //configure env
@@ -23,6 +24,7 @@ app.use(morgan("dev"));
 //routes
 app.use("/api/v1/activitycategory", activityCategoryRoutes);
 app.use("/api/v1/gameandactivity", gamesAndActivitiesRoutes);
+app.use("/api/v1/gameandactivityRequest", gamesAndActivitiesRequestRoutes);
 
 //rest api
 app.get("/", (req, res) => {

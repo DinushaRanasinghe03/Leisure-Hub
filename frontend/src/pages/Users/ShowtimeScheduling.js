@@ -4,10 +4,8 @@ import Layout from '../../components/Layout/Layout'
 import DatePicker from 'react-date-picker';
 import 'react-calendar/dist/Calendar.css';
 
-
 const ShowtimeScheduling = () => {
-
-  const [schedules, setSchedules] = useState([]);
+    const [schedules, setSchedules] = useState([]);
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [loading, setLoading] = useState(false);
 
@@ -18,8 +16,7 @@ const ShowtimeScheduling = () => {
     const fetchSchedules = async (date) => {
         try {
             setLoading(true);
-            const utcDate = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
-            const formattedDate = utcDate.toISOString().split('T')[0];
+            const formattedDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString().split('T')[0];
             const { data } = await axios.get(`http://localhost:8080/api/v1/movieschedule/get-schedule-date/${formattedDate}`);
             if (data.success) {
                 setSchedules(data.movieSchedules);
@@ -33,65 +30,58 @@ const ShowtimeScheduling = () => {
         }
     };
 
-
-  return (
-    <Layout title={"ShowTimes"}>
-    <div className='container-fluid m-3 p-3'>
-            <div className='row'>
-            <h3 className="text-center">Movie Showtimes</h3><br/>
-                <div className='col-md-10 mx-auto '>
-                    
-                    <div className="mb-3">
-                        <label className="form-label"><h5>Select Your Preferred Date:</h5></label>
-                        <DatePicker
-                            value={selectedDate}
-                            onChange={(date) => setSelectedDate(date)}
-                            dateFormat="yyyy-MM-dd"
-                            className="form-control"
-                        />
-                    </div>
-                    <br /><br /><br /><br/>
-                    <h5><center>Showtime Schedule for {selectedDate.toLocaleDateString('en-US')}</center></h5>
-                    <br/>
-                    
-                    {loading ? (
-                        <p>Loading...</p>
-                    ) : (
-                        <>
-                            {schedules.length === 0 ? (
-                                <p>No showtime available for the selected date.</p>
-                            ) : (
-                                <table className="table table-striped ">
-                                    <thead>
-                                        <tr>
-                                            
-                                            <th>From</th>
-                                            <th>To</th>
-                                            <th>Movie</th>
-                                            
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {schedules.map(schedule => (
-                                            <tr key={schedule._id}>
-                                            
-                                                <td>{schedule.from}</td>
-                                                <td>{schedule.to}</td>
-                                                <td>{schedule.movie}</td>
-                                                
+    return (
+        <Layout title={"ShowTimes"}>
+            <div className='container-fluid m-3 p-3'>
+                <div className='row'>
+                    <h3 className="text-center">Movie Showtimes</h3><br/>
+                    <div className='col-md-10 mx-auto '>
+                        <div className="mb-3">
+                            <label className="form-label"><h5>Select Your Preferred Date:</h5></label>
+                            <DatePicker
+                                value={selectedDate}
+                                onChange={(date) => setSelectedDate(date)}
+                                dateFormat="yyyy-MM-dd"
+                                className="form-control"
+                            />
+                        </div>
+                        <br /><br />
+                        <h5><center>Showtime Schedule for {selectedDate.toLocaleDateString('en-US')}</center></h5>
+                        <br/>
+                        {loading ? (
+                            <p>Loading...</p>
+                        ) : (
+                            <>
+                                {schedules.length === 0 ? (
+                                    <p>No showtime available for the selected date.</p>
+                                ) : (
+                                    <table className="table table-striped ">
+                                        <thead>
+                                            <tr>
+                                                <th>From</th>
+                                                <th>To</th>
+                                                <th>Movie</th>
                                             </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            )}
-                        </>
-                    )}
+                                        </thead>
+                                        <tbody>
+                                            {schedules.map(schedule => (
+                                                <tr key={schedule._id}>
+                                                    <td>{schedule.from}</td>
+                                                    <td>{schedule.to}</td>
+                                                    <td>{schedule.movie.name}</td> {/* Display movie name */}
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                )}
+                            </>
+                        )}
+                    </div>
                 </div>
             </div>
-        </div>
-        <br/><br/><br/><br/><br/>
+            <br/><br/>
         </Layout>
-  )
-}
+    );
+};
 
-export default ShowtimeScheduling
+export default ShowtimeScheduling;

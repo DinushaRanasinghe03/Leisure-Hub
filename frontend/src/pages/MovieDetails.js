@@ -67,13 +67,13 @@ const MovieDetails = () => {
 
             <center>
               <button className="btn btn-primary ms-3">BOOK NOW</button>
-              <button className="btn btn-secondary ms-3">Reviews</button>
+              <button className="btn btn-secondary ms-3">Rate Now</button>
             </center>
           </div>
         </div>
         <br/><br/><br/>
         <div className='row'>
-          <h4><center>Similar Movies by Genre</center></h4>
+          <h4><center>Similar Movies</center></h4>
           {relatedMovies.length > 0 ? (
             <div className='row row-cols-1 row-cols-md-4 g-4' style={{ marginLeft: '20px' }}>
               {relatedMovies.map(p => (

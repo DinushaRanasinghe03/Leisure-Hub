@@ -13,15 +13,19 @@ import Movie from './pages/MovieManagement/Movie';
 import UpdateMovie from './pages/MovieManagement/UpdateMovie';
 import AddMovieSchedule from './pages/MovieManagement/AddMovieSchedule';
 import ShowtimeSchedule from './pages/MovieManagement/ShowtimeSchedule';
-import Search from './pages/Search';
+import SearchMovie from './pages/SearchMovie';
 import MovieDetails from './pages/MovieDetails';
 import ShowtimeScheduling from './pages/Users/ShowtimeScheduling';
+
+
+
 function App() {
   return (
     <>
     <Routes>
+    
       <Route path='/' element={<HomePage />} />
-      <Route path='/search' element={<Search />} />
+      <Route path='/search' element={<SearchMovie />} />
       <Route path='/moviedetails/:slug' element={<MovieDetails />} />
       <Route path='/movies' element={<Movies />} />
       <Route path='/schedules' element={<ShowtimeScheduling />} />
@@ -34,6 +38,7 @@ function App() {
       <Route path="/adminmoviedashboard/moviemanagement/movie/:slug" element={<UpdateMovie />} />
       <Route path="/adminmoviedashboard/moviemanagement/add-movieschedule" element={<AddMovieSchedule />} />
       <Route path="/adminmoviedashboard/moviemanagement/movieschedule" element={<ShowtimeSchedule />} />
+      
     </Routes>
       
     </>

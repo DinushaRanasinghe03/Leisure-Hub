@@ -1,10 +1,15 @@
 import React from "react";
 import Layout from "../components/layout/Layout";
+import { NavLink } from "react-router-dom";
+import ResourceTable from "../components/layout/ResourceTable";
 
 const Resource = () => {
   return (
     <Layout title={"Admin Resources - LeisureHub"}>
-      <h1>Resource Page</h1>
+      <NavLink to="/addResource">Add Resource</NavLink>
+      <div>
+        <ResourceTable />
+      </div>
     </Layout>
   );
 };

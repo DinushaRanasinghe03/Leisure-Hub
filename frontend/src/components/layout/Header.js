@@ -16,6 +16,16 @@ const Header = () => {
             </NavLink>
           </li>
           <li>
+            <NavLink to="/pageNotFound" activeClassName="active">
+              Movies
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/pageNotFound" activeClassName="active">
+              Games and Activities
+            </NavLink>
+          </li>
+          <li>
             <NavLink to="/resource" activeClassName="active">
               Resource
             </NavLink>
@@ -24,6 +34,21 @@ const Header = () => {
             <NavLink to="/maintenance" activeClassName="active">
               Maintenance
             </NavLink>
+          </li>
+          <li>
+            <NavLink to="/pageNotFound" activeClassName="active">
+              Staff
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/pageNotFound" activeClassName="active">
+              Members
+            </NavLink>
+          </li>
+          <li>
+              <NavLink to="/pageNotFound" activeClassName="active">
+                Customer Service
+              </NavLink>
           </li>
           <li>
             <NavLink to="/pageNotFound" activeClassName="active">

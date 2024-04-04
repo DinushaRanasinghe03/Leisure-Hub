@@ -60,7 +60,7 @@ export const createResourceController = async (req, res) => {
   }
 };
 
-//get all resources
+//get all resources with filter
 export const getResourceController = async (req, res) => {
   try {
     const resources = await resourcesModel
@@ -83,6 +83,8 @@ export const getResourceController = async (req, res) => {
     });
   }
 };
+
+
 
 //Get single resource
 export const getSingleResourceController = async (req, res) => {

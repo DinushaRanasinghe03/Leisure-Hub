@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import Layout from "../../components/layout/Layout";
-import "./AddResource.css";
-import axios from "axios";
+import "./ResourceForm.css";
 import { toast } from "react-toastify";
-const { Option } = "Select";
 
 const AddResource = () => {
   const [numberOrder, setNumberOrder] = useState("");
@@ -72,11 +70,6 @@ const AddResource = () => {
     );
     toast.success("Added Successfully!");
   };
-
-  //create product function
-  const handleCreate = () => {
-
-  }
 
   return (
     <Layout title={"Add Resource - LeisureHub"}>
@@ -235,9 +228,7 @@ const AddResource = () => {
             />
           </div>
 
-          <div>
-            <button className="addResource-button" onClick={handleCreate}> Add Resource</button>
-          </div>
+          <input type="submit" value="Submit" />
         </form>
       </div>
     </Layout>

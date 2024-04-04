@@ -3,6 +3,8 @@ import axios from 'axios';
 import AdminMovieMenu from '../../components/Layout/AdminMovieMenu';
 import DatePicker from 'react-date-picker';
 import 'react-date-picker/dist/DatePicker.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ShowtimeSchedule = () => {
     const [schedules, setSchedules] = useState([]);
@@ -31,8 +33,26 @@ const ShowtimeSchedule = () => {
         }
     };
 
+    const handleDeleteSchedule = async (scheduleId) => {
+        try {
+            const confirmDelete = window.confirm('Do you want to delete this schedule?');
+            if (confirmDelete) {
+                const { data } = await axios.delete(`http://localhost:8080/api/v1/movieschedule/delete-movieschedule/${scheduleId}`);
+                if (data.success) {
+                    // Remove the deleted schedule from the state
+                    setSchedules(prevSchedules => prevSchedules.filter(schedule => schedule._id !== scheduleId));
+                    toast.success('Schedule deleted successfully');
+                } else {
+                    console.error('Failed to delete schedule:', data.message);
+                }
+            }
+        } catch (error) {
+            console.error('Error deleting schedule:', error);
+        }
+    };
+
     return (
-        <div className='container-fluid m-3 p-3'>
+        <div className='container-fluid m-4 p-3'>
             <div className='row'>
                 <div className='col-md-3'>
                     <AdminMovieMenu />
@@ -48,7 +68,7 @@ const ShowtimeSchedule = () => {
                             className="form-control"
                         />
                     </div>
-                    <br /><br /><br /><br/><br/><br/>
+                    <br /><br /><br />
                     <h5><center>Showtime Schedule for {selectedDate.toLocaleDateString('en-US')}</center></h5>
                     <br/>
                     
@@ -62,21 +82,28 @@ const ShowtimeSchedule = () => {
                                 <table className="table table-striped">
                                     <thead>
                                         <tr>
-                                            
                                             <th>From</th>
                                             <th>To</th>
                                             <th>Movie</th>
-                                            <th>Unavailable Seats</th>
+                                            <th>Booked or Unavailable Seats</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {schedules.map(schedule => (
                                             <tr key={schedule._id}>
-                                            
                                                 <td>{schedule.from}</td>
                                                 <td>{schedule.to}</td>
-                                                <td>{schedule.movie}</td>
-                                                <td>{schedule.unavailable_seats.join(', ')}</td>
+                                                <td>{schedule.movie.name}</td>
+                                                <td>{schedule.unavailable_seats.join(' ')}</td>
+                                                <td>
+                                                    <button 
+                                                        className='btn btn-danger'
+                                                        onClick={() => handleDeleteSchedule(schedule._id)}
+                                                    >
+                                                        Delete
+                                                    </button>
+                                                </td>
                                             </tr>
                                         ))}
                                     </tbody>
@@ -86,6 +113,7 @@ const ShowtimeSchedule = () => {
                     )}
                 </div>
             </div>
+            <ToastContainer />
         </div>
     );
 };

@@ -17,7 +17,7 @@ export const AllGamesAndActivities = () => {
       setGameandactivity(data.gamesandactivities);
     } catch (error) {
       console.log(error);
-      toast.error("somthing went wrong");
+      toast.error("something went wrong");
     }
   };
 
@@ -47,11 +47,32 @@ export const AllGamesAndActivities = () => {
                         src={`/api/v1/gameandactivity/gameandactivity-activityimage/${g._id}`}
                         className="card-img-top"
                         alt={g.name}
+                        style={{ height: "200px", objectFit: "cover" }} // Set fixed height for image and cover
                       />
-                      <div className="card-body">
-                        <h5 className="card-title">{g.name}</h5>
-                        <p className="card-text">{g.description}</p>
-                        <p className="card-text">{g.guidelines}</p>
+                      <div className="card-body" style={{ height: "300px" }}>
+                        {" "}
+                        {/* Set fixed height for card body */}
+                        <h5
+                          className="card-title"
+                          style={{ height: "50px", overflow: "hidden" }}
+                        >
+                          {g.name}
+                        </h5>{" "}
+                        {/* Set fixed height and hide overflow for title */}
+                        <p
+                          className="card-text"
+                          style={{ height: "70px", overflow: "hidden" }}
+                        >
+                          {g.description}
+                        </p>{" "}
+                        {/* Set fixed height and hide overflow for description */}
+                        <p
+                          className="card-text"
+                          style={{ height: "70px", overflow: "hidden" }}
+                        >
+                          {g.guidelines}
+                        </p>{" "}
+                        {/* Set fixed height and hide overflow for guidelines */}
                       </div>
                     </div>
                   </Link>

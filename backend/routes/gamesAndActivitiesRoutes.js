@@ -50,7 +50,7 @@ router.get("/search-gameandactivity/:keyword", searchGameAndActivityController);
 
 //similar games and activities
 router.get(
-  "/related-gameandactivity/:apid/:cid",
+  "/related-gameandactivity/:aid/:cid",
   relatedGameAndActivityController
 );
 

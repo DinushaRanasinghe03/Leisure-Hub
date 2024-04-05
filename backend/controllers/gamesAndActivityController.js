@@ -259,6 +259,7 @@ export const searchGameAndActivityController = async (req, res) => {
         { description: { $regex: keyword, $options: "i" } },
       ],
     }).select("-activityimage");
+
     res.json(results);
   } catch (error) {
     console.log(error);
@@ -273,10 +274,10 @@ export const searchGameAndActivityController = async (req, res) => {
 //similar games and activities
 export const relatedGameAndActivityController = async (req, res) => {
   try {
-    const { apid, cid } = req.params;
+    const { aid, cid } = req.params;
     const gamesandactivities = await GamesAndActivitiesModel.find({
       gameoractivitycategory: cid,
-      _id: { $ne: apid },
+      _id: { $ne: aid },
     })
       .select("-activityimage")
       .limit(3)

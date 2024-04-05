@@ -1,7 +1,9 @@
 import express from "express";
+
 import {
   createGameAndActivityRequestController,
   deleteGamesAndActivityRequestController,
+  generateDailyReportController,
   getGamesAndActivityRequestController,
   getSingleGamesAndActivityRequestController,
   updateGameAndActivityRequestController,
@@ -41,4 +43,6 @@ router.delete(
   deleteGamesAndActivityRequestController
 );
 
+// Route for generating daily report
+router.get("/daily-report", generateDailyReportController);
 export default router;

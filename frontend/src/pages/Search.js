@@ -1,8 +1,10 @@
 import Layout from "../components/Layout/Layout";
 import React from "react";
 import { useSearch } from "../context/search";
+import { useNavigate } from "react-router-dom";
 
 const Search = () => {
+  const navigate = useNavigate();
   const [values, setValues] = useSearch();
   return (
     <Layout title={"Search Results"}>
@@ -28,8 +30,22 @@ const Search = () => {
                     {g.description.substring(0, 30)}...
                   </p>
                   <p className="card-text">{g.guidelines}</p>
-                  <button class="btn btn-primary ms-2">More Details</button>
-                  <button class="btn btn-secondary ms-2">Request</button>
+                  <button
+                    class="btn btn-primary ms-2"
+                    onClick={() => navigate(`/activity/${g.slug}`)}
+                  >
+                    More Details
+                  </button>
+                  <button
+                    class="btn btn-secondary ms-2"
+                    onClick={() =>
+                      navigate(`/gamesandactivitiesrequests/${g.slug}`, {
+                        state: { name: g.name },
+                      })
+                    }
+                  >
+                    Request
+                  </button>
                 </div>
               </div>
             ))}

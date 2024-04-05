@@ -14,8 +14,8 @@ const Gamesandactivitiesrequests = () => {
   const [MemberName, setMemberName] = useState("");
   const [noParticipation, setNoParticipation] = useState("");
   const [contactNo, setContactNo] = useState("");
-  const [scheduledDate, setScheduledDate] = useState(new Date());
-  const [Time, setTime] = useState(new Date());
+  const [scheduledDate, setScheduledDate] = useState(null); // Initialize with null
+  const [Time, setTime] = useState(null); // Initialize with null
 
   useEffect(() => {
     if (location.state?.name) {
@@ -53,75 +53,78 @@ const Gamesandactivitiesrequests = () => {
 
   return (
     <Layout>
-      <div className="container-fluid m-3 p-3">
-        <div className="row">
-          <div className="col-md-3"></div>
-          <div className="col-md-9">
-            <h1>Request Game or Activity</h1>
-            <div className="m-1 w-75"></div>
-            <div className="mb-3">
-              <input
-                type="text"
-                value={name}
-                placeholder="Game or Activity name"
-                className="form-control"
-                onChange={(e) => setName(e.target.value)}
-              />
-            </div>
-            <div className="mb-3">
-              <input
-                type="text"
-                value={MemberName}
-                placeholder="Mention contact person name"
-                className="form-control"
-                onChange={(e) => setMemberName(e.target.value)}
-              />
-            </div>
-            <div className="mb-3">
-              <input
-                type="text"
-                value={noParticipation}
-                placeholder="Mention number of participants"
-                className="form-control"
-                onChange={(e) => setNoParticipation(e.target.value)}
-              />
-            </div>
-            <div className="mb-3">
-              <input
-                type="text"
-                value={contactNo}
-                placeholder="Add contact number"
-                className="form-control"
-                onChange={(e) => setContactNo(e.target.value)}
-              />
-            </div>
-            <div className="mb-3">
-              <DatePicker
-                selected={scheduledDate}
-                onChange={(date) => setScheduledDate(date)}
-                className="form-control"
-                dateFormat="MM/dd/yyyy"
-              />
-            </div>
-            <div className="mb-3">
-              <DatePicker
-                selected={Time}
-                onChange={(time) => setTime(time)}
-                showTimeSelect
-                showTimeSelectOnly
-                dateFormat="h:mm aa"
-                className="form-control"
-                timeIntervals={60}
-                timeCaption="Time"
-                minTime={new Date().setHours(8, 0)} // 8:00 AM
-                maxTime={new Date().setHours(22, 0)} // 10:00 PM
-              />
-            </div>
-
-            <div className="mb-3">
-              <button className="btn btn-primary" onClick={handleCreate}>
-                SUBMIT REQUEST
-              </button>
+      <div className="container">
+        <div className="row justify-content-center mt-5">
+          <div className="col-md-6">
+            <div className="card p-4">
+              <h1 className="mb-4">Request Game or Activity</h1>
+              <form onSubmit={handleCreate}>
+                <div className="mb-3">
+                  <input
+                    type="text"
+                    value={name}
+                    placeholder="Game or Activity name"
+                    className="form-control"
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </div>
+                <div className="mb-3">
+                  <input
+                    type="text"
+                    value={MemberName}
+                    placeholder="Contact person name"
+                    className="form-control"
+                    onChange={(e) => setMemberName(e.target.value)}
+                  />
+                </div>
+                <div className="mb-3">
+                  <input
+                    type="text"
+                    value={noParticipation}
+                    placeholder="Number of participants"
+                    className="form-control"
+                    onChange={(e) => setNoParticipation(e.target.value)}
+                  />
+                </div>
+                <div className="mb-3">
+                  <input
+                    type="text"
+                    value={contactNo}
+                    placeholder="Contact number"
+                    className="form-control"
+                    onChange={(e) => setContactNo(e.target.value)}
+                  />
+                </div>
+                <div className="mb-3">
+                  <DatePicker
+                    selected={scheduledDate}
+                    placeholderText="Select preferred date"
+                    onChange={(date) => setScheduledDate(date)}
+                    className="form-control"
+                    dateFormat="MM/dd/yyyy"
+                  />
+                </div>
+                <div className="mb-3">
+                  <DatePicker
+                    selected={Time}
+                    placeholderText="Select preferred time"
+                    onChange={(time) => setTime(time)}
+                    showTimeSelect
+                    showTimeSelectOnly
+                    dateFormat="h:mm aa"
+                    className="form-control"
+                    timeIntervals={60}
+                    timeCaption="Time"
+                    minTime={new Date().setHours(8, 0)} // 8:00 AM
+                    maxTime={new Date().setHours(22, 0)} // 10:00 PM
+                  />
+                </div>
+                <div className="mb-3">
+                  <button type="submit" className="btn btn-primary">
+                    SUBMIT REQUEST
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         </div>

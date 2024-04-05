@@ -1,40 +1,47 @@
-import Layout from "../components/Layout/Layout";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import Layout from "../components/Layout/Layout";
 
 const ActivityDetails = () => {
+  // Get the slug parameter from the URL
   const params = useParams();
+
+  // State variables to store game/activity details and related games/activities
   const [gameandactivity, setGameandactivity] = useState({});
   const [relatedGameAndActivity, setRelatedGameAndActivity] = useState([]);
 
-  // Initial details
+  // Fetch game/activity details when the component mounts or slug parameter changes
   useEffect(() => {
-    if (params?.slug) getGameAndActivity();
+    if (params?.slug) {
+      getGameAndActivity();
+    }
   }, [params?.slug]);
 
-  // Get game and activity details
+  // Function to fetch game/activity details based on slug
   const getGameAndActivity = async () => {
     try {
       const { data } = await axios.get(
         `/api/v1/gameandactivity/get-gameandactivity/${params.slug}`
       );
+      // Set game/activity details
       setGameandactivity(data?.gamesandactivities);
-      getSimilarGameAndActivity(
-        data?.gameandactivity._id,
-        data?.gameandactivity.gameoractivitycategory._id
-      );
+      // If game/activity ID is available, fetch related games/activities
+      if (data?.gamesandactivities?._id) {
+        getRelatedGameAndActivity(data?.gamesandactivities?._id);
+      }
     } catch (error) {
       console.log(error);
     }
   };
 
-  // Get similar games and activities
-  const getSimilarGameAndActivity = async (apid, cid) => {
+  // Function to fetch related games/activities based on current game/activity ID
+  const getRelatedGameAndActivity = async (aid, cid) => {
     try {
       const { data } = await axios.get(
-        `/api/v1/gameandactivity/related-gameandactivity/${apid}/${cid}`
+        `/api/v1/gameandactivity/related-gameandactivity/${cid}`
       );
+      // Set related games/activities
       setRelatedGameAndActivity(data?.gamesandactivities);
     } catch (error) {
       console.log(error);
@@ -42,55 +49,60 @@ const ActivityDetails = () => {
   };
 
   return (
-    <Layout>
-      <div className="row container mt-2">
-        <div className="col-md-6 ">
-          <img
-            src={`/api/v1/gameandactivity/gameandactivity-activityimage/${gameandactivity._id}`}
-            className="card-img-top"
-            alt={gameandactivity.name}
-            style={{ maxWidth: "100%", height: "auto !important" }} // Set max width and auto height
-          />
+    <Layout title={"Games and Activities Details"}>
+      <div className="container mt-2">
+        <div className="row">
+          <div className="col-md-6">
+            {/* Display image of the game/activity */}
+            <img
+              src={`/api/v1/gameandactivity/gameandactivity-activityimage/${gameandactivity._id}`}
+              className="card-img-top"
+              alt={gameandactivity.name}
+              style={{ maxWidth: "100%", height: "auto" }}
+            />
+          </div>
+          <div className="col-md-6">
+            {/* Display details of the game/activity */}
+            <h1 className="text-center">Games and Activity Details</h1>
+            <h6>Name: {gameandactivity.name}</h6>
+            <br />
+            <h6>Description: {gameandactivity.description}</h6>
+            <br />
+            <h6>Guidelines: {gameandactivity.guidelines}</h6>
+            <br />
+            <h6>Category: {gameandactivity?.gameoractivitycategory?.name}</h6>
+            <br />
+            <h6>Instructors: {gameandactivity?.instructors}</h6>
+            {/* Button for requesting the game/activity */}
+            <button className="btn btn-secondary ms-2">Request</button>
+          </div>
         </div>
-        <div className="col-md-6 ">
-          <h1 className="text-center">Games and Activity Details</h1>
-          <h6>Name: {gameandactivity.name}</h6>
-          <br />
-          <h6>Description: {gameandactivity.description}</h6>
-          <br />
-          <h6>Guidelines: {gameandactivity.guidelines}</h6>
-          <br />
-          <h6>Category: {gameandactivity?.gameoractivitycategory?.name}</h6>
-          <br />
-          <h6>Instructors: {gameandactivity?.instructors}</h6>
-          <button className="btn btn-secondary ms-2">Request</button>
-        </div>
-      </div>
 
-      <hr />
-      <div className="row container">
-        <h6>Similar Games and Activities</h6>
-        {relatedGameAndActivity.length < 1 && (
-          <p className="text-center">No similar Game Or Activity found</p>
-        )}
-        <div className="d-flex flex-wrap">
-          {relatedGameAndActivity?.map((g) => (
-            <div className="card m-4" style={{ width: "18rem" }} key={g._id}>
-              <img
-                src={`/api/v1/gameandactivity/gameandactivity-activityimage/${g._id}`}
-                className="card-img-top"
-                alt={g.name}
-                style={{ maxWidth: "100%", height: "auto" }} // Set max width and auto height
-              />
-              <div className="card-body">
-                <h5 className="card-title">{g.name}</h5>
-                <p className="card-text">{g.description.substring(0, 30)}...</p>
-                <p className="card-text">{g.guidelines}</p>
-
-                <button className="btn btn-secondary ms-2">Request</button>
+        <hr />
+        <div className="row mt-4">
+          <h4 className="text-center">Similar Games and Activities</h4>
+          {/* Display related games/activities */}
+          {relatedGameAndActivity.length > 0 ? (
+            relatedGameAndActivity.map((g) => (
+              <div key={g._id} className="col-md-3 mb-4">
+                <div className="card">
+                  <img
+                    src={`/api/v1/gameandactivity/gameandactivity-activityimage/${g._id}`}
+                    className="card-img-top"
+                    alt={g.name}
+                  />
+                  <div className="card-body">
+                    <h5 className="card-title">{g.name}</h5>
+                    <p className="card-text">{g.description}</p>
+                    {/* Button for viewing details of related game/activity */}
+                    <button className="btn btn-primary">View Details</button>
+                  </div>
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          ) : (
+            <p className="text-center">No similar games and activities found</p>
+          )}
         </div>
       </div>
     </Layout>

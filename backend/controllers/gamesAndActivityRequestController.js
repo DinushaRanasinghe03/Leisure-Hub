@@ -1,6 +1,6 @@
 import GamesAndActivitiesRequestModel from "../models/GamesAndActivitiesRequestModel.js";
 import fs from "fs";
-
+import pdf from "html-pdf";
 export const createGameAndActivityRequestController = async (req, res) => {
   try {
     const {
@@ -45,6 +45,57 @@ export const createGameAndActivityRequestController = async (req, res) => {
       error,
       message: "Error in creating request",
     });
+  }
+};
+// Function to generate HTML content for the daily report
+const generateDailyReportHTML = (requests) => {
+  // Generate HTML content for the daily report based on the requests data
+  let htmlContent = `<h1>Daily Requests Report</h1>`;
+  htmlContent += `<table border="1" cellpadding="5"><tr><th>Name</th><th>Member Name</th><th>No of Participation</th><th>Contact No</th><th>Scheduled Date</th><th>Time</th></tr>`;
+  requests.forEach((request) => {
+    htmlContent += `<tr><td>${request.name}</td><td>${request.MemberName}</td><td>${request.noParticipation}</td><td>${request.contactNo}</td><td>${request.scheduledDate}</td><td>${request.Time}</td></tr>`;
+  });
+  htmlContent += `</table>`;
+  return htmlContent;
+};
+
+// Route handler for generating and downloading daily report as PDF
+export const generateDailyReportController = async (req, res) => {
+  try {
+    // Fetch data for the daily report
+    const requests = await GamesAndActivitiesRequestModel.find();
+
+    // Generate HTML content for the daily report
+    const htmlContent = generateDailyReportHTML(requests);
+
+    // Options for PDF generation
+    const pdfOptions = {
+      format: "Letter",
+    };
+
+    // Generate PDF from HTML content
+    pdf
+      .create(htmlContent, pdfOptions)
+      .toFile("daily_report.pdf", (err, result) => {
+        if (err) {
+          console.error("Error generating PDF:", err);
+          res.status(500).json({ error: "Failed to generate PDF" });
+        } else {
+          // Send the generated PDF file as a response
+          res.download(result.filename, "daily_report.pdf", (err) => {
+            if (err) {
+              console.error("Error downloading PDF:", err);
+              res.status(500).json({ error: "Failed to download PDF" });
+            } else {
+              // Delete the temporary PDF file after download
+              fs.unlinkSync(result.filename);
+            }
+          });
+        }
+      });
+  } catch (error) {
+    console.error("Error generating daily report:", error);
+    res.status(500).json({ error: "Failed to generate daily report" });
   }
 };
 

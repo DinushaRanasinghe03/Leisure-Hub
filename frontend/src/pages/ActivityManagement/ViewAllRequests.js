@@ -32,14 +32,14 @@ export const ViewAllRequests = () => {
       const response = await axios.get(
         "/api/v1/gameandactivityRequest/daily-report",
         {
-          responseType: "blob", // Ensure response type is set to blob to handle binary data
+          responseType: "blob",
         }
       );
-      const blob = new Blob([response.data], { type: "application/pdf" }); // Change the content type to "application/pdf"
+      const blob = new Blob([response.data], { type: "application/pdf" });
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = "daily_report.pdf"; // Specify the filename with a .pdf extension for the downloaded PDF file
+      a.download = "daily_report.pdf";
       a.click();
     } catch (error) {
       console.error("Error downloading daily report:", error);
@@ -48,6 +48,21 @@ export const ViewAllRequests = () => {
       setLoading(false);
     }
   };
+
+  const deleteRequest = async (id) => {
+    try {
+      await axios.delete(
+        `/api/v1/gameandactivityRequest/delete-gameandactivityRequest/${id}`
+      );
+      // Update the list of requests after deletion
+      getAllGamesAndActivitiesRequest();
+      toast.success("Request deleted successfully");
+    } catch (error) {
+      console.error("Error deleting request:", error);
+      toast.error("Failed to delete request");
+    }
+  };
+
   return (
     <Layout>
       <div className="container-fluid m-3 p-3">
@@ -67,23 +82,29 @@ export const ViewAllRequests = () => {
                   >
                     <div className="card-body">
                       <p className="card-text">
-                        Game or Activity Name :{request.name}
+                        Game or Activity Name: {request.name}
                       </p>
                       <p className="card-text">
-                        Member Name :{request.MemberName}
+                        Member Name: {request.MemberName}
                       </p>
                       <p className="card-text">
-                        Number of Participation :{request.noParticipation}
+                        Number of Participation: {request.noParticipation}
                       </p>
                       <p className="card-text">
-                        Contact Number :{request.contactNo}
+                        Contact Number: {request.contactNo}
                       </p>
                       <p className="card-text">
-                        Preffered Date :{request.scheduledDate}
+                        Preferred Date: {request.scheduledDate}
                       </p>
                       <p className="card-text">
-                        Preffered Time :{request.Time}
+                        Preferred Time: {request.Time}
                       </p>
+                      <button
+                        className="btn btn-danger"
+                        onClick={() => deleteRequest(request._id)}
+                      >
+                        Delete
+                      </button>
                     </div>
                   </div>
                 ))}

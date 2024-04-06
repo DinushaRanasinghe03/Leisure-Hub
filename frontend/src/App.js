@@ -3,9 +3,9 @@ import DashboardAdmin from "./pages/DashboardAdmin";
 import Resource from "./pages/Resource";
 import Maintenance from "./pages/Maintenance";
 import PageNotFound from "./pages/PageNotFound";
-import AddResource from "./pages/resources/AddResource";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import AddResource from "./pages/Resources/AddResource";
+
+;
 
 function App() {
   return (

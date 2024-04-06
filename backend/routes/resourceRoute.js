@@ -2,7 +2,6 @@ import express from "express";
 import {
   createResourceController,
   deleteResourceController,
-  getAllResourceController,
   getResourceController,
   getSingleResourceController,
   updateResourceController,

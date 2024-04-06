@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import Layout from "../../components/layout/Layout";
 import "./AddResource.css";
+import { toast } from "react-hot-toast";
 import axios from "axios";
-import { toast } from "react-toastify";
-const { Option } = "Select";
+import { useNavigate } from "react-router-dom";
 
 const AddResource = () => {
+  const navigate = useNavigate();
   const [numberOrder, setNumberOrder] = useState("");
   const [itemId, setItemId] = useState("");
   const [itemName, setItemName] = useState("");
@@ -18,71 +19,45 @@ const AddResource = () => {
   const [supplierEmail, setSupplierEmail] = useState("");
   const [datePurchased, setDatePurchased] = useState("");
 
-  const [itemIdError, setItemIdError] = useState("");
-  const [quantityError, setQuantityError] = useState("");
-  const [alertQuantityError, setAlertQuantityError] = useState("");
-  const [supplierEmailError, setSupplierEmailError] = useState("");
-
-  //form validation
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    // Clear previous errors
-    setItemIdError("");
-    setQuantityError("");
-    setAlertQuantityError("");
-    setSupplierEmailError("");
-
-    // ItemId must start with either A, G, M
-    if (!itemId.match(/^(A|G|M)/)) {
-      setItemIdError("Item ID must start with A, G, or M");
-      return;
-    }
-
-    // Quantity and alertQuantity must not be less than 0
-    if (quantity < 0) {
-      setQuantityError("Quantity cannot be less than 0");
-      return;
-    }
-
-    if (alertQuantity < 0) {
-      setAlertQuantityError("Alert Quantity cannot be less than 0");
-      return;
-    }
-
-    // Supplier email must be in abc@gmail.com format
-    if (!supplierEmail.match(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/)) {
-      setSupplierEmailError("Supplier email must be in abc@gmail.com format");
-      return;
-    }
-
-    // If all validations pass, display success message
-    console.log(
-      numberOrder,
-      itemId,
-      itemName,
-      type,
-      quantity,
-      unitPrice,
-      description,
-      alertQuantity,
-      supplier,
-      supplierEmail,
-      datePurchased
-    );
-    toast.success("Added Successfully!");
-  };
-
   //create product function
-  const handleCreate = () => {
+  const handleCreate = async (e) => {
+    e.preventDefault();
+    try {
+      const resourceData = new FormData();
+      resourceData.append("numberOrder", numberOrder);
+      resourceData.append("itemId", itemId);
+      resourceData.append("itemName", itemName);
+      resourceData.append("type", type);
+      resourceData.append("quantity", quantity);
+      resourceData.append("unitPrice", unitPrice);
+      resourceData.append("description", description);
+      resourceData.append("alertQuantity", alertQuantity);
+      resourceData.append("supplier", supplier);
+      resourceData.append("unitPrice", unitPrice);
+      resourceData.append("supplierEmail", supplierEmail);
+      resourceData.append("datePurchased", datePurchased);
 
-  }
+      const { data } = await axios.post(
+        "http://localhost:8070/api/v1/resources/createResource",
+        resourceData
+      );
+      if (data?.success) {
+        toast.success("Resource Created successfully");
+        navigate("/resource");
+      } else {
+        throw new Error(data?.message || "Failed to fetch resources");
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Error in getting resources: " + error.message);
+    }
+  };
 
   return (
     <Layout title={"Add Resource - LeisureHub"}>
       <div className="form-container">
         <h2>Add New Resource</h2>
-        <form onSubmit={handleSubmit} action="#" method="POST">
+        <form onSubmit={handleCreate} action="#" method="POST">
           <div className="form-group">
             <label htmlFor="itemNo">Number</label>
             <input
@@ -107,7 +82,6 @@ const AddResource = () => {
               onChange={(e) => setItemId(e.target.value)}
               required
             />
-            {itemIdError && <p className="error-message">{itemIdError}</p>}
           </div>
 
           <div className="form-group">
@@ -133,10 +107,9 @@ const AddResource = () => {
               required
             >
               <option value="">Select Type</option>
-              <option value="Type1">Theater</option>
-              <option value="Type2">Games</option>
-              <option value="Type3">Activities</option>
-              {/* Add more options as needed */}
+              <option value="Theater">Theater</option>
+              <option value="Games">Games</option>
+              <option value="Activities">Activities</option>
             </select>
           </div>
 
@@ -151,7 +124,6 @@ const AddResource = () => {
               onChange={(e) => setQuantity(e.target.value)}
               required
             />
-            {quantityError && <p className="error-message">{quantityError}</p>}
           </div>
 
           <div className="form-group">
@@ -191,9 +163,6 @@ const AddResource = () => {
               onChange={(e) => setAlertQuantity(e.target.value)}
               required
             />
-            {alertQuantityError && (
-              <p className="error-message">{alertQuantityError}</p>
-            )}
           </div>
 
           <div className="form-group">
@@ -218,9 +187,6 @@ const AddResource = () => {
               onChange={(e) => setSupplierEmail(e.target.value)}
               required
             />
-            {supplierEmailError && (
-              <p className="error-message">{supplierEmailError}</p>
-            )}
           </div>
 
           <div className="form-group">
@@ -236,7 +202,9 @@ const AddResource = () => {
           </div>
 
           <div>
-            <button className="addResource-button" onClick={handleCreate}> Add Resource</button>
+            <button className="addResource-button" onClick={handleCreate}>
+              Add Resource
+            </button>
           </div>
         </form>
       </div>

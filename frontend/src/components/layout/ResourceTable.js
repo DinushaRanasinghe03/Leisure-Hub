@@ -47,19 +47,19 @@ const ResourceTable = () => {
           </tr>
         </thead>
         <tbody>
-          {resources.map((resource) => (
-            <tr key={resource._id}>
-              <td>{resource.numberOrder}</td>
-              <td>{resource.itemId}</td>
-              <td>{resource.itemName}</td>
-              <td>{resource.type}</td>
-              <td>{resource.quantity}</td>
-              <td>{resource.unitPrice}</td>
-              <td>{resource.description}</td>
-              <td>{resource.alertQuantity}</td>
-              <td>{resource.supplier}</td>
-              <td>{resource.supplierEmail}</td>
-              <td>{resource.datePurchased}</td>
+          {resources.map((r) => (
+            <tr key={r._id}>
+              <td>{r.numberOrder}</td>
+              <td>{r.itemId}</td>
+              <td>{r.itemName}</td>
+              <td>{r.type}</td>
+              <td>{r.quantity}</td>
+              <td>{r.unitPrice}</td>
+              <td>{r.description}</td>
+              <td>{r.alertQuantity}</td>
+              <td>{r.supplier}</td>
+              <td>{r.supplierEmail}</td>
+              <td>{r.datePurchased}</td>
 
               <td>
                 <button className="view-button">View</button>

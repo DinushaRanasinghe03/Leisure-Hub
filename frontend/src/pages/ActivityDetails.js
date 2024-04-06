@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import Layout from "../components/Layout/Layout";
+import { useNavigate } from "react-router-dom";
 
 const ActivityDetails = () => {
+  const navigate = useNavigate();
   // Get the slug parameter from the URL
   const params = useParams();
 
@@ -28,7 +30,10 @@ const ActivityDetails = () => {
       setGameandactivity(data?.gamesandactivities);
       // If game/activity ID is available, fetch related games/activities
       if (data?.gamesandactivities?._id) {
-        getRelatedGameAndActivity(data?.gamesandactivities?._id);
+        getSimilarGameAndActivity(
+          data?.gamesandactivities._id,
+          data?.gamesandactivities.gameoractivitycategory._id
+        );
       }
     } catch (error) {
       console.log(error);
@@ -36,10 +41,10 @@ const ActivityDetails = () => {
   };
 
   // Function to fetch related games/activities based on current game/activity ID
-  const getRelatedGameAndActivity = async (aid, cid) => {
+  const getSimilarGameAndActivity = async (aid, cid) => {
     try {
       const { data } = await axios.get(
-        `/api/v1/gameandactivity/related-gameandactivity/${cid}`
+        `/api/v1/gameandactivity/related-gameandactivity/${aid}/${cid}`
       );
       // Set related games/activities
       setRelatedGameAndActivity(data?.gamesandactivities);
@@ -48,6 +53,14 @@ const ActivityDetails = () => {
     }
   };
 
+  // Function to navigate to game details page
+  const navigateToGameDetails = (slug) => {
+    navigate(`/activity/${slug}`);
+  };
+  // Function to navigate to requests page
+  const navigateToRequests = (slug, name) => {
+    navigate(`/gamesandactivitiesrequests/${slug}`, { state: { name } });
+  };
   return (
     <Layout title={"Games and Activities Details"}>
       <div className="container mt-2">
@@ -74,7 +87,14 @@ const ActivityDetails = () => {
             <br />
             <h6>Instructors: {gameandactivity?.instructors}</h6>
             {/* Button for requesting the game/activity */}
-            <button className="btn btn-secondary ms-2">Request</button>
+            <button
+              className="btn btn-secondary ms-2"
+              onClick={() =>
+                navigateToRequests(gameandactivity.slug, gameandactivity.name)
+              }
+            >
+              Request
+            </button>
           </div>
         </div>
 
@@ -95,7 +115,12 @@ const ActivityDetails = () => {
                     <h5 className="card-title">{g.name}</h5>
                     <p className="card-text">{g.description}</p>
                     {/* Button for viewing details of related game/activity */}
-                    <button className="btn btn-primary">View Details</button>
+                    <button
+                      className="btn btn-primary ms-2"
+                      onClick={() => navigateToGameDetails(g.slug)}
+                    >
+                      More Details
+                    </button>
                   </div>
                 </div>
               </div>

@@ -36,7 +36,7 @@ function App() {
         <Route path="/policy" element={<Policy />} />
         <Route path="*" element={<Pagenotfound />} />
         <Route
-          path="/adminactivitydashboard"
+          path="/adminactivitydashboard/activitymanagement"
           element={<AdminActivityDashboard />}
         />
         <Route

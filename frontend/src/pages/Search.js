@@ -10,7 +10,7 @@ const Search = () => {
     <Layout title={"Search Results"}>
       <div className="container">
         <div className="text-center">
-          <h1>Serach Results</h1>
+          <h1>Search Result</h1>
           <h6>
             {values?.results.length < 1
               ? "No Game or Activity Found"

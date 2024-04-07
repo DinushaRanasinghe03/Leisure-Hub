@@ -1,6 +1,6 @@
 import Layout from "../components/Layout/Layout";
 import React from "react";
-import { useSearch } from "../context/search";
+import { useSearch } from "../context/Search.js";
 import { useNavigate } from "react-router-dom";
 
 const SearchActivity = () => {

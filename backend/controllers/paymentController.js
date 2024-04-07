@@ -16,7 +16,8 @@ exports.addPayment = async (req, res) => {
             name: req.body.name,
             number: req.body.number,
             address: req.body.address,
-            email: req.body.email
+            email: req.body.email,
+            is_card_payment: req.body.is_card_payment
         });
         const payment = await newPayment.save();
         res.json(payment);

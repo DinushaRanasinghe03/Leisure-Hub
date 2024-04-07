@@ -17,6 +17,12 @@ const paymentSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    is_card_payment: {
+        type: Boolean,
+        required: true,
+        default: false
+    },
+
 
 });
 

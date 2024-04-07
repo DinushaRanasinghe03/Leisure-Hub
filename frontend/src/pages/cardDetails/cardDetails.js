@@ -17,44 +17,12 @@ const BasicCardDetailsForm = () => {
   const [number,setNumber]=useState('');
   const [email,setEmail]=useState('');
   const [otp, setOTP] = useState('');
-  const [verificationStatus, setVerificationStatus] = useState('');
-  
-
-  const handleGenerateOTP = () => {
-    // Generate a 6-digit OTP
-    const generatedOTP = Math.floor(100000 + Math.random() * 900000);
-    setOTP(generatedOTP);
-    setVerificationStatus('');
-  };
-
-  const handleVerifyOTP = (enteredOTP) => {
-    if (enteredOTP === otp) {
-      setVerificationStatus('OTP Verified!');
-    } else {
-      setVerificationStatus('Incorrect OTP. Please try again.');
-    }
-  };
-
- 
-
-const handleSendEmail = () => {
-  setEmail('himashiamaya2@gmail.com')
-  // Send OTP to email
-  axios.post('/send-otp', { email, otp })
-    .then(response => {
-      console.log(response.data);
-    })
-    .catch(error => {
-      console.error('Error sending OTP:', error);
-      });
-  };
+  const [secret, set] = useState('');
 
   useEffect(() => {
     fetchData();
   }, []);
 
-
-  
   //submitdata by id new
   const fetchData = async () => {
     const url = new URL(window.location.href); // Create a URL object
@@ -91,9 +59,7 @@ console.log('id',id);
     
       const response = await axios.post('/api/cardpayments/', data);
       console.log('data', response.data);
-      window.location.href = "/all"
-
-
+      window.location.href = `/otp?id=${response.data._id}`;
     } catch (error) {
       console.error('error:', error);
     }
@@ -121,7 +87,7 @@ console.log('id',id);
 
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>CVV</Form.Label>
-          <Form.Control type="text" placeholder="CVV" value={cvv} onChange={(e) => { setCVV(e.target.value) }} />
+          <Form.Control type="password" placeholder="CVV" value={cvv} onChange={(e) => { setCVV(e.target.value) }} />
           <Form.Text className="text-muted">
             We'll never share your CVV with anyone else.
           </Form.Text>

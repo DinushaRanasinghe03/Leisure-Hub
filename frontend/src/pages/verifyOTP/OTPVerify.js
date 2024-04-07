@@ -5,9 +5,10 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
 
-function OTPAuthenticationPage() {
-  const [email, setEmail] = useState('');
-  const [id, setID] = useState('');
+function OTPVerification() {
+  const [card_id, setCardID] = useState('');
+  const [secret, setSecret] = useState('');
+  const [otp, setOTP] = useState('');
 
   useEffect(() => {
     fetchData();
@@ -18,36 +19,47 @@ function OTPAuthenticationPage() {
     const searchParams = new URLSearchParams(url.search); // Extract search params
 
     // Access specific parameter values using get()
-    const id = searchParams.get('id');
-    setID(id);
+    const secret = searchParams.get('secret');
+    const card_id = searchParams.get('id');
+    console.log("secret", secret);
+    console.log("card_id", card_id);
+    setCardID(card_id);
+    setSecret(secret);
   };
 
   const submitData = async () => {
-    let data = {
-      email: email
-    };
     try {
-      const response = await axios.post('/api/cardpayments/otp', data);
+      let data = {
+        otp: otp,
+        secret: secret,
+        card_id: card_id,
+      }
+      const response = await axios.post('/api/cardpayments/verification', data);
       console.log('data', response.data);
-      window.location.href = `/verify?id=${id}&secret=${response.data.secret}`;
+      if (response.data.verification) {
+        window.location.href = "/all"
+      } else {
+        window.location.href = "/";
+      }
     } catch (error) {
       console.error('error:', error);
     }
-  };
+  }
+
   return (
     <div style={{ backgroundImage: "url('background.jpg')", height: '100vh', width: '100vw', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
       <div style={{ backgroundColor: '#b3e0f2', padding: '60px', borderRadius: '20px', boxShadow: '0 0 20px rgba(0, 0, 0, 0.1)', width: '50%', maxWidth: '800px' }}>
         <h2 style={{ fontSize: '28px', marginBottom: '30px' }}>OTP Verification</h2>
         <Form>
+          <p style={{ marginTop: '20px', fontSize: '16px' }}>One time password has been sent to your email .Please verify it.</p>
           <Form.Group className="mb-4" controlId="formBasicEmail">
-            <Form.Label style={{ fontSize: '20px', marginBottom: '10px' }}>Enter your email address</Form.Label>
-            <Form.Control type="email" placeholder="Enter email" style={{ fontSize: '18px', padding: '15px' }} value={email} onChange={(e) => { setEmail(e.target.value) }} />
+            <Form.Label style={{ fontSize: '20px', marginBottom: '10px' }}>Enter your OTP</Form.Label>
+            <Form.Control type="text" placeholder="Enter OTP" style={{ fontSize: '18px', padding: '15px' }} value={otp} onChange={(e) => { setOTP(e.target.value) }} />
             <Form.Text className="text-muted" style={{ fontSize: '16px' }}>
-              We'll never share your email with anyone else.
             </Form.Text>
           </Form.Group>
           <Button variant="primary" onClick={submitData} style={{ fontSize: '20px', padding: '15px 30px' }}>
-            Send OTP
+            Verify OTP
           </Button>
         </Form>
       </div>
@@ -55,4 +67,4 @@ function OTPAuthenticationPage() {
   );
 }
 
-export default OTPAuthenticationPage;
+export default OTPVerification;

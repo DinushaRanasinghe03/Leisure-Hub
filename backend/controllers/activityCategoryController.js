@@ -37,7 +37,7 @@ export const createActivityCategoryController = async (req, res) => {
   }
 };
 
-//update activity categoory
+//update activity category
 export const updateActivityCategoryController = async (req, res) => {
   try {
     const { name } = req.body;

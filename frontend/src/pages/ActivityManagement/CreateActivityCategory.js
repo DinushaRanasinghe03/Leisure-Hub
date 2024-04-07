@@ -32,7 +32,7 @@ export const CreateActivityCategory = () => {
     }
   };
 
-  //get all games categories
+  //get all games and activity categories
   const getAllCategory = async () => {
     try {
       const { data } = await axios.get(
@@ -53,7 +53,7 @@ export const CreateActivityCategory = () => {
     getAllCategory();
   }, []);
 
-  //update category
+  //update games and activity category
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
@@ -74,7 +74,7 @@ export const CreateActivityCategory = () => {
       toast.error("Something went wrong when updating category");
     }
   };
-  //delete category
+  //delete games and activity category
   const handleDelete = async (pId) => {
     try {
       const { data } = await axios.delete(

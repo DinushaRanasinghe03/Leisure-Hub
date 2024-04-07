@@ -1,12 +1,16 @@
 import React from "react";
 import Layout from "../components/layout/Layout";
-import { NavLink } from "react-router-dom";
 import ResourceTable from "../components/layout/ResourceTable";
+import { Link } from "react-router-dom";
+import "./Resources/AddResource.css";
 
 const Resource = () => {
   return (
     <Layout title={"Admin Resources - LeisureHub"}>
-      <NavLink to="/addResource">Add Resource</NavLink>
+      <Link to={`/addResource`}>
+        <button className="addResource-button">Add Resource</button>
+      </Link>
+
       <div>
         <ResourceTable />
       </div>

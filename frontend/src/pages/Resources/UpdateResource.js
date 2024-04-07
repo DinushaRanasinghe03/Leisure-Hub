@@ -9,17 +9,18 @@ const UpdateResource = () => {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const [numberOrder, setNumberOrder] = useState("");
-  const [itemId, setItemId] = useState("");
-  const [itemName, setItemName] = useState("");
-  const [type, setType] = useState("");
-  const [quantity, setQuantity] = useState("");
-  const [unitPrice, setUnitPrice] = useState("");
-  const [description, setDescription] = useState("");
-  const [alertQuantity, setAlertQuantity] = useState("");
-  const [supplier, setSupplier] = useState("");
-  const [supplierEmail, setSupplierEmail] = useState("");
-  const [datePurchased, setDatePurchased] = useState("");
+  // State variables to hold resource data
+  const [numberOrder, setNumberOrder] = useState(""); // Added
+  const [itemId, setItemId] = useState(""); // Added
+  const [itemName, setItemName] = useState(""); // Added
+  const [type, setType] = useState(""); // Added
+  const [quantity, setQuantity] = useState(""); // Added
+  const [unitPrice, setUnitPrice] = useState(""); // Added
+  const [description, setDescription] = useState(""); // Added
+  const [alertQuantity, setAlertQuantity] = useState(""); // Added
+  const [supplier, setSupplier] = useState(""); // Added
+  const [supplierEmail, setSupplierEmail] = useState(""); // Added
+  const [datePurchased, setDatePurchased] = useState(""); // Added
 
   //get single resource
   // Fetch single resource data
@@ -30,7 +31,7 @@ const UpdateResource = () => {
         `http://localhost:8070/api/v1/resources/getResource/${id}`
       );
       if (response.data.success) {
-        const resource = response.data.resource; 
+        const resource = response.data.resource;
         setNumberOrder(resource.numberOrder);
         setItemId(resource.itemId);
         setItemName(resource.itemName);

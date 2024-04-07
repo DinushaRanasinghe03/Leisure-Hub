@@ -2,7 +2,8 @@ import React from "react";
 import {useFormik} from 'formik'
 //import { Container} from 'reactstrap'
 //import Axios from 'axios';
-import './EmployeeForm.css';
+//import '../../pages/Employee/EmployeeForm.css'
+import {  useNavigate } from 'react-router-dom';
 //import '../../App.css'
 
 import { Form, Button, Col, Row } from "react-bootstrap";
@@ -11,6 +12,7 @@ import { Form, Button, Col, Row } from "react-bootstrap";
 //const API_URL = 'http://localhost:8080/api/v1/employee';
 
   const EmployeeForm = () => {
+    const navigate = useNavigate();
 
     const validate = values => {
       const errors = {};
@@ -86,6 +88,7 @@ import { Form, Button, Col, Row } from "react-bootstrap";
             window.alert('Data has been inserted successfully');
             //window.location = "http://localhost:..../.....";
             console.log('Successfully added to list');
+            navigate('/employeelist')
           }else{
             console.error('Failed to submit form:', response.status, response.statusText);
           }

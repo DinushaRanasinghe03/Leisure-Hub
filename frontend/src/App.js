@@ -1,20 +1,28 @@
-import React from 'react'
-import { Routes, Route, Navigate } from 'react-router-dom'
-import Axios from "axios";
+import { BrowserRouter as Router, Route, Routes, } from 'react-router-dom';
+import React from 'react';
+import EmployeeForm from './pages/Employee/EmployeeForm';
+import EmployeeList from './pages/Employee/EmployeeList';
+import UpdateEmployeeForm from './pages/Employee/UpdateEmployeeForm';
+import EmployeeLeaveForm from './pages/Employee/EmployeeLeaveForm';
+import EmployeeSalaryForm from './pages/Employee/EmployeeSalaryForm';
 
-import EmployeeForm from './pages/Employee/EmployeeForm.js';
+// Import other pages if you have
 
 function App() {
   return (
-    <Routes>
+    <Router>
 
-        {/* Employee Management pages routing */}
-        
-        <Route path="/employeeRegister" element={<EmployeeForm />} />
-
-    </Routes>
+      <Routes>
+          <Route path="/" element={< EmployeeForm/>} />
+          <Route path="/employeelist" element={< EmployeeList/>} />
+          <Route path='/updateEmploee/:employeeId' element={<UpdateEmployeeForm />} />
+          <Route path='/employeeleave' element={<EmployeeLeaveForm/>}/>
+          <Route path='/employeesalary' element={<EmployeeSalaryForm/>}/>
+          </Routes>
+    
+     
+    </Router>
   );
 }
 
 export default App;
-

@@ -121,4 +121,3 @@ export async function deleteEmployee(req, res) {
 
 // Export all the controller functions as an object
 export default { addEmployee, getAllEmployee, getEmployee, updateEmployee, deleteEmployee };
-

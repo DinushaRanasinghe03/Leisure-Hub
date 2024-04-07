@@ -1,3 +1,4 @@
+
 * {
   margin: 0;
   padding: 0;
@@ -10,48 +11,6 @@ Body {
   background-size: cover;
 }
 
-
-:root {
-  /* midnight blue  */
-  --primary-color: #191970;
-  /* denim blue  */
-  --secondary-color: #6F8FAF;
-  --heading-color: #E6E6FA;
-  --text-color: #ffffff;
-  --font-name: "Montserrat", sans-serif;
-  --subtitle-font-name: "Island Moments", cursive;
-}
-
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
-}
-
-h1,
-h2,
-h3,
-h4,
-p {
-  color: #000000;
-}
-
-a {
-  text-decoration: none;
-  color: unset;
-}
-
-ul {
-  list-style: none;
-}
-
 /* heading  */
 .title {
   margin: 1em 0 0.5em 0;
@@ -61,7 +20,6 @@ ul {
   font-size: 1.8rem;
   line-height: 42px;
   font-weight: bold;
-  text-transform: uppercase;
 }
 
 label {
@@ -70,7 +28,6 @@ label {
   text-shadow: 0 -1px 1px rgba(21, 21, 21, 0.4);
   font-size: 1.2rem;
   color: #ffffff;
-  text-transform: capitalize;
 }
 
 section {
@@ -81,7 +38,7 @@ section {
   padding: 40px;
 
   width: fit-content;
-  background: rgba(23, 116, 203, 0.39);
+  background: #ffffff;
   border-radius: 16px;
   background: rgba(0, 0, 0, 0.39);
   box-shadow: 0 4px 30px rgba(21, 1, 1, 0.1);
@@ -103,7 +60,6 @@ section {
   color: var(--text-color);
   font-size: 1rem;
   font-weight: 800;
-  text-transform: capitalize;
 }
 
 .primary__btn:hover {
@@ -135,30 +91,11 @@ section {
   color: white;
 }
 
-.tertiary_btn {
-  background: rgb(5, 5, 67) !important;
-  color: #ffffff !important;
-  border: 2px solid white !important;
-  border-radius: 50px !important;
-  font-weight: 500 !important;
-  padding: 0.5rem 1.3rem !important;
-  text-decoration: none;
-  font-size: 0.8rem;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-
-}
-
-
-.tertiary_btn:hover {
-  color: var(--primary-color);
-  background: #000022;
-}
-
 /* radio button style */
-.radio {
+/* .radio {
   height: 18px;
   width: 18px;
-}
+} */
 
 /* dropdown style */
 select {
@@ -191,14 +128,13 @@ input {
   font-size: 1rem;
   font-weight: 700;
   width: 245px;
-  text-transform: capitalize;
 }
 
 /* textarea input  */
 
 textarea {
   padding: 5px;
-  background: rgb(192, 196, 192);
+  background: rgb(255, 255, 255);
   color: rgb(26, 24, 24);
   cursor: pointer;
   border: 1px solid black;
@@ -228,7 +164,7 @@ textarea::placeholder {
 thead,
 th {
   text-align: center;
-  border: 1px solid rgb(111, 110, 110);
+  border: 1px solid rgb(255, 255, 255);
   font-size: 1.2rem;
   padding: 10px 2px;
 }

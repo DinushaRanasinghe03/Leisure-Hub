@@ -1,5 +1,6 @@
 import movieScheduleModel from "../models/movieScheduleModel.js"
 import movieModel from "../models/movieModel.js";
+import movieCategoryModel from "../models/movieCategoryModel.js";
 
 // Controller function for creating a movie schedule
 export const createMovieScheduleController = async (req, res) => {
@@ -193,76 +194,86 @@ export const deleteMovieScheduleController = async (req, res) => {
 
 
 
-//generate report
-// Function to generate the report
+// Function to generate a movie report
 export const generateMovieReport = async (req, res) => {
     try {
-        // Retrieve all movies
-        const movies = await movieModel.find({}, '_id name');
+        // Fetch all movie schedules
+        const allSchedules = await movieScheduleModel.find().populate('movie');
 
-        // Retrieve all movie schedules
-        const movieSchedules = await movieScheduleModel.find({}, 'date movie');
+        // Fetch all movies
+        const allMovies = await movieModel.find();
 
-        // Initialize an empty object to store movie schedule counts
-        const movieScheduleCounts = {};
+        // Fetch all movie categories
+        const allCategories = await movieCategoryModel.find();
 
-        // Iterate through each movie schedule
-        movieSchedules.forEach(schedule => {
-            // Extract month and year from the schedule date
-            const monthYear = `${schedule.date.getFullYear()}-${schedule.date.getMonth() + 1}`;
-
-            // If the month-year key doesn't exist in the movie schedule counts object, initialize it
-            if (!movieScheduleCounts[monthYear]) {
-                movieScheduleCounts[monthYear] = {};
-            }
-
-            // If the movie ID doesn't exist in the month-year object, initialize it
-            if (!movieScheduleCounts[monthYear][schedule.movie]) {
-                movieScheduleCounts[monthYear][schedule.movie] = 0;
-            }
-
-            // Increment the count for the movie in that month
-            movieScheduleCounts[monthYear][schedule.movie]++;
-        });
-
-        // Prepare the report data
-        const report = [];
-
-        // Iterate through each month-year
-        for (const monthYear in movieScheduleCounts) {
-            const monthReport = {
-                monthYear,
-                movies: []
-            };
-
-            // Iterate through each movie and its count in that month
-            for (const movie of movies) {
-                const movieId = movie._id.toString();
-                const movieName = movie.name;
-                const movieCount = movieScheduleCounts[monthYear][movieId] || 0;
-
-                // Add movie details to the month report
-                monthReport.movies.push({
-                    name: movieName,
-                    count: movieCount
-                });
-            }
-
-            // Add the month report to the overall report
-            report.push(monthReport);
-        }
+        // Process data for the report
+        const reportData = {
+            totalMoviesScheduled: allSchedules.length,
+            moviesScheduledToday: allSchedules.filter(schedule => isToday(new Date(schedule.date))),
+            moviesScheduledUpcoming: getUpcomingMovies(allSchedules),
+            moviesByGenre: getMoviesByGenre(allSchedules, allCategories),
+            moviesWithMostShowtimes: getTopMoviesByShowtimes(allSchedules, 'desc'),
+            moviesWithFewestShowtimes: getTopMoviesByShowtimes(allSchedules, 'asc'),
+            movieScheduleOverview: allSchedules.map(schedule => ({
+                movie: schedule.movie.name,
+                date: schedule.date,
+                time: `${schedule.from} - ${schedule.to}`,
+                genre: schedule.movie.genre.name,
+                availability: calculateAvailability(schedule.movie._id, allMovies, allSchedules)
+            }))
+        };
 
         // Send the report as response
-        res.status(200).json({
-            success: true,
-            report
-        });
+        res.status(200).json({ success: true, report: reportData });
     } catch (error) {
         console.error(error);
-        res.status(500).send({
-            success: false,
-            message: 'Error in generating movie report',
-            error: error.message
-        });
+        res.status(500).json({ success: false, message: 'Error generating movie report', error: error.message });
     }
+};
+
+// Helper function to check if a date is today
+const isToday = (someDate) => {
+    const today = new Date();
+    return someDate.getDate() === today.getDate() &&
+        someDate.getMonth() === today.getMonth() &&
+        someDate.getFullYear() === today.getFullYear();
+};
+
+// Helper function to get upcoming movies
+const getUpcomingMovies = (schedules) => {
+    const today = new Date();
+    return schedules.filter(schedule => new Date(schedule.date) > today);
+};
+
+// Helper function to get movies by genre
+const getMoviesByGenre = (schedules, categories) => {
+    const moviesByGenre = {};
+    categories.forEach(category => {
+        moviesByGenre[category.name] = schedules.filter(schedule => schedule.movie.genre._id.toString() === category._id.toString()).length;
+    });
+    return moviesByGenre;
+};
+
+// Helper function to get top movies by showtimes
+const getTopMoviesByShowtimes = (schedules, order) => {
+    const movieCounts = {};
+    schedules.forEach(schedule => {
+        const movieId = schedule.movie._id.toString();
+        movieCounts[movieId] = (movieCounts[movieId] || 0) + 1;
+    });
+    const sortedMovies = Object.keys(movieCounts).sort((a, b) => order === 'desc' ? movieCounts[b] - movieCounts[a] : movieCounts[a] - movieCounts[b]);
+    return sortedMovies.slice(0, 5).map(movieId => ({
+        movie: schedules.find(schedule => schedule.movie._id.toString() === movieId).movie.name,
+        totalShowtimes: movieCounts[movieId]
+    }));
+};
+
+// Helper function to calculate availability of a movie
+const calculateAvailability = (movieId, allMovies, allSchedules) => {
+    const movie = allMovies.find(movie => movie._id.toString() === movieId.toString());
+    const totalSeats = movie ? movie.seats : 0;
+    const scheduledShowtimes = allSchedules.filter(schedule => schedule.movie._id.toString() === movieId.toString());
+    const totalScheduledSeats = scheduledShowtimes.reduce((total, schedule) => total + schedule.unavailable_seats.length, 0);
+    const availableSeats = totalSeats - totalScheduledSeats;
+    return availableSeats;
 };

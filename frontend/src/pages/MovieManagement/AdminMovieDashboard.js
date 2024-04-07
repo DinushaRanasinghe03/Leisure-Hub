@@ -1,100 +1,105 @@
 import React, { useState, useEffect } from 'react';
-import AdminMovieMenu from '../../components/Layout/AdminMovieMenu';
 import axios from 'axios';
+import AdminMovieMenu from '../../components/Layout/AdminMovieMenu';
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import PdfDocument from './MovieAnalysis'; 
 
-const Movie = () => {
-    const [reportData, setReportData] = useState([]);
+const AdminMovieDashboard = () => {
+    const [movieReport, setMovieReport] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        fetchReportData();
+        const fetchMovieReport = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8080/api/v1/movieschedule/generate-movie-report`); // Adjust the API endpoint as needed
+                setMovieReport(response.data.report);
+                setLoading(false);
+            } catch (error) {
+                setError(error.message);
+                setLoading(false);
+            }
+        };
+
+        fetchMovieReport();
     }, []);
 
-    const fetchReportData = async () => {
-        try {
-            setLoading(true);
-            const response = await axios.get('http://localhost:8080/api/v1/movieschedule/generate-movie-report');
-            setReportData(response.data.report);
-            setLoading(false);
-        } catch (error) {
-            console.error('Error fetching movie report:', error);
-            setLoading(false);
-        }
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
     };
 
-    const downloadReport = () => {
-        const filename = 'Monthly_movie_report.csv'; 
-        const csvData = generateCSV(reportData);
-        const blob = new Blob([csvData], { type: 'text/csv' });
-        const url = window.URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', filename);
-        document.body.appendChild(link);
-        link.click();
-    };
+    const sortedMovieSchedule = movieReport && movieReport.movieScheduleOverview && [...movieReport.movieScheduleOverview].sort((a, b) => new Date(a.date) - new Date(b.date));
 
-    const generateCSV = (data) => {
-        // Generate CSV data here based on the report data
-        let csv = 'Month-Year,Movie,No Of Screenings\n';
-        data.forEach(monthReport => {
-            monthReport.movies.forEach(movie => {
-                if (movie.count > 0) {
-                    csv += `${monthReport.monthYear},${movie.name},${movie.count}\n`;
-                }
-            });
-        });
-        return csv;
-    };
+    if (loading) {
+        return <p>Loading...</p>;
+    }
 
+    if (error) {
+        return <p>Error: {error}</p>;
+    }
+  
     return (
-        <div className='container-fluid m-4 p-3'>
-        <div className='row'>
-            <div className='col-md-3'>
-                <AdminMovieMenu />
-            </div>
+        <div className='container-fluid m-4 p-2'>
+            <div className='row'>
+                <div className='col-md-3'>
+                    <AdminMovieMenu />
+                </div>
                 <div className='col-md-9'>
-                    <h3 className="text-center">Movie Analysis</h3><br/>
-                    <div className='col-md-10 mx-auto '>
-                        {loading ? (
-                            <p>Loading...</p>
-                        ) : (
-                            <>
-                                <table className="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>Year-Month</th>
-                                            <th>Movie</th>
-                                            <th>No Of Screenings</th>
+                    <h3><center>Movie Analysis</center></h3>
+                    {movieReport && (
+                        <div>
+                            <p>Total Scheduling: {movieReport.totalMoviesScheduled}</p>
+                            <p>Movies Scheduled Today: {movieReport.moviesScheduledToday.length}</p>
+                            <p>Movies Scheduled Upcoming: {movieReport.moviesScheduledUpcoming.length}</p>
+                            
+                            <h5>Movies with Most Showtimes:</h5>
+                            <ul>
+                                {movieReport.moviesWithMostShowtimes.map(movie => (
+                                    <li key={movie.movie}>{movie.movie}: {movie.totalShowtimes}</li>
+                                ))}
+                            </ul>
+                            <h5>Movies with Fewest Showtimes:</h5>
+                            <ul>
+                                {movieReport.moviesWithFewestShowtimes.map(movie => (
+                                    <li key={movie.movie}>{movie.movie}: {movie.totalShowtimes}</li>
+                                ))}
+                            </ul><br/>
+                            <h5>Movie Schedule Overview:</h5>
+                            <table className="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Movie</th>
+                                        <th>Date</th>
+                                        <th>Time</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {sortedMovieSchedule.map((schedule, index) => (
+                                        <tr key={schedule.movie}>
+                                            <td>{index + 1}</td>
+                                            <td>{schedule.movie}</td>
+                                            <td>{formatDate(schedule.date)}</td>
+                                            <td>{schedule.time}</td>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        {reportData.map((monthReport, index) => (
-                                            <React.Fragment key={index}>
-                                                {monthReport.movies.map((movie, movieIndex) => (
-                                                    movie.count > 0 && (
-                                                        <tr key={movieIndex}>
-                                                            {movieIndex === 0 && (
-                                                                <td rowSpan={monthReport.movies.length}>{monthReport.monthYear}</td>
-                                                            )}
-                                                            <td>{movie.name}</td>
-                                                            <td>{movie.count}</td>
-                                                        </tr>
-                                                    )
-                                                ))}
-                                            </React.Fragment>
-                                        ))}
-                                    </tbody>
-                                </table>
-                                <button className='btn btn-primary' onClick={downloadReport} disabled={loading}>Download Report</button>
-                            </>
-                        )}
-                    </div>
+                                    ))}
+                                </tbody>
+                            </table>
+                            <PDFDownloadLink document={<PdfDocument movieReport={movieReport} />} fileName="movie_Analysis_Report.pdf">
+                                {({ blob, url, loading, error }) => (
+                                    <button className="btn btn-primary" disabled={loading}>{loading ? 'Loading document...' : 'Download Report'}</button>
+                                )}
+                            </PDFDownloadLink>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
     );
 };
 
-
-export default Movie;
+export default AdminMovieDashboard;

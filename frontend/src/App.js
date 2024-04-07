@@ -18,7 +18,6 @@ import MovieDetails from './pages/MovieDetails';
 import ShowtimeScheduling from './pages/Users/ShowtimeScheduling';
 
 
-
 function App() {
   return (
     <>
@@ -38,6 +37,7 @@ function App() {
       <Route path="/adminmoviedashboard/moviemanagement/movie/:slug" element={<UpdateMovie />} />
       <Route path="/adminmoviedashboard/moviemanagement/add-movieschedule" element={<AddMovieSchedule />} />
       <Route path="/adminmoviedashboard/moviemanagement/movieschedule" element={<ShowtimeSchedule />} />
+      
       
     </Routes>
       

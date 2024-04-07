@@ -24,7 +24,8 @@ router.put('/update-movieschedule/:id',formidable(),updateMovieScheduleControlle
 router.delete('/delete-movieschedule/:id',deleteMovieScheduleController )
 
 //generate report
-router.get('/generate-movie-report', generateMovieReport );
+router.get('/generate-movie-report', generateMovieReport);
+
 
 export default router
 

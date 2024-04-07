@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./ResourceTable.css";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 const ResourceTable = () => {
   const [resources, setResources] = useState([]);
@@ -65,7 +66,9 @@ const ResourceTable = () => {
                 <button className="view-button">View</button>
               </td>
               <td>
-                <button className="update-button">Update</button>
+                <Link to={`/updateResource/${r._id}`}>
+                  <button className="update-button">Update</button>
+                </Link>
               </td>
               <td>
                 <button className="delete-button">Delete</button>

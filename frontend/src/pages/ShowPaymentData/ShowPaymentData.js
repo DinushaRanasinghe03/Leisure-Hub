@@ -12,19 +12,26 @@ const BasicExampleTable = () => {
   const [address, setAddress] = useState('');
   const [email, setEmail] = useState('');
   const [allData, setAllData] = useState([]);
+  const [id, setID] = useState('');
+  const [paymentDetails, setPaymentDetails] = useState(null);
 
   useEffect(() => {
     fetchData();
   }, []);
 
   const fetchData = async () => {
+    const url = new URL(window.location.href); // Create a URL object
+    const searchParams = new URLSearchParams(url.search); // Extract search params
+    const id = searchParams.get('id');
+    setID(id)
+
     try {
-      const response = await axios.get('/api/payments');
-      console.log("response",response.data);
-      setAllData(response.data);
+       const response = await axios.get(`/api/payments/${id}`);
+       setPaymentDetails(response.data);
     } catch (error) {
-      console.error('error:', error);
-    }
+      console.error('Error fetching data:', error);
+    }
+   
   };
 
   const submitData = async () => {
@@ -61,7 +68,7 @@ const BasicExampleTable = () => {
 
     // Handle select button click for a specific row
     console.log("Selected row:", rowData);
-    // Add your logic here
+
   };
 
   return (
@@ -97,33 +104,34 @@ const BasicExampleTable = () => {
         </Form>
       </div> */}
 
-      <div className="table-container">
+  
+<div className="table-container">
         <h2>Payment Personal Details</h2>
         <Table striped bordered hover>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Phone Number</th>
-              <th>Address</th>
-              <th>Email</th>
-              <th>Select</th> {/* New column for select button */}
-            </tr>
-          </thead>
           <tbody>
-            {allData.map((data, index) => (
-              <tr key={index}>
-                <td>{data.name}</td>
-                <td>{data.number}</td>
-                <td>{data.address}</td>
-                <td>{data.email}</td>
-                <td>
-                  <Button variant="info" onClick={() => handleSelect(data)}>Select</Button>
-                </td>
-              </tr>
-            ))}
+            {paymentDetails && (
+              <>
+                <tr>
+                  <td>Name</td>
+                  <td>{paymentDetails.name}</td>
+                </tr>
+                <tr>
+                  <td>Phone Number</td>
+                  <td>{paymentDetails.number}</td>
+                </tr>
+                <tr>
+                  <td>Address</td>
+                  <td>{paymentDetails.address}</td>
+                </tr>
+                <tr>
+                  <td>Email</td>
+                  <td>{paymentDetails.email}</td>
+                </tr>
+              </>
+            )}
           </tbody>
         </Table>
-      </div>
+      </div>
     </div>
   );
 }

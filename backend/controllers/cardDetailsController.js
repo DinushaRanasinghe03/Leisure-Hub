@@ -26,6 +26,7 @@ exports.getCardPayments = async (req, res) => {
 //create
 exports.addCardPayment = async (req, res) => {
     try {
+        let cardPayment = {};
         const newCardPayment = new CardPayment({
             nameOnCard: req.body.nameOnCard,
             cardNumber: req.body.cardNumber,
@@ -34,13 +35,15 @@ exports.addCardPayment = async (req, res) => {
             payment: req.body.payment,
         });
 
-        const { secret, otp } = await generateOTP();
+        const verifyResponse = await verifyOTP(req.body.secret, req.body.otp);
 
-        const email = 'himashiamaya17@gmail.com'
-
-        const resSendEmail = await sendOTPByEmail(email, otp);
-
-        const cardPayment = await newCardPayment.save();
+        // if (verifyResponse) {
+            cardPayment = await newCardPayment.save();
+        // } else {
+        //     cardPayment = {
+        //         msg: "Error in verification"
+        //     }
+        // }
         res.json(cardPayment);
     } catch (err) {
         console.error(err.message);
@@ -48,6 +51,46 @@ exports.addCardPayment = async (req, res) => {
     }
 };
 
+//send otp
+exports.sendOTPtoEmail = async (req, res) => {
+    try {
+        const { secret, otp } = await generateOTP();
+        const email = await req.body.email;
+        const resSendEmail = await sendOTPByEmail(email, otp);
+        const response = { 
+            secret: secret, 
+            otp: otp 
+        }
+        console.log("res",response);
+        res.json(response);
+    } catch (err) {
+        console.log(err);
+        res.status(500).send('Server Error');
+    }
+};
+
+
+//verify otp
+
+exports.verifyOTPByEmail = async (req, res) => {
+    try {
+        const otp = await req.body.otp;
+        const secret = await req.body.secret;
+
+        const verify = await verifyOTP(secret, otp);
+        console.log(req.body.card_id);
+        console.log("verify", verify);
+        if (verify) {
+            res.status(200).json({verification: verify});
+        } else {
+            const deletedCardPayment = await CardPayment.findByIdAndDelete(req.body.card_id);
+            res.json({ msg: 'Please Try Again', deletedCardPayment });
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Can not Verify Card');
+    }
+}
 
 //delete
 exports.deleteCardPayment = async (req, res) => {
@@ -96,7 +139,7 @@ exports.editCardPayment = async (req, res) => {
 // Generate a new secret and OTP URI
 async function generateOTP() {
     const secret = speakeasy.generateSecret({ length: 10 }); // 10 bytes will be equivalent to 80 bits
-    const otp = await generateTOTP(secret.ascii);  
+    const otp = await generateTOTP(secret.ascii);
     return {
         secret: secret.ascii,
         otp
@@ -113,8 +156,6 @@ async function generateTOTP(secret) {
 
 // Send OTP via email
 async function sendOTPByEmail(email, otp) {
-    // Create a SMTP transporter
-    // Setup email data
     let mailOptions = {
         from: 'f4185e42-cff0-447f-ae38-b3ab49d43e6c@debugmail.io', // Enter sender email
         to: email, // Enter receiver email
@@ -125,4 +166,14 @@ async function sendOTPByEmail(email, otp) {
     // Send email
     let info = await transporter.sendMail(mailOptions);
     console.log('Message sent: %s', info.messageId);
+    return info;
+}
+
+async function verifyOTP(secret, otp) {
+    return speakeasy.totp.verify({
+        secret: secret,
+        encoding: 'ascii',
+        token: otp,
+        window: 2 
+    });
 }

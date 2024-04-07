@@ -13,7 +13,7 @@ const BasicExampleAdd = () => {
   const [email, setEmail] = useState('');
   const [paymentType, setPaymentType] = useState('');
   const [error, setError] = useState('');
-  const [formSubmitted, setFormSubmitted] = useState(false);
+  const [is_card_payment, setIsCardPayment] = useState(false);
 
   const validatePhoneNumber = () => {
     if (!number.trim()) {
@@ -24,18 +24,19 @@ const BasicExampleAdd = () => {
       return false;
     }
     setError('');
-    return true;
-  };
-
-
-
-
+    return true;
+  };
+  
   const submitData = async (e) => {
+    if (paymentType === 'card') {
+      setIsCardPayment(true);
+    }
     let data = {
       name: name,
       number: number,
       address: address,
-      email: email
+      email: email,
+      is_card_payment: is_card_payment
     };
 
     try {
@@ -43,21 +44,18 @@ const BasicExampleAdd = () => {
       const isValid = validatePhoneNumber();
       if (isValid) {
         const response = await axios.post('/api/payments', data);
-      console.log('data', response.data);
-      if(paymentType=='card'){
+        console.log('data', response.data);
+        if (paymentType === 'card') {
+          window.location.href = `/card?id=${response.data._id}`
+        } else {
+          window.location.href = `/all?id=${response.data._id}`
+        }
 
-        window.location.href = `/card?id=${response.data._id}`
-       
-      }else{
-        window.location.href = "/all"
-    
+      } else {
+        console.log('invalid data', error);
       }
-        
-      }else{
-        console.log('invalid data');
-      }
-      
-      
+
+
     } catch (error) {
       console.error('error:', error);
     }
@@ -89,11 +87,11 @@ const BasicExampleAdd = () => {
           </Form.Text>
         </Form.Group>
 
-        
-      <Form.Group className="mb-3" controlId="formBasicCheckbox" style ={{display :'flex'}} >
-        <Form.Check type="radio" label="cash" value='cash' checked={paymentType==='cash'} onChange={(e)=>setPaymentType(e.target.value)}/>
-        <Form.Check type="radio" label="card" value='card' checked={paymentType==='card'} onChange={(e)=>setPaymentType(e.target.value)}/>
-      </Form.Group>
+
+        <Form.Group className="mb-3" controlId="formBasicCheckbox" style={{ display: 'flex' }} >
+          <Form.Check type="radio" label="cash" value='cash' checked={paymentType === 'cash'} onChange={(e) => setPaymentType(e.target.value)} />
+          <Form.Check type="radio" label="card" value='card' checked={paymentType === 'card'} onChange={(e) => setPaymentType(e.target.value)} />
+        </Form.Group>
 
         <Button variant="primary" onClick={submitData}>
           Submit

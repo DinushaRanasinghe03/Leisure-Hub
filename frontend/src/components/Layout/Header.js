@@ -1,3 +1,5 @@
+//import LEISUREHUB_LOGO from '../assets/LEISUREHUB_LOGO.jpg'
+//import LEISUREHUB_LOGO from "../../assets/LEISUREHUB_LOGO.jpg";
 import React from "react";
 import { NavLink, Link } from "react-router-dom";
 import { useAuth } from "../../context/auth";
@@ -32,16 +34,58 @@ const Header = () => {
           >
             <span className="navbar-toggler-icon" />
           </button>
+
           <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
-            <Link to="/" className="navbar-brand">
-              LEISURE HUB
-            </Link>
+            {/* <Link
+              to="/"
+              className="navbar-brand"
+              style={{ display: "flex", alignItems: "center" }}
+            >
+              <img
+                src={LEISUREHUB_LOGO}
+                alt="logo"
+                style={{ maxHeight: "50px", marginRight: "10px" }}
+              />
+              <span style={{ marginTop: "5px" }}>LEISUREHUB</span>
+            </Link> */}
+
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
               <li className="nav-item">
                 <NavLink to="/" className="nav-link">
                   Home
                 </NavLink>
               </li>
+
+              <li className="nav-item">
+                <NavLink to="/movies" className="nav-link">
+                  Movies
+                </NavLink>
+              </li>
+
+              <li className="nav-item">
+                <NavLink to="/schedules" className="nav-link">
+                  Movie Show Times
+                </NavLink>
+              </li>
+
+              <li className="nav-item">
+                <NavLink to="/booking" className="nav-link">
+                  Booking
+                </NavLink>
+              </li>
+
+              <li className="nav-item">
+                <NavLink to="/games" className="nav-link">
+                  Games & Activities
+                </NavLink>
+              </li>
+
+              <li className="nav-item">
+                <NavLink to="/facilities" className="nav-link">
+                  Facilities
+                </NavLink>
+              </li>
+
               <li className="nav-item">
                 <NavLink to="/memberships" className="nav-link">
                   Memberships
@@ -99,12 +143,6 @@ const Header = () => {
                   </li>
                 </>
               )}
-
-              <li className="nav-item">
-                <NavLink to="/cart" className="nav-link" href="#">
-                  Cart (0)
-                </NavLink>
-              </li>
             </ul>
           </div>
         </div>

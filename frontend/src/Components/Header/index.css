@@ -60,7 +60,7 @@
 ==========footer==============
 */
 
-.footer {
+/* .footer {
   color: white;
   margin-top: 25px;
   padding: 25px;
@@ -78,10 +78,60 @@
 .footer a:hover {
   color: #ffefba;
   border-bottom: 1px solid #ffefba;
+} */
+.footer {
+  color: white;
+  padding: 25px;
+  background: #26294e !important;
+  background: -webkit-linear-gradient(to right, #937bd3, #380463);
+  background: linear-gradient(to right, #937bd3, #380463);
 }
 
+
+.footer a{
+  text-decoration: none;
+  color: #949CE3;
+  padding: 10px;
+}
+
+.footer a:hover{
+  color: #949CE3 ;
+  border-bottom: 1px solid #949CE3;
+}
 /* ================== */
 .movie-link {
   text-decoration: none !important;
   color: black !important;
+}
+.box {
+  background-color: #8590f5; /* Light blue */
+  border: 2px solid #8590f5;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.box-text {
+  font-size: 1.2em;
+  font-style: italic;
+  font-weight: 500;
+}
+
+.box-text2 {
+  font-size: 1.1em;
+  font-weight: 500;
+  text-align: left;
+}
+
+.register-button {
+  background-color: white;
+  color: black;
+  padding: 10px 20px;
+  border: 2px solid black;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.register-button:hover {
+  background-color: #f0f0f0; /* Light gray on hover */
 }

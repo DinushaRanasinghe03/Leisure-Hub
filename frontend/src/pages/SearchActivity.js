@@ -3,7 +3,7 @@ import React from "react";
 import { useSearch } from "../context/search";
 import { useNavigate } from "react-router-dom";
 
-const Search = () => {
+const SearchActivity = () => {
   const navigate = useNavigate();
   const [values, setValues] = useSearch();
   return (
@@ -56,4 +56,4 @@ const Search = () => {
   );
 };
 
-export default Search;
+export default SearchActivity;

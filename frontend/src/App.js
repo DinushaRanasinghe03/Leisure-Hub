@@ -15,8 +15,8 @@ import { ViewAllRequests } from "./pages/ActivityManagement/ViewAllRequests";
 import { UpdateGamesAndActivities } from "./pages/ActivityManagement/UpdateGamesAndActivities";
 import GamesAndActivities from "./pages/user/GamesAndActivities";
 import GamesAndActivitiesRequests from "./pages/user/GamesAndActivitiesRequests";
-import Search from "./pages/Search";
 import ActivityDetails from "./pages/ActivityDetails";
+import SearchActivity from "./pages/SearchActivity";
 
 function App() {
   return (
@@ -24,7 +24,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/activity/:slug" element={<ActivityDetails />} />
-        <Route path="/gamesandactivities/search" element={<Search />} />
+        <Route path="/gamesandactivities/search" element={<SearchActivity />} />
         <Route path="/gamesandactivities" element={<GamesAndActivities />} />
         <Route
           path="/gamesandactivitiesrequests/:slug"

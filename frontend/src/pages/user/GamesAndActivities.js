@@ -3,7 +3,7 @@ import Layout from "../../components/Layout/Layout";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Radio, Spin } from "antd";
-import SearchInput from "../../components/Form/SearchInput";
+import SearchInputActivity from "../../components/Form/SearchInputActivity";
 
 const GamesAndActivities = () => {
   const navigate = useNavigate();
@@ -105,7 +105,7 @@ const GamesAndActivities = () => {
           {/* Games and activities display */}
           <div className="col-md-10">
             <div className="row mt-3">
-              <SearchInput />
+              <SearchInputActivity />
               <h1 className="text-center">Games and Activities</h1>
               <h6 className="text-center">
                 Elevate your leisure with our streamlined online scheduling for

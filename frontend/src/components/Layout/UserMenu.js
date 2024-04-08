@@ -1,16 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
+import { useAuth } from "../../context/auth";
+import axios from "axios";
+
 const UserMenu = () => {
+  const [auth] = useAuth();
+
   return (
     <div>
       <div className="text-center dashboard-menu">
         <div className="list-group">
-          <h4>User Profile</h4>
+          <h4>My Profile</h4>
           <NavLink
             to="/dashboard/user/profile"
             className="list-group-item list-group-item-action"
           >
-            Profile
+            Update Profile
           </NavLink>
           <NavLink
             to="/dashboard/user/booked-movies"

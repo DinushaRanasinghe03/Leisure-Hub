@@ -1,6 +1,19 @@
 import userModel from "../models/userModel.js";
 import { comparePassword, hashPassword } from "../helpers/authHelper.js";
 import JWT from "jsonwebtoken";
+//import multer from "multer"; // Import multer for file upload
+
+// Multer configuration for file upload
+// const storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, "uploads/"); // Save uploaded files to the 'uploads' directory
+//   },
+//   filename: function (req, file, cb) {
+//     cb(null, file.originalname); // Use the original file name
+//   },
+// });
+
+// const upload = multer({ storage: storage });
 
 export const registerController = async (req, res) => {
   try {
@@ -16,6 +29,16 @@ export const registerController = async (req, res) => {
       membership,
       answer,
     } = req.body;
+
+    // // Check if req.file exists and handle the uploaded file
+    // let profilePicPath = null;
+    // if (req.file) {
+    //   profilePicPath = req.file.path;
+    // } else {
+    //   // Handle the case where no profile picture is uploaded
+    //   // For example, you might set a default profile picture path
+    //   // or leave it as null if it's not required
+    // }
 
     //validation
     if (!fname) {
@@ -48,6 +71,9 @@ export const registerController = async (req, res) => {
     if (!answer) {
       return res.send({ message: "Answer is Required" });
     }
+    // if (!profilePic) {
+    //   return res.send({ message: "profile picture is Required" });
+    // }
 
     // // Validation
     // if (!fname || !lname || !email || !addressLine1 || !addressLine2 || !dob || !password) {
@@ -64,6 +90,9 @@ export const registerController = async (req, res) => {
       });
     }
 
+    // Save the uploaded profile picture and get its path
+    //const profilePicPath = req.file ? req.file.path : null;
+
     //register user
     const hashedPassword = await hashPassword(password);
 
@@ -79,6 +108,7 @@ export const registerController = async (req, res) => {
       password: hashedPassword,
       membership,
       answer,
+      //profilePic: profilePicPath,
     }).save();
 
     res.status(201).send({

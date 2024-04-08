@@ -35,7 +35,7 @@ const ForgotPasssword = () => {
   };
   return (
     <Layout title={"Forgot Password - LEISURE HUB"}>
-      <div className="form-container ">
+      <div className="login-form">
         <form onSubmit={handleSubmit}>
           <h4 className="title">RESET PASSWORD</h4>
 
@@ -57,7 +57,7 @@ const ForgotPasssword = () => {
               onChange={(e) => setAnswer(e.target.value)}
               className="form-control"
               id="exampleInputEmail1"
-              placeholder="Enter Your favorite Sport Name "
+              placeholder="Enter Your favorite Sport "
               required
             />
           </div>
@@ -73,7 +73,7 @@ const ForgotPasssword = () => {
             />
           </div>
 
-          <button type="submit" className="btn btn-primary">
+          <button type="submit" className="form-button">
             RESET
           </button>
         </form>

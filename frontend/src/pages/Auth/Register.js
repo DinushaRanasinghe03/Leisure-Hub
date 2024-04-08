@@ -16,6 +16,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [membership, setMembership] = useState("");
   const [answer, setAnswer] = useState("");
+  const [profilePic, setProfilePic] = useState();
   const navigate = useNavigate();
 
   const location = window.location.pathname;
@@ -29,6 +30,10 @@ const Register = () => {
 
   const handleMembershipChange = (event) => {
     setMembership(event.target.value);
+  };
+
+  const handleProfilePicChange = (event) => {
+    setProfilePic(event.target.files[0]); // Update state with selected file
   };
 
   const handleSubmit = async (e) => {
@@ -45,24 +50,12 @@ const Register = () => {
         password,
         membership,
         answer,
+        profilePic,
       });
-
-      // if (res && res.data.success) {
-      //   // Redirect to payment pathway with membership payment value
-      //   if (membership === "individual") {
-      //     window.location.href = "payment?amount=5000"; // Redirect to payment page with the payment amount
-      //   } else if (membership === "family") {
-      //     window.location.href = "payment?amount=15000"; // Redirect to payment page with the payment amount
-      //   } else if (membership === "Corporate standared") {
-      //     window.location.href = "payment?amount=40000"; // Redirect to payment page with the payment amount
-      //   } else if (membership === "Corporate max") {
-      //     window.location.href = "payment?amount=40000"; // Redirect to payment page with the payment amount
-      //   }
-      //   toast.success(res.data && res.data.message);
 
       if (res && res.data.success) {
         navigate("/login");
-        toast.success(res.data && res.data.message);
+        toast.success(res.data.message);
       } else {
         toast.error(res.data.message);
       }
@@ -78,8 +71,8 @@ const Register = () => {
         <table>
           <tr>
             <td>
-              <div className="register-container">
-                <div className="form-container">
+              <div>
+                <div className="membership-details">
                   <form onSubmit={handleSubmit}>
                     <h4 className="title">REGISTER FORM</h4>
                     <div className="row mb-3">
@@ -188,6 +181,17 @@ const Register = () => {
                         />
                       </div>
                     </div>
+                    {/* <div className="row mb-3">
+                      <div className="col-md-6">
+                        <input
+                          type="file"
+                          onChange={handleProfilePicChange} // Handle profile picture change
+                          className="form-control"
+                          accept="image/*" // Accept only image files
+                          aria-label="Profile Picture"
+                        />
+                      </div>
+                    </div> */}
 
                     <div className="additional-content">
                       <h5>Membership Types</h5>
@@ -215,17 +219,17 @@ const Register = () => {
                         </label>
                         <br />
                       </div>
-                      &nbsp;&nbsp;&nbsp; Corporate memberships
+                      Corporate memberships
                       <div>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <input
                           type="radio"
-                          value="corporate standared"
-                          checked={membership === "corporate standared"}
+                          value="corporate standard"
+                          checked={membership === "corporate standard"}
                           onChange={handleMembershipChange}
                         />
-                        <label htmlFor="Corporate standared">
-                          <b>Corporate standared</b>
+                        <label htmlFor="Corporate standard">
+                          <b>Corporate Standard</b>
                         </label>
                         <br />
                       </div>
@@ -238,14 +242,14 @@ const Register = () => {
                           onChange={handleMembershipChange}
                         />
                         <label htmlFor="Corporate max">
-                          <b>Corporate max</b>
+                          <b>Corporate Max</b>
                         </label>
                         <br />
                       </div>
                     </div>
                     <br />
 
-                    <button type="submit" className="">
+                    <button type="submit" className="form-button">
                       Submit
                     </button>
                   </form>
@@ -253,41 +257,42 @@ const Register = () => {
                 </div>
               </div>
             </td>
-
             <td>
-              <div className="membership-details">
-                <div class="register-container text-center">
+              <div>
+                <div className="membership-details">
                   <div class="col">
                     <div class="row">
                       <br />
-
-                      <b>Individual membership</b>
                       <center>
+                        <b>Individual membership</b>
+                        <br />
                         Unlimited access to in-complex swimming pool and Gym.
                         <br />
                         Unlimited Movies and Activities.
                         <br />
-                        <div class="red-text">LKR.5000 monthly</div>
+                        <div class="membership-prices">LKR.5000 monthly</div>
                         <br />
                         <br />
                       </center>
                     </div>
                     <div class="row">
-                      <b>Family membership</b>
-
                       <center>
+                        <b>Family membership</b>
+                        <br />
                         Equivalent to 4 Individual Memberships. <br />
                         Unlimited access to in-complex swimming pool and Gym.
                         <br />
                         Unlimited Movies and Activities
                         <br />
-                        <div class="red-text">LKR.15000 monthly</div>
+                        <div class="membership-prices">LKR.15,000 monthly</div>
+                        <br />
                         <br />
                       </center>
                     </div>
                     <div class="row">
-                      <b>Corporate membership</b>
                       <center>
+                        <b>Corporate membership</b>
+                        <br />
                         Get a corporate membership for your organisation.
                         <br />
                         Unlimited access to in-complex swimming pool and Gym.
@@ -297,19 +302,19 @@ const Register = () => {
                         <br />
                         <table>
                           <tr>
-                            <td class="red-text">
+                            <td class="membership-prices">
                               Standard
                               package&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             </td>
-                            <td class="red-text">staff&lt;=20</td>
-                            <td class="red-text">LKR.40,000</td>
+                            <td class="membership-prices">staff&lt;=20</td>
+                            <td class="membership-prices">LKR.40,000</td>
                           </tr>
                           <tr>
-                            <td class="red-text">Max package</td>
-                            <td class="red-text">
+                            <td class="membership-prices">Max package</td>
+                            <td class="membership-prices">
                               20&lt;staff&lt;50&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             </td>
-                            <td class="red-text">LKR.40,000</td>
+                            <td class="membership-prices">LKR.80,000</td>
                           </tr>
                         </table>
                         <br />

@@ -118,8 +118,9 @@
   justify-content: center;
   min-height: 70vh;
   flex-direction: column;
-  background-color: #ffdee9;
-  background-image: linear-gradient(0deg, #ffdee9 0%, #b5fffc 100%);
+  background-color: white;
+
+  /* linear-gradient(0deg, #d1d1f3 0%, #dcfffe 100%) */
 }
 .register-container {
   display: flex;
@@ -136,16 +137,46 @@
 
 
 .membership-details{
-  margin: 0 auto; /* Add this line */
+  margin:50px; /* Add this line */
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   padding: 20px;
   background-color: #fff;
   width: 600px;
   height: auto;
   flex: 1;
+  
 }
-.red-text {
+
+.login-form {
+  margin: 50px auto; /* auto margin to center horizontally */
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  padding: 20px;
+  background-color: #fff;
+  width: 350px;
+  height: auto; 
+  display: flex; /* using flexbox */
+  flex-direction: column; /* align children vertically */
+  justify-content: center; /* center vertically */
+  align-items: center; /* center horizontally */
+}
+
+.forgot-password-link {
+  text-align: left;
+  margin-top: -20px;
+  margin-bottom: -20px;
+  font-size: 12px; 
+
+ 
+}
+.forgot-password-link a {
+  text-decoration: none; /* Remove underline */
+  color: #1d569b; /* Set color to match the surrounding text */
+ 
+  font-weight: 500;
+}
+.membership-prices {
   color: #127d26a7;
+  font-weight: bold;
 }
 
 .form-container form {
@@ -159,7 +190,7 @@
   
 }
 
-.form-container form .title {
+.title {
   text-align: center;
   margin-bottom: 15px;
   font-weight: bold;
@@ -172,7 +203,7 @@
   border-radius: 0;
 }
 
-.form-container form button {
+.form-button {
   display: block; /* Add this line */
   border: 1px solid black;
   border-radius: 0;
@@ -181,6 +212,14 @@
   width: 100%;
   height: 40px;
   margin-top: 10px;
+  background: linear-gradient(to right, #52589e, #0b070e);
+}
+.form-control-login {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
 }
 
 .form-container form button:hover {
@@ -209,7 +248,7 @@
 
 /*============homepage================*/
 .box {
-  background-color: #8590f5; /* Light blue */
+  background-color: hwb(234 52% 4%); /* Light blue */
   border: 2px solid #8590f5;
   padding: 20px;
   border-radius: 10px;
@@ -240,3 +279,127 @@
 .register-button:hover {
   background-color: #f0f0f0; /* Light gray on hover */
 }
+
+
+/* User DashBoard */
+body {
+  background-color: #f9f9fa
+}
+
+.padding {
+  padding: 3rem !important
+}
+
+.user-card-full {
+  overflow: hidden;
+}
+
+.card {
+  border-radius: 5px;
+  -webkit-box-shadow: 0 1px 20px 0 rgba(69,90,100,0.08);
+  box-shadow: 0 1px 20px 0 rgba(69,90,100,0.08);
+  border: none;
+  margin-bottom: 30px;
+}
+
+.m-r-0 {
+  margin-right: 0px;
+}
+
+.m-l-0 {
+  margin-left: 0px;
+}
+
+.user-card-full .user-profile {
+  border-radius: 5px 0 0 5px;
+}
+
+
+
+.user-profile {
+  padding: 20px 0;
+}
+
+.card-block {
+  padding: 1.25rem;
+}
+
+.m-b-25 {
+  margin-bottom: 25px;
+}
+
+.img-radius {
+  border-radius: 5px;
+}
+
+
+
+h6 {
+  font-size: 14px;
+}
+
+.card .card-block p {
+  line-height: 25px;
+}
+
+
+.card-block {
+  padding: 1.25rem;
+}
+
+.b-b-default {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.m-b-20 {
+  margin-bottom: 20px;
+}
+
+.p-b-5 {
+  padding-bottom: 5px !important;
+}
+
+.card .card-block p {
+  line-height: 25px;
+}
+
+.m-b-10 {
+  margin-bottom: 10px;
+}
+
+.text-muted {
+  color: #919aa3 !important;
+  margin-bottom: 20px;
+  font-size: larger;
+
+}
+
+.b-b-default {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.f-w-600 {
+  font-weight: 600;
+}
+
+.m-b-20 {
+  margin-bottom: 20px;
+}
+
+
+
+.p-b-5 {
+  padding-bottom: 5px !important;
+}
+
+.m-b-10 {
+  margin-bottom: 10px;
+}
+
+
+
+
+
+
+
+

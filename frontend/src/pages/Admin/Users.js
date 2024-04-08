@@ -60,6 +60,7 @@ const Users = () => {
           <div className="col-md-9">
             <ReportGenerator users={filteredUsers} />{" "}
             {/* Render the ReportGenerator component */}
+            <br />
             {loading ? (
               <p>Loading...</p>
             ) : error ? (
@@ -85,6 +86,7 @@ const Users = () => {
                     {/* Add more options if needed */}
                   </select>
                 </div>
+                <br />
                 <table className="table">
                   <thead>
                     <tr>

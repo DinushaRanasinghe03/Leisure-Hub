@@ -43,50 +43,60 @@ const Login = () => {
 
   return (
     <Layout title="Login-Leisure Hub">
-      <div className="form-container">
-        <form onSubmit={handleSubmit}>
-          <h4 className="title">Login</h4>
+      <center>
+        <div className="login-form">
+          <form onSubmit={handleSubmit}>
+            <h4 className="title">Login</h4>
 
-          <div className="mb-3">
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="form-control"
-              id="InputEmail1"
-              placeholder="Enter Your Email "
-              required
-            />
-          </div>
+            <div className="mb-3">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="form-control"
+                id="InputEmail1"
+                placeholder="Enter Your Email "
+                required
+              />
+            </div>
 
-          <div className="mb-3">
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="form-control"
-              id="InputPassword1"
-              placeholder="Enter Your Password "
-              required
-            />
-          </div>
-          <div className="mb-3">
-            <button
-              type="button"
-              className="btn btn-primary"
-              onClick={() => {
-                navigate("/forgot-password");
-              }}
-            >
-              Forgot Password
+            <div className="mb-3">
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="form-control-login"
+                id="InputPassword1"
+                placeholder="Enter Your Password "
+                required
+              />
+            </div>
+            <div className="forgot-password-link">
+              <a href="/forgot-password">forgot Password?</a>
+            </div>
+
+            <br />
+
+            <button type="submit" className="form-button">
+              Login
             </button>
-          </div>
 
-          <button type="submit" className="btn btn-primary">
-            Login
-          </button>
-        </form>
-      </div>
+            <div>
+              <div
+                className="forgot-password-link"
+                style={{
+                  textAlign: "left",
+                  marginTop: "15px",
+                  marginBottom: "15px",
+                }}
+              >
+                Not a member yet?
+                <a href="/register"> Get a membership now</a>
+              </div>
+            </div>
+          </form>
+        </div>
+      </center>
     </Layout>
   );
 };

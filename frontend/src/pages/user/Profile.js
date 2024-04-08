@@ -16,7 +16,7 @@ const Profile = () => {
   const [phone, setPhone] = useState("");
   const [address1, setAddress1] = useState("");
   const [address2, setAddress2] = useState("");
-  const [dob, setDOB] = useState("");
+  //const [dob, setDOB] = useState("");
   const [password, setPassword] = useState("");
 
   // Get user data
@@ -28,7 +28,7 @@ const Profile = () => {
     setPhone(phone);
     setAddress1(address1);
     setAddress2(address2);
-    setDOB(dob);
+    //setDOB(dob);
   }, [auth?.user]);
 
   const handleSubmit = async (e) => {
@@ -41,7 +41,7 @@ const Profile = () => {
         phone,
         address1,
         address2,
-        dob,
+        //dob,
         password,
       });
       if (data?.error) {
@@ -92,72 +92,81 @@ const Profile = () => {
             <UserMenu />
           </div>
           <div className="col-md-8">
-            <div className="form-container" style={{ marginTop: "-40px" }}>
+            <div
+              className="membership-details "
+              style={{ position: "relative", borderRadius: "10px" }}
+            >
               <form onSubmit={handleSubmit}>
                 <h4 className="title">User Profile</h4>
-                <div className="mb-3">
-                  <input
-                    type="text"
-                    value={fname}
-                    onChange={(e) => setFname(e.target.value)}
-                    className="form-control"
-                    id="Inputfname"
-                    placeholder="Enter Your First name "
-                    autoFocus
-                  />
+                <div className="row mb-3">
+                  <div className="col-md-6">
+                    <input
+                      type="text"
+                      value={fname}
+                      onChange={(e) => setFname(e.target.value)}
+                      className="form-control"
+                      id="Inputfname"
+                      placeholder="Enter Your First name "
+                      autoFocus
+                    />
+                  </div>
+                  <div className="col-md-6">
+                    <input
+                      type="text"
+                      value={lname}
+                      onChange={(e) => setLname(e.target.value)}
+                      className="form-control"
+                      id="Inputlname"
+                      placeholder="Enter Your Last name "
+                    />
+                  </div>
                 </div>
-                <div className="mb-3">
-                  <input
-                    type="text"
-                    value={lname}
-                    onChange={(e) => setLname(e.target.value)}
-                    className="form-control"
-                    id="Inputlname"
-                    placeholder="Enter Your Last name "
-                  />
+                <div className="row mb-3">
+                  <div className="col-md-6">
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="form-control"
+                      id="InputEmail1"
+                      placeholder="Enter Your Email "
+                      disabled
+                    />
+                  </div>
+                  <div className="col-md-6">
+                    <input
+                      type="text"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      className="form-control"
+                      id="Inputphone"
+                      placeholder="Enter Your Phone"
+                    />
+                  </div>
                 </div>
-                <div className="mb-3">
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="form-control"
-                    id="InputEmail1"
-                    placeholder="Enter Your Email "
-                    disabled
-                  />
+                <div className="row mb-3">
+                  <div className="col-md-6">
+                    <input
+                      type="text"
+                      value={address1}
+                      onChange={(e) => setAddress1(e.target.value)}
+                      className="form-control"
+                      id="Inputaddress1"
+                      placeholder="Enter Your Address line 1 "
+                    />
+                  </div>
+                  <div className="col-md-6">
+                    <input
+                      type="text"
+                      value={address2}
+                      onChange={(e) => setAddress2(e.target.value)}
+                      className="form-control"
+                      id="Inputaddress2"
+                      placeholder="Enter Your Address line 2 "
+                    />
+                  </div>
                 </div>
-                <div className="mb-3">
-                  <input
-                    type="text"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    className="form-control"
-                    id="Inputphone"
-                    placeholder="Enter Your Phone"
-                  />
-                </div>
-                <div className="mb-3">
-                  <input
-                    type="text"
-                    value={address1}
-                    onChange={(e) => setAddress1(e.target.value)}
-                    className="form-control"
-                    id="Inputaddress1"
-                    placeholder="Enter Your Address line 1 "
-                  />
-                </div>
-                <div className="mb-3">
-                  <input
-                    type="text"
-                    value={address2}
-                    onChange={(e) => setAddress2(e.target.value)}
-                    className="form-control"
-                    id="Inputaddress2"
-                    placeholder="Enter Your Address line 2 "
-                  />
-                </div>
-                <div className="mb-3">
+                {/* <div className="mb-3">
                   <input
                     type="date"
                     value={dob}
@@ -165,7 +174,7 @@ const Profile = () => {
                     className="form-control"
                     id="Inputdob"
                   />
-                </div>
+                </div> */}
                 <div className="mb-3">
                   <input
                     type="password"
@@ -173,24 +182,44 @@ const Profile = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     className="form-control"
                     id="InputPassword1"
-                    placeholder="Enter Your Password "
+                    placeholder="Enter your new password "
                   />
                 </div>
+
                 <button
                   onClick={handleSubmit}
                   type="submit"
                   className="btn btn-primary mt-3"
+                  style={{ position: "absolute", bottom: 20, right: 20 }}
                 >
-                  Update
+                  Update Details
                 </button>
-                <button
-                  onClick={handleDeleteProfile}
-                  type="button"
-                  className="btn btn-danger mt-3 ms-2"
-                >
-                  Delete Profile
-                </button>
+                <br />
+                <br />
               </form>
+            </div>
+            <div
+              className="membership-details"
+              style={{ position: "relative", borderRadius: "10px" }}
+            >
+              <table style={{ width: "100%", display: "inline-table" }}>
+                <tr>
+                  <td style={{ verticalAlign: "middle" }}>
+                    This action will permanently delete your profile and it’s
+                    data.
+                  </td>
+                  <td style={{ verticalAlign: "middle" }}>
+                    <button
+                      onClick={handleDeleteProfile}
+                      type="button"
+                      style={{ marginTop: "10px" }}
+                      className="btn btn-danger"
+                    >
+                      Delete Profile
+                    </button>
+                  </td>
+                </tr>
+              </table>
             </div>
           </div>
         </div>

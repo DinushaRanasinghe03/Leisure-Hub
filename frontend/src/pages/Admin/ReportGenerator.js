@@ -30,7 +30,9 @@ const ReportGenerator = ({ users }) => {
 
   return (
     <div>
-      <button onClick={generatePDFReport}>Generate PDF Report</button>
+      <button onClick={generatePDFReport} className="btn btn-success mt-3">
+        Generate PDF Report
+      </button>
     </div>
   );
 };

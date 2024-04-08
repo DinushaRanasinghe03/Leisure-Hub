@@ -94,12 +94,12 @@ const Memberships = () => {
                 <Link
                   to={{
                     pathname: "/register",
-                    state: { membershipType: "corporate" },
+                    state: { membershipType: "corporate standared" },
                   }}
                 >
                   <button
                     className="btn btn-primary"
-                    onClick={() => handleJoinNow("corporate")}
+                    onClick={() => handleJoinNow("corporate standared")}
                   >
                     Join Now
                   </button>

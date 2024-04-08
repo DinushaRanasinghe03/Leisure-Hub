@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Layout from "../../components/layout/Layout";
+import Layout from "../../components/layout/LayoutAdmin";
 import "./AddResource.css";
 import { toast } from "react-hot-toast";
 import axios from "axios";

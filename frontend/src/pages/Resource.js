@@ -1,5 +1,5 @@
 import React from "react";
-import Layout from "../components/layout/Layout";
+import Layout from "../components/layout/LayoutAdmin";
 import ResourceTable from "../components/layout/ResourceTable";
 import { Link } from "react-router-dom";
 import "./Resources/AddResource.css";

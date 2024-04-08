@@ -1,11 +1,10 @@
 import React from "react";
-import Header from "./Header";
-//import Footer from "./Footer";
+import Header from "./HeaderAdmin";
 import { Helmet } from "react-helmet";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const Layout = ({ children, title, description, keywords, author }) => {
+const LayoutAdmin = ({ children, title, description, keywords, author }) => {
   return (
     <div>
       <Helmet>
@@ -26,11 +25,11 @@ const Layout = ({ children, title, description, keywords, author }) => {
   );
 };
 
-Layout.defaultProps = {
+LayoutAdmin.defaultProps = {
   title: "LeisureHub",
   description: "M E R N stack project",
   keywords: "react,node,express,mongodb",
   author: "Student Jam",
 };
 
-export default Layout;
+export default LayoutAdmin;

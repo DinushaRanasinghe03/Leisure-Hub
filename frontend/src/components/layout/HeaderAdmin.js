@@ -1,9 +1,8 @@
 import React from "react";
-import "./Header.css";
+import "./HeaderAdmin.css";
 import {NavLink} from "react-router-dom";
 
-//comments
-const Header = () => {
+const HeaderAdmin = () => {
   return (
     <header className="header">
       <div className="logo">
@@ -62,4 +61,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default HeaderAdmin;

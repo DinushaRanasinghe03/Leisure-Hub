@@ -1,5 +1,5 @@
-//import LEISUREHUB_LOGO from '../assets/LEISUREHUB_LOGO.jpg'
-//import LEISUREHUB_LOGO from "../../assets/LEISUREHUB_LOGO.jpg";
+//import LEISUREHUB_LOGO from "../assets/LEISUREHUB_LOGO.jpg";
+import LEISUREHUB_LOGO from "../../assets/LEISUREHUB_LOGO.jpg";
 import React from "react";
 import { NavLink, Link } from "react-router-dom";
 import { useAuth } from "../../context/auth";
@@ -36,7 +36,7 @@ const Header = () => {
           </button>
 
           <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
-            {/* <Link
+            <Link
               to="/"
               className="navbar-brand"
               style={{ display: "flex", alignItems: "center" }}
@@ -47,7 +47,7 @@ const Header = () => {
                 style={{ maxHeight: "50px", marginRight: "10px" }}
               />
               <span style={{ marginTop: "5px" }}>LEISUREHUB</span>
-            </Link> */}
+            </Link>
 
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
               <li className="nav-item">

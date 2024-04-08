@@ -1,9 +1,19 @@
 import React from "react";
-//import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
+
 const Footer = () => {
   return (
-    <div className="bg-dark text-light p-3">
-      <h4 className="text-center">All Right Reserved &copy; LeisureHub</h4>
+    <div className="footer">
+      <h4 className="text-center">All Right Reserved &copy; LEISUREHUB</h4>
+      <p className="text-center mt-3">
+        <Link to="/about">About Us</Link>|<Link to="/contact">Contact Us</Link>|
+        <Link to="/policy">Privacy & Policy</Link>|
+        <Link to="/reviews">Reviews & Ratings</Link>|
+        <Link to="/feedback">Provide Feedback To LEISUREHUB</Link>
+      </p>
+      <p className="text-center">
+        0786453567 | A810,Kaduwela | info@leisurehub.gov.lk
+      </p>
     </div>
   );
 };

@@ -41,6 +41,7 @@ const AddResource = () => {
         "http://localhost:8070/api/v1/resources/createResource",
         resourceData
       );
+      console.log()
       if (data?.success) {
         toast.success("Resource Created successfully");
         navigate("/resource");

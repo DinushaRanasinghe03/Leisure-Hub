@@ -36,7 +36,10 @@ const Header = () => {
             <span className="navbar-toggler-icon" />
           </button>
 
-          <div className="collapse navbar-collapse header-nav" id="navbarTogglerDemo01">
+          <div
+            className="collapse navbar-collapse header-nav"
+            id="navbarTogglerDemo01"
+          >
             <Link
               to="/"
               className="navbar-brand"
@@ -122,9 +125,11 @@ const Header = () => {
                     <ul className="dropdown-menu">
                       <li>
                         <NavLink
-                          to={`/dashboard/${
-                            auth?.user?.role === 1 ? "admin" : "user"
-                          }`}
+                          to={
+                            auth?.user?.role === 1
+                              ? "/admin/dashboard"
+                              : "/dashboard/user"
+                          }
                           className="dropdown-item"
                         >
                           Dashboard
@@ -143,7 +148,6 @@ const Header = () => {
                   </li>
                 </>
               )}
-              
             </ul>
           </div>
         </div>

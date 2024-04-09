@@ -3,15 +3,14 @@ import React from "react";
 import Layout from "./../../components/Layout/Layout";
 import AdminMenu from "../../components/Layout/AdminMenu";
 import { useAuth } from "../../context/auth";
+import LayoutAdmin from "./../../components/Layout/LayoutAdmin";
 const AdminDashboard = () => {
   const [auth] = useAuth();
   return (
-    <Layout>
+    <LayoutAdmin>
       <div className="container-fluid m-3 p-3 ">
         <div className="row">
-          <div className="col-md-3">
-            <AdminMenu />
-          </div>
+          <div className="col-md-3">{/* <AdminMenu /> */}</div>
           <div class="col-sm-8">
             <div class="card-block">
               <h4 class="m-b-20 p-b-5 b-b-default f-w-600">
@@ -39,7 +38,7 @@ const AdminDashboard = () => {
           </div>
         </div>
       </div>
-    </Layout>
+    </LayoutAdmin>
   );
 };
 

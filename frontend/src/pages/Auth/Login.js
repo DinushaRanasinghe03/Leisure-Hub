@@ -31,7 +31,17 @@ const Login = () => {
         });
 
         localStorage.setItem("auth", JSON.stringify(res.data));
-        navigate(location.state || "/");
+        console.log(res.data.user.role);
+        // 1 --> admin
+        // 0 --> user
+        if (res.data.user.role == 0) {
+          navigate(location.state || "/");
+          console.log("This is  user");
+        } else {
+          navigate(location.state || "/adminmoviedashboard");
+          // navigate(location.state || "/test");
+          console.log("This is  admin");
+        }
       } else {
         toast.error(res.data.message);
       }

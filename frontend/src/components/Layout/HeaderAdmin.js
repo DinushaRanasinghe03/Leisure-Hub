@@ -1,9 +1,25 @@
 import React from "react";
 import "./HeaderAdmin.css";
-import {NavLink} from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import LEISUREHUB_LOGO from "../../assets/LEISUREHUB_LOGO.jpg";
+import { useAuth } from "../../context/auth";
+import toast from "react-hot-toast";
 
 const HeaderAdmin = () => {
+  const [auth, setAuth] = useAuth(); //const [auth, setAuth] = useAuth();
+  const handleLogout = () => {
+    //Check if auth is null before accessing its properties
+    if (auth && auth.user) {
+      setAuth({
+        ...auth,
+        user: null,
+        token: "",
+      });
+      localStorage.removeItem("auth");
+      toast.success("Logout Successfully");
+    }
+  };
+
   return (
     <header className="header">
       <div className="logo">
@@ -22,7 +38,10 @@ const HeaderAdmin = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/adminactivitydashboard/activitymanagement/create-category" activeClassName="active">
+            <NavLink
+              to="/adminactivitydashboard/activitymanagement/create-category"
+              activeClassName="active"
+            >
               Games and Activities
             </NavLink>
           </li>
@@ -42,14 +61,14 @@ const HeaderAdmin = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/pageNotFound" activeClassName="active">
+            <NavLink to="/admin/users" activeClassName="active">
               Members
             </NavLink>
           </li>
           <li>
-              <NavLink to="/pageNotFound" activeClassName="active">
-                Customer Service
-              </NavLink>
+            <NavLink to="/pageNotFound" activeClassName="active">
+              Customer Service
+            </NavLink>
           </li>
           <li>
             <NavLink to="/pageNotFound" activeClassName="active">
@@ -57,15 +76,20 @@ const HeaderAdmin = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/" activeClassName="active">
+            <NavLink to="/admin/dashboard" activeClassName="active">
+              Admin Profile
+            </NavLink>
+          </li>
+          <li>
+            <NavLink onClick={handleLogout} to="/" activeClassName="active">
               Logout
             </NavLink>
           </li>
           <img
-                src={LEISUREHUB_LOGO}
-                alt="logo"
-                style={{ maxHeight: "50px", marginRight: "10px" }}
-              />
+            src={LEISUREHUB_LOGO}
+            alt="logo"
+            style={{ maxHeight: "50px", marginRight: "10px" }}
+          />
         </ul>
       </nav>
     </header>

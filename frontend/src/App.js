@@ -17,21 +17,20 @@ import GamesAndActivitiesRequests from "./pages/user/GamesAndActivitiesRequests"
 import ActivityDetails from "./pages/ActivityDetails";
 import SearchActivity from "./pages/SearchActivity";
 
-import  AdminMovieDashboard  from './pages/MovieManagement/AdminMovieDashboard';
-import AddMovies from './pages/MovieManagement/AddMovies';
-import  CreateMovieCategory  from './pages/MovieManagement/CreateMovieCategory';
-import { Movies } from './pages/user/Movies';
-import Movie from './pages/MovieManagement/Movie';
-import UpdateMovie from './pages/MovieManagement/UpdateMovie';
-import AddMovieSchedule from './pages/MovieManagement/AddMovieSchedule';
-import ShowtimeSchedule from './pages/MovieManagement/ShowtimeSchedule';
-import SearchMovie from './pages/SearchMovie';
-import MovieDetails from './pages/MovieDetails';
-import ShowtimeScheduling from './pages/user/ShowtimeScheduling';
+import AdminMovieDashboard from "./pages/MovieManagement/AdminMovieDashboard";
+import AddMovies from "./pages/MovieManagement/AddMovies";
+import CreateMovieCategory from "./pages/MovieManagement/CreateMovieCategory";
+import { Movies } from "./pages/user/Movies";
+import Movie from "./pages/MovieManagement/Movie";
+import UpdateMovie from "./pages/MovieManagement/UpdateMovie";
+import AddMovieSchedule from "./pages/MovieManagement/AddMovieSchedule";
+import ShowtimeSchedule from "./pages/MovieManagement/ShowtimeSchedule";
+import SearchMovie from "./pages/SearchMovie";
+import MovieDetails from "./pages/MovieDetails";
+import ShowtimeScheduling from "./pages/user/ShowtimeScheduling";
 import MovieList from "./pages/MovieList";
 import TicketBooking from "./pages/TicketBooking";
 import Payments from "./pages/Payments";
-
 
 import Register from "./pages/Auth/Register";
 import Login from "./pages/Auth/Login";
@@ -45,9 +44,6 @@ import Profile from "./pages/user/Profile";
 import BookedMovies from "./pages/user/BookedMovies";
 import BookedActivities from "./pages/user/BookedActivities";
 import Memberships from "./pages/Memberships";
-
-
-
 
 function App() {
   return (
@@ -90,49 +86,56 @@ function App() {
           element={<ViewAllRequests />}
         />
 
+        <Route path="/search" element={<SearchMovie />} />
+        <Route path="/moviedetails/:slug" element={<MovieDetails />} />
+        <Route path="/movies" element={<Movies />} />
+        <Route path="/schedules" element={<ShowtimeScheduling />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/adminmoviedashboard" element={<AdminMovieDashboard />} />
+        <Route
+          path="/adminmoviedashboard/moviemanagement/add-movie"
+          element={<AddMovies />}
+        />
+        <Route
+          path="/adminmoviedashboard/moviemanagement/create-category"
+          element={<CreateMovieCategory />}
+        />
+        <Route
+          path="/adminmoviedashboard/moviemanagement/movie"
+          element={<Movie />}
+        />
+        <Route
+          path="/adminmoviedashboard/moviemanagement/movie/:slug"
+          element={<UpdateMovie />}
+        />
+        <Route
+          path="/adminmoviedashboard/moviemanagement/add-movieschedule"
+          element={<AddMovieSchedule />}
+        />
+        <Route
+          path="/adminmoviedashboard/moviemanagement/movieschedule"
+          element={<ShowtimeSchedule />}
+        />
 
+        <Route path="/booking" element={<MovieList />} />
+        <Route path="/booking/:movieId" element={<TicketBooking />} />
+        <Route path="/payment/:bookingId" element={<Payments />} />
 
-       <Route path='/search' element={<SearchMovie />} />
-      <Route path='/moviedetails/:slug' element={<MovieDetails />} />
-      <Route path='/movies' element={<Movies />} />
-      <Route path='/schedules' element={<ShowtimeScheduling />} />
-      <Route path="/about" element={<About />} />
-      <Route path="/adminmoviedashboard" element={<AdminMovieDashboard />} />
-      <Route path="/adminmoviedashboard/moviemanagement/add-movie" element={<AddMovies />} />
-      <Route path="/adminmoviedashboard/moviemanagement/create-category" element={<CreateMovieCategory />} />
-      <Route path="/adminmoviedashboard/moviemanagement/movie" element={<Movie />} />
-      <Route path="/adminmoviedashboard/moviemanagement/movie/:slug" element={<UpdateMovie />} />
-      <Route path="/adminmoviedashboard/moviemanagement/add-movieschedule" element={<AddMovieSchedule />} />
-      <Route path="/adminmoviedashboard/moviemanagement/movieschedule" element={<ShowtimeSchedule />} />
-      
-
-      <Route path="/booking" element={<MovieList />} />
-          <Route path="/booking/:movieId" element={<TicketBooking />} />
-          <Route path="/payment/:bookingId" element={<Payments />} />
-
-          <Route path="/dashboard" element={<PrivateRoute />}>
+        <Route path="/dashboard" element={<PrivateRoute />}>
           <Route path="user" element={<Dashboard />} />
           <Route path="user/profile" element={<Profile />} />
           <Route path="user/booked-movies" element={<BookedMovies />} />
           <Route path="user/booked-activities" element={<BookedActivities />} />
-          </Route>
+        </Route>
 
-          <Route path="/dashboard" element={<AdminRoute />}>
-          <Route path="admin" element={<AdminDashboard />} />
-          <Route path="admin/users" element={<Users />} />
+        <Route path="/admin" element={<AdminRoute />}>
+          <Route path="dashboard" element={<AdminDashboard />} />
+          <Route path="users" element={<Users />} />
         </Route>
         <Route path="/register" element={<Register />} />
         <Route path="/forgot-password" element={<ForgotPasssword />} />
         <Route path="/login" element={<Login />} />
         <Route path="/memberships" element={<Memberships />} />
-      
-
-
-
-
-
-
-
       </Routes>
     </>
   );

@@ -6,22 +6,25 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
 
 const MembershipAdd = () => {
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
-  const [address, setAddress] = useState('');
-  const [email, setEmail] = useState('');
+  const [nameOnCard, setNameOnCard] = useState('');
+  const [cardNumber, setCardNumber] = useState('');
+  const [expDate, setEXPDate] = useState('');
+  const [cvv, setcvv] = useState('');
 
+  
   const submitData = async () => {
     let data = {
-      name: name,
-      number: number,
-      address: address,
-      email: email
+      nameOnCard: nameOnCard,
+      cardNumber: cardNumber,
+      expDate: expDate,
+      cvv: cvv
     };
 
     try {
-      const response = await axios.post('/api/payments', data);
+    
+      const response = await axios.post('/api/membershipPayments/', data);
       console.log('data', response.data);
+      window.location.href = `/otp?id=${response.data._id}`;
     } catch (error) {
       console.error('error:', error);
     }
@@ -32,26 +35,23 @@ const MembershipAdd = () => {
       <h2>Membership Payment</h2>
       <Form>
         <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Name</Form.Label>
-          <Form.Control type="text" placeholder="Name" value={name} onChange={(e) => { setName(e.target.value) }} />
+          <Form.Label>Name On Card</Form.Label>
+          <Form.Control type="text" placeholder="Name On card" value={nameOnCard} onChange={(e) => { setNameOnCard(e.target.value) }} />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Phone Number</Form.Label>
-          <Form.Control type="text" placeholder="phone number" value={number} onChange={(e) => { setNumber(e.target.value) }} />
+          <Form.Label>Card Number</Form.Label>
+          <Form.Control type="text" placeholder="Enter Card number" value={cardNumber} onChange={(e) => { setCardNumber(e.target.value) }} />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Address</Form.Label>
-          <Form.Control type="text" placeholder="address" value={address} onChange={(e) => { setAddress(e.target.value) }} />
+          <Form.Label>Expire Date</Form.Label>
+          <Form.Control type="date" placeholder="Enter Expire Date" value={expDate} onChange={(e) => { setEXPDate(e.target.value) }} />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control type="email" placeholder="Enter email" value={email} onChange={(e) => { setEmail(e.target.value) }} />
-          <Form.Text className="text-muted">
-            We'll never share your email with anyone else.
-          </Form.Text>
+          <Form.Label>CVV</Form.Label>
+          <Form.Control type="password" placeholder="Enter your CVV" value={cvv} onChange={(e) => { setcvv(e.target.value) }} />
         </Form.Group>
 
         <Button variant="primary" onClick={submitData}>

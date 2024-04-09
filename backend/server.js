@@ -22,6 +22,7 @@ app.use('/api/items', require('./routes/itemRoutes'));
 app.use('/api/payments', require('./routes/paymentRoutes'));
 app.use('/api/cardpayments', require('./routes/cardDetailsRoute'));
 app.use('/api/membershipPayments', require('./routes/membershipPaymentRoute'));
+app.use('/api/paymentsummaries',require('./routes/paymentSummaryRoute'));
 
 const PORT = process.env.PORT || 5000;
 

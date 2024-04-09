@@ -7,6 +7,7 @@ import BasicExampleTable from './pages/ShowPaymentData/ShowPaymentData.js';
 import OTPAuthenticationPage from './pages/otp/otp.js';
 import OTPVerification from "./pages/verifyOTP/OTPVerify.js";
 import PaymentUnSuccessMessage from "./pages/PaymentSuccess/PaymentSuccess.js"
+import MembershipAdd from "./pages/MembersipPayments/MembershipPayment.js"
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
@@ -22,11 +23,13 @@ function App() {
       <Route path="otp" element={<OTPAuthenticationPage/>}/>
       <Route path="verify" element={<OTPVerification/>}/>
       <Route path="end" element={<PaymentUnSuccessMessage/>}/>
+      <Route path="/membership" element={<MembershipAdd/>}/>
+
       </Routes>
 
        {/* <div className="App">
           
-          <BasicExampleAdd/>
+          <MembershipAdd/>
          
        </div> */}
        </BrowserRouter>

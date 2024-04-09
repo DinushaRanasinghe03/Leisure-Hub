@@ -54,7 +54,7 @@ const BasicExampleTable = () => {
   const handleSelect = async(rowData) => {
     window.location.href = `/edit?id=${rowData._id}`
     /*try {
-        const response = await axios.get(`/api/payments/${rowData._id}`);
+        const response = await axios.get(/api/payments/${rowData._id});
         console.log("response1",response.data);
         setName(response.data.name);
         setNumber(response.data.number);
@@ -127,6 +127,18 @@ const BasicExampleTable = () => {
                   <td>Email</td>
                   <td>{paymentDetails.email}</td>
                 </tr>
+                <tr>
+                  <td colSpan="2">
+                    <Button variant="primary" onClick={() => handleSelect(paymentDetails)}>Select</Button>
+                  </td>
+                </tr>
+                {/* new row
+                <tr>
+                  <td colSpan="2">
+                    <Button variant="primary" onClick={() => handleSelect(paymentDetails)}>Save</Button>
+                  </td>
+                </tr>
+                 */}
               </>
             )}
           </tbody>

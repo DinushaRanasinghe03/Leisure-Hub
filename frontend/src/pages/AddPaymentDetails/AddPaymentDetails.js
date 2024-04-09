@@ -62,6 +62,8 @@ const BasicExampleAdd = () => {
   };
 
   return (
+    <div>
+      <h2 style={{ textAlign: "center" }}>Enter Your Personal Details</h2>
     <div className="form-container">
       <Form>
         <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -97,6 +99,7 @@ const BasicExampleAdd = () => {
           Submit
         </Button>
       </Form>
+    </div>
     </div>
   );
 }

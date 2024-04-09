@@ -62,7 +62,7 @@ const BasicExampleDelete = ({}) => {
     try {
       const response = await axios.put(`/api/payments/${id}`, data);
       console.log('data', response.data);
-      window.location.href = "/all"
+      window.location.href = `/all?id=${response.data._id}`
     } catch (error) {
       console.error('error:', error);
     }
@@ -72,7 +72,7 @@ const BasicExampleDelete = ({}) => {
     try {
       const response = await axios.delete(`/api/payments/${id}`);
       console.log('Deleted:', response.data);
-      window.location.href = "/all"
+      window.location.href = "/end"
     } catch (error) {
       console.error('Error deleting data:', error);
     }

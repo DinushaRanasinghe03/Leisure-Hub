@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 
-const PaymentSuccessMessage = ({ paymentId }) => {
+const PaymentUnSuccessMessage = ({ paymentId }) => {
   return (
     <div className="alert alert-success" role="alert">
-      Payment successful! Your payment ID is: {paymentId}
+      Movie Ticket Reservation Unsuccessful! Try Again
     </div>
+    
   );
 };
 
-export default PaymentSuccessMessage;
+export default PaymentUnSuccessMessage;

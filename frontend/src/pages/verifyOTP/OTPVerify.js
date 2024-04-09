@@ -39,7 +39,7 @@ function OTPVerification() {
       if (response.data.verification) {
         window.location.href = "/all"
       } else {
-        window.location.href = "/";
+        window.location.href = "/end";
       }
     } catch (error) {
       console.error('error:', error);

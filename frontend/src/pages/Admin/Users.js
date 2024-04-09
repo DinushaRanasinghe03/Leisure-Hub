@@ -6,6 +6,7 @@ import axios from "axios";
 import { jsPDF } from "jspdf"; // Import jsPDF for PDF generation
 import "jspdf-autotable"; // Import autotable plugin for tabular data
 import ReportGenerator from "./ReportGenerator";
+import LayoutAdmin from "./../../components/Layout/LayoutAdmin";
 
 const Users = () => {
   const [auth] = useAuth();
@@ -51,7 +52,7 @@ const Users = () => {
   };
 
   return (
-    <Layout title={"Membership Holders-Leisure Hub"}>
+    <LayoutAdmin title={"Membership Holders-Leisure Hub"}>
       <div className="container-fluid m-3 p-3 dashboard">
         <div className="row">
           <div className="col-md-3">
@@ -122,7 +123,7 @@ const Users = () => {
           </div>
         </div>
       </div>
-    </Layout>
+    </LayoutAdmin>
   );
 };
 

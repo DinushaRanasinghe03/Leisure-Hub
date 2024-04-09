@@ -78,11 +78,18 @@ const Header = () => {
                 </NavLink>
               </li>
 
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <NavLink to="/gamesandactivities" className="nav-link">
                   Games & Activities
                 </NavLink>
-              </li>
+              </li> */}
+              {auth && auth.user && (
+                <li className="nav-item">
+                  <NavLink to="/gamesandactivities" className="nav-link">
+                    Games & Activities
+                  </NavLink>
+                </li>
+              )}
 
               <li className="nav-item">
                 <NavLink to="/facilities" className="nav-link">

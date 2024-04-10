@@ -5,37 +5,36 @@ import movieCategoryModel from "../models/movieCategoryModel.js";
 // Controller function for creating a movie schedule
 export const createMovieScheduleController = async (req, res) => {
     try {
-        const {date,from,to,movie} = req.fields
+        const { date, from, to, movie } = req.fields;
 
-        //validation
-        switch(true){
-            case !date:
-                return res.status(500).send({error: 'date is required'})
-            case !from:
-                return res.status(500).send({error: 'from time is required'})
-            case !to:
-                return res.status(500).send({error: 'to time is required'})
-            case !movie:
-                return res.status(500).send({error: 'movie is required'}) 
-                            
+        // Validate input
+        if (!date || !from || !to || !movie) {
+            return res.status(400).send({ error: 'All fields are required' });
         }
 
-        const movieschedule = new movieScheduleModel({...req.fields})
-        
-        await movieschedule.save()
-        res.status(201).send({
-            success:true,
-            message: 'Movie schedule added successfully',
-            movieschedule
-        });
+        // Check if the provided schedule overlaps with any existing schedules for the same date
+        const existingSchedule = await movieScheduleModel.findOne({ date, $or: [{ from: { $lt: to, $gte: from } }, { to: { $gt: from, $lte: to } }] });
 
+        if (existingSchedule) {
+            return res.status(400).send({ error: 'Schedule overlaps with an existing schedule' });
+        }
+
+        // Create and save the new movie schedule
+        const newSchedule = new movieScheduleModel({ date, from, to, movie });
+        await newSchedule.save();
+
+        res.status(201).send({
+            success: true,
+            message: 'Movie schedule added successfully',
+            movieSchedule: newSchedule
+        });
     } catch (error) {
-        console.log(error)
+        console.error('Error creating movie schedule:', error);
         res.status(500).send({
-            success:false,
-            error,
-            message:'Error in creating schedule'
-        })
+            success: false,
+            error: error.message,
+            message: 'Error in creating schedule'
+        });
     }
 };
 

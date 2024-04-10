@@ -12,6 +12,8 @@ import PaymentSummaryPage from "./pages/PaymentSummary/PaymentSummary.js"
 import PaymentUnSuccessMessage from "./pages/PaymentSuccess/ReservationUnsuccess.js"
 import MemPaymentUnSuccessMessage from "./pages/MembershipPaymentStatus/MembershipPaymentUnsuccess.js"
 import MemPaymentSuccessMessage from "./pages/MembershipPaymentStatus/MembershipPaymentSuccess.js"
+import MemOTPVerification from "./pages/MembershipPaymentVerification/MembershipOTP.js"
+import MemOTPAuthenticationPage from "./pages/MembershipPaymentVerification/MembersipPaymentOTP1.js"
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
@@ -32,6 +34,9 @@ function App() {
       <Route path="/resunsuccess" element={<PaymentUnSuccessMessage/>}/>
       <Route path="/memsuccess" element={<MemPaymentSuccessMessage/>}/>
       <Route path="/memunsuccess" element={<MemPaymentUnSuccessMessage/>}/>
+      <Route path="/memotpverification" element={<MemOTPVerification/>}/>
+      <Route path="/memOtpAuth" element={<MemOTPAuthenticationPage/>}/>
+      memOtpAuth
 
       </Routes>
 

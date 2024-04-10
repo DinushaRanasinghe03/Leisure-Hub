@@ -4,9 +4,10 @@ const membershipController = require('../controllers/membershipController');
 
 router.get('/', membershipController.getPayments);
 router.post('/', membershipController.addPayment);
-//router.delete('/:id', paymentController.deletePayment);
 router.get('/:id', membershipController.getPaymentById);
-//router.put('/:id', paymentController.editPayment);
+router.post('/otp', membershipController.sendOTPtoEmail);
+router.post('/verification', membershipController.verifyOTPByEmail);
+
 
 module.exports = router;
 

@@ -148,16 +148,16 @@ const BasicExampleTable = () => {
                   <td>{paymentDetails.email}</td>
                 </tr>
                 <tr>
-                  <td colSpan="2">
-                    <Button variant="primary" onClick={() => handleSelect(paymentDetails)}>Select</Button>
-                  </td>
-                </tr>
                 
-                <tr>
-                  <td colSpan="2">
-                    <Button variant="primary" onClick={() => handleSave(paymentDetails)}>Save</Button>
-                  </td>
-                </tr>
+               <td colSpan="2">
+                  <div className="d-flex justify-content-between">
+                  <Button variant="primary" onClick={() => handleSelect(paymentDetails)}>Select</Button>
+                  <Button variant="primary" onClick={() => handleSave(paymentDetails)}>Save</Button>
+                  </div>
+              </td>
+               </tr>
+
+             
                 
               </>
             )}

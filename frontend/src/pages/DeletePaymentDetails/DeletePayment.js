@@ -79,6 +79,8 @@ const BasicExampleDelete = ({}) => {
   };
 
   return (
+    <div>
+      <h2 style={{ textAlign: "center" }}>You can edit Your Personal Details here</h2>
     <div className="form-container">
       <Form>
         <Form.Group className="mb-3" controlId="formBasicName">
@@ -111,6 +113,7 @@ const BasicExampleDelete = ({}) => {
           </Button>
         )}
       </Form>
+    </div>
     </div>
   );
 }

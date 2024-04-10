@@ -24,15 +24,17 @@ const MembershipAdd = () => {
     
       const response = await axios.post('/api/membershipPayments/', data);
       console.log('data', response.data);
-      window.location.href = `/otp?id=${response.data._id}`;
+      window.location.href = `/memOtpAuth?id=${response.data._id}`;
     } catch (error) {
       console.error('error:', error);
     }
   };
 
   return (
+    <div>
+      <h2 style={{ textAlign: "center" }}>Membersip Payments</h2>
     <div className="form-container">
-      <h2>Membership Payment</h2>
+      
       <Form>
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Name On Card</Form.Label>
@@ -58,6 +60,7 @@ const MembershipAdd = () => {
           Submit
         </Button>
       </Form>
+    </div>
     </div>
   );
 }

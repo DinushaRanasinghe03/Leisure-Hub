@@ -212,7 +212,10 @@ const Profile = () => {
                     <button
                       onClick={handleDeleteProfile}
                       type="button"
-                      style={{ marginTop: "10px" }}
+                      style={{
+                        marginTop: "10px",
+                        backgroundColor: "red",
+                      }}
                       className="btn btn-danger"
                     >
                       Delete Profile

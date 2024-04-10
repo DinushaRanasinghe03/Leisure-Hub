@@ -1,151 +1,67 @@
-import React, { useState, useEffect } from "react";
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import Table from 'react-bootstrap/Table';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap/dist/js/bootstrap.js';
 
-const PaymentSummary = () => {
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
-  const [address, setAddress] = useState('');
-  const [email, setEmail] = useState('');
-  const [allData, setAllData] = useState([]);
-  const [id, setID] = useState('');
-  const [paymentDetails, setPaymentDetails] = useState(null);
+function PaymentSummaryPage() {
+    const [paymentDetails, setPaymentDetails] = useState([]);
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+    useEffect(() => {
+        fetchData();
+    }, []);
 
-  const fetchData = async () => {
-    const url = new URL(window.location.href); // Create a URL object
-    const searchParams = new URLSearchParams(url.search); // Extract search params
-    const id = searchParams.get('id');
-    setID(id)
-
-    try {
-       const response = await axios.get(`/api/payments/${id}`);
-       setPaymentDetails(response.data);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-   
-  };
-
-  const submitData = async () => {
-    let data = {
-      name: name,
-      number: number,
-      address: address,
-      email: email
+    const fetchData = async () => {
+        try {
+            const response = await axios.get('/api/paymentsummaries');
+            setPaymentDetails(response.data);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
     };
 
-    try {
-      const response = await axios.post('/api/payments', data);
-      console.log('data', response.data);
-      fetchData(); // Fetch data again after adding new data
-    } catch (error) {
-      console.error('error:', error);
-    }
-  };
+    const tableStyle = {
+        width: '100%',
+        borderCollapse: 'collapse',
+        backgroundColor: '#f8f9fa', /* Light gray background color */
+        border: '1px solid #dee2e6', /* Light gray border */
+    };
 
-  const handleSelect = async(rowData) => {
-    window.location.href = `/edit?id=${rowData._id}`
-    /*try {
-        const response = await axios.get(/api/payments/${rowData._id});
-        console.log("response1",response.data);
-        setName(response.data.name);
-        setNumber(response.data.number);
-        setAddress(response.data.address);
-        setEmail(response.data.email);
+    const headerCellStyle = {
+        backgroundColor: '#007bff', /* Blue background color for header cells */
+        color: '#ffffff', /* White text color for header cells */
+        padding: '8px',
+        borderBottom: '1px solid #dee2e6', /* Light gray bottom border for cells */
+    };
 
-       // setAllData(response.data);
-      } catch (error) {
-        console.error('error:', error);
-      }*/
+    const rowStyle = {
+        backgroundColor: '#f2f2f2', /* Light gray background color for even rows */
+    };
 
-    // Handle select button click for a specific row
-    console.log("Selected row:", rowData);
+    const hoverStyle = {
+        backgroundColor: '#e2e2e2', /* Darker gray background color on hover */
+    };
 
-  };
-
-  return (
-    <div>
-      {/* <div className="form-container">
-        <Form>
-          <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>Name</Form.Label>
-            <Form.Control type="text" placeholder="text" value={name} onChange={(e) => { setName(e.target.value) }} />
-          </Form.Group>
-
-          <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>Phone Number</Form.Label>
-            <Form.Control type="text" placeholder="phone number" value={number} onChange={(e) => { setNumber(e.target.value) }} />
-          </Form.Group>
-
-          <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>Address</Form.Label>
-            <Form.Control type="text" placeholder="address" value={address} onChange={(e) => { setAddress(e.target.value) }} />
-          </Form.Group>
-
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Email address</Form.Label>
-            <Form.Control type="email" placeholder="Enter email" value={email} onChange={(e) => { setEmail(e.target.value) }} />
-            <Form.Text className="text-muted">
-              We'll never share your email with anyone else.
-            </Form.Text>
-          </Form.Group>
-
-          <Button variant="primary" onClick={submitData}>
-            Submit
-          </Button>
-        </Form>
-      </div> */}
-
-  
-<div className="table-container">
-        <h2>Payment Personal Details</h2>
-        <Table striped bordered hover>
-          <tbody>
-            {paymentDetails && (
-              <>
-                <tr>
-                  <td>Name</td>
-                  <td>{paymentDetails.name}</td>
-                </tr>
-                <tr>
-                  <td>Phone Number</td>
-                  <td>{paymentDetails.number}</td>
-                </tr>
-                <tr>
-                  <td>Address</td>
-                  <td>{paymentDetails.address}</td>
-                </tr>
-                <tr>
-                  <td>Email</td>
-                  <td>{paymentDetails.email}</td>
-                </tr>
-                <tr>
-                  <td colSpan="2">
-                    <Button variant="primary" onClick={() => handleSelect(paymentDetails)}>Select</Button>
-                  </td>
-                </tr>
-                {/* new row
-                <tr>
-                  <td colSpan="2">
-                    <Button variant="primary" onClick={() => handleSelect(paymentDetails)}>Save</Button>
-                  </td>
-                </tr>
-                 */}
-              </>
-            )}
-          </tbody>
-        </Table>
-      </div>
-    </div>
-  );
+    return (
+        <div>
+            <h1 style={{ textAlign: 'center' }}>Payment Report</h1>
+            <table style={tableStyle}>
+                <thead>
+                    <tr>
+                        <th style={headerCellStyle}>Name</th>
+                        <th style={headerCellStyle}>Email</th>
+                        <th style={headerCellStyle}>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {paymentDetails.map((payment, index) => (
+                        <tr key={index} style={index % 2 === 0 ? rowStyle : {}}>
+                            <td style={{ padding: '8px', borderBottom: '1px solid #dee2e6' }}>{payment.name}</td>
+                            <td style={{ padding: '8px', borderBottom: '1px solid #dee2e6' }}>{payment.email}</td>
+                            <td style={{ padding: '8px', borderBottom: '1px solid #dee2e6' }}>{payment.total}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
+    );
 }
 
-export default BasicExampleTable;
+export default PaymentSummaryPage;

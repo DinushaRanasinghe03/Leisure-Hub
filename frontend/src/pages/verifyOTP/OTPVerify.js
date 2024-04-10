@@ -37,9 +37,9 @@ function OTPVerification() {
       const response = await axios.post('/api/cardpayments/verification', data);
       console.log('data', response.data);
       if (response.data.verification) {
-        window.location.href = "/all"
+        window.location.href = "/end"
       } else {
-        window.location.href = "/end";
+        window.location.href = "/resunsuccess";
       }
     } catch (error) {
       console.error('error:', error);

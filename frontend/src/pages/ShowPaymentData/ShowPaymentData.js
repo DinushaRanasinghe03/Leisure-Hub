@@ -70,6 +70,26 @@ const BasicExampleTable = () => {
     console.log("Selected row:", rowData);
 
   };
+  //save button function
+  const handleSave = async(rowData) => {
+    window.location.href = `/end?id=${rowData._id}`
+    /*try {
+        const response = await axios.get(/api/payments/${rowData._id});
+        console.log("response1",response.data);
+        setName(response.data.name);
+        setNumber(response.data.number);
+        setAddress(response.data.address);
+        setEmail(response.data.email);
+
+       // setAllData(response.data);
+      } catch (error) {
+        console.error('error:', error);
+      }*/
+
+    // Handle select button click for a specific row
+    console.log("Selected row:", rowData);
+
+  };
 
   return (
     <div>
@@ -132,13 +152,13 @@ const BasicExampleTable = () => {
                     <Button variant="primary" onClick={() => handleSelect(paymentDetails)}>Select</Button>
                   </td>
                 </tr>
-                {/* new row
+                
                 <tr>
                   <td colSpan="2">
-                    <Button variant="primary" onClick={() => handleSelect(paymentDetails)}>Save</Button>
+                    <Button variant="primary" onClick={() => handleSave(paymentDetails)}>Save</Button>
                   </td>
                 </tr>
-                 */}
+                
               </>
             )}
           </tbody>

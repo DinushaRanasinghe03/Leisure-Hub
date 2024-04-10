@@ -72,7 +72,7 @@ const BasicExampleDelete = ({}) => {
     try {
       const response = await axios.delete(`/api/payments/${id}`);
       console.log('Deleted:', response.data);
-      window.location.href = "/end"
+      window.location.href = "/resunsuccess"
     } catch (error) {
       console.error('Error deleting data:', error);
     }

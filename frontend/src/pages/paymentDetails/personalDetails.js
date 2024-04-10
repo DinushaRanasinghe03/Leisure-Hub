@@ -8,6 +8,7 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
 
+
 const BasicExample = ({ id ='65f93fd2324ccf3684001584'}) => {
 
   //let id = '65f93fd2324ccf3684001584'

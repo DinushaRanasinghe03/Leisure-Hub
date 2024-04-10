@@ -4,7 +4,7 @@ const paymentSummaryController = require('../controllers/paymentSummaryControlle
 
 router.get('/', paymentSummaryController.getPaymentSummary);
 router.get('/:id', paymentSummaryController.getPaymentSummaryById);
-router.get('/sum', paymentSummaryController.getTotal);
+router.post('/sum', paymentSummaryController.getTotal);
 
 
 

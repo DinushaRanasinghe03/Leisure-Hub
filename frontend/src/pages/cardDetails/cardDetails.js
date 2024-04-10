@@ -68,7 +68,10 @@ console.log('id',id);
 
 
   return (
+    <div>
+    <h2 style={{ textAlign: "center" }}>Enter Your Card Details</h2>
     <div className="form-container">
+     
       <Form>
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Name On Card</Form.Label>
@@ -82,7 +85,7 @@ console.log('id',id);
 
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Expire Date</Form.Label>
-          <Form.Control type="text" placeholder="Expire Date" value={expDate} onChange={(e) => { setEXPDate(e.target.value) }} />
+          <Form.Control type="date" placeholder="Expire Date" value={expDate} onChange={(e) => { setEXPDate(e.target.value) }} />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -97,6 +100,7 @@ console.log('id',id);
           Submit
         </Button>
       </Form>
+    </div>
     </div>
   );
 }

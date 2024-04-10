@@ -1,0 +1,45 @@
+/* Table styles */
+.payment-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #aed9e0; /* Pastel Blue color */
+    margin-bottom: 20px; /* Add margin at the bottom of the table */
+}
+
+.payment-table th, .payment-table td {
+    padding: 15px 20px; /* Increased padding for more space between columns */
+    text-align: left;
+    border-bottom: 1px solid #dee2e6;
+}
+
+/* Header styles */
+.payment-table th {
+    background-color: #007bff; /* Adjusted to contrast with Pastel Blue */
+    color: #ffffff;
+}
+
+/* Even row styles */
+.payment-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Hover effect for rows */
+.payment-table tbody tr:hover {
+    background-color: #e2e2e2;
+}
+
+/* Increase space between rows */
+.payment-table tbody tr {
+    margin-bottom: 10px;
+}
+
+/* Responsive table styles */
+@media (max-width: 768px) {
+    .payment-table {
+        font-size: 14px;
+    }
+
+    .payment-table th, .payment-table td {
+        padding: 12px 15px; /* Adjusted padding for smaller screens */
+    }
+}

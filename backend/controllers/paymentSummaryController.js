@@ -1,11 +1,12 @@
 const booking = require('../models/PaymentSummary');
 const movies = require('../models/PaymentMovie');
+const movieschedule = require('../models/PaymentSchedule');
 exports.getPaymentSummary = async (req, res) => {
     try {
         const paymentsummary = await booking.find().populate({
             path: 'movie',
             select: 'name'
-        });
+        }).populate('schedule');
         res.json(paymentsummary);
     } catch (err) {
         console.error(err.message);
@@ -13,22 +14,30 @@ exports.getPaymentSummary = async (req, res) => {
     }
 };
 
-exports.getTotal = async (req,res) =>{
+exports.getTotal = async (req, res) => {
     try {
         const sumResult = await booking.aggregate([
             {
                 $group: {
-                    totalAmount: { $sum: { $toDouble: "$total" } }
-                }
-            }
+                    _id: null, // Group all documents into a single group
+                    totalAmount: { $sum: { $toDouble: "$total" } }
+                }
+            },
+            {
+                $project: {
+                    _id: 0, // Exclude the _id field from the output
+                    totalAmount: 1 // Include the totalAmount field
+                }
+            }
         ]);
-        const sum = sumResult.length > 0 ? sumResult[0].totalAmount : 0;
+
+        const sum = sumResult.length > 0 ? sumResult[0].totalAmount : 0;
         res.json(sum);
-        
+
     } catch (error) {
-        console.error(err.message);
+        console.error(error.message);
         res.status(500).send('Server Error');
-    }
+    }
 }
 
 // exports.addPayment = async (req, res) => {

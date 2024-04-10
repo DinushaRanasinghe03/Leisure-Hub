@@ -130,7 +130,7 @@ export const Movies = () => {
             </div>
           </div>
           <div className='col-md-9'>
-            <h2 className='text-center'>Now showing</h2>
+          <h1 style={{ fontSize: "24px", fontWeight: "bold",textAlign: "center", marginBottom: "20px" }}>Now Showing</h1>
             {sortedOngoingMovies.length === 0 ? (
               <p className="text-center">No ongoing movies available</p>
             ) : (
@@ -160,7 +160,7 @@ export const Movies = () => {
             )}
 
             <br/><br/>
-            <h2 className='text-center'>Coming Soon</h2>
+            <h1 style={{ fontSize: "24px", fontWeight: "bold", textAlign: "center", marginBottom: "20px" }}>Coming Soon</h1>
             {upcomingMovies.length === 0 ? (
               <p className="text-center">No upcoming movies available</p>
             ) : (

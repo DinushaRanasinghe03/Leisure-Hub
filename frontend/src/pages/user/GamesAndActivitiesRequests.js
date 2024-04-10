@@ -13,7 +13,7 @@ const Gamesandactivitiesrequests = () => {
   const [name, setName] = useState("");
   const [MemberName, setMemberName] = useState("");
   const [noParticipation, setNoParticipation] = useState("");
-  const [contactNo, setContactNo] = useState("");
+  const [regiEmail, setRegiEmail] = useState("");
   const [scheduledDate, setScheduledDate] = useState(null); // Initialize with null
   const [Time, setTime] = useState(null); // Initialize with null
   const [errors, setErrors] = useState({});
@@ -37,11 +37,12 @@ const Gamesandactivitiesrequests = () => {
     } else if (!/^\d+$/.test(noParticipation.trim())) {
       errors.noParticipation = "Number of participants must be a valid number";
     }
-    if (!contactNo.trim()) {
-      errors.contactNo = "Please enter a contact number";
-    } else if (contactNo.trim().length !== 10) {
-      errors.contactNo = "Phone number must be 10 digits";
+    if (!regiEmail.trim()) {
+      errors.regiEmail = "Please enter your registered email address";
+    } else if (!/^\S+@\S+\.\S+$/.test(regiEmail.trim())) {
+      errors.regiEmail = "Please enter your registered email address";
     }
+
     if (!scheduledDate) {
       errors.scheduledDate = "Please select a preferred date";
     }
@@ -61,7 +62,7 @@ const Gamesandactivitiesrequests = () => {
       gameandactivityRequestData.append("name", name);
       gameandactivityRequestData.append("MemberName", MemberName);
       gameandactivityRequestData.append("noParticipation", noParticipation);
-      gameandactivityRequestData.append("contactNo", contactNo);
+      gameandactivityRequestData.append("regiEmail", regiEmail);
       gameandactivityRequestData.append("scheduledDate", scheduledDate);
       gameandactivityRequestData.append("Time", Time);
       const { data } = await axios.post(
@@ -129,13 +130,13 @@ const Gamesandactivitiesrequests = () => {
                 <div className="mb-3">
                   <input
                     type="text"
-                    value={contactNo}
-                    placeholder="Contact number"
+                    value={regiEmail}
+                    placeholder="Enter registered email"
                     className="form-control"
-                    onChange={(e) => setContactNo(e.target.value)}
+                    onChange={(e) => setRegiEmail(e.target.value)}
                   />
-                  {errors.contactNo && (
-                    <div className="text-danger">{errors.contactNo}</div>
+                  {errors.regiEmail && (
+                    <div className="text-danger">{errors.regiEmail}</div>
                   )}
                 </div>
                 <div className="mb-3">

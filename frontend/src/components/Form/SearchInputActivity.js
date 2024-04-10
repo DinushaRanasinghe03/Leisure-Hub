@@ -25,7 +25,7 @@ const SearchInputActivity = () => {
         <input
           className="form-control me-2"
           type="search"
-          placeholder="Search"
+          placeholder="Search Here.."
           aria-label="Search"
           value={values.keyword}
           onChange={(e) => setValues({ ...values, keyword: e.target.value })}

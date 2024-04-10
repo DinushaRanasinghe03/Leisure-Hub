@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import AdminActivityMenu from "../../components/Layout/AdminActivityMenu";
 import axios from "axios";
 //import toast from "react-hot-toast";
-import toast, { Toaster } from 'react-hot-toast';
+import toast, { Toaster } from "react-hot-toast";
 import { Select } from "antd";
 import { useNavigate } from "react-router-dom";
-import LayoutAdmin from './../../components/Layout/LayoutAdmin';
+import LayoutAdmin from "./../../components/Layout/LayoutAdmin";
 const { Option } = Select;
 
 export const AddGamesAndActivities = () => {
@@ -57,7 +57,6 @@ export const AddGamesAndActivities = () => {
         gameandactivityData
       );
       if (data?.success) {
-        navigate("/adminactivitydashboard/activitymanagement/activities");
         setTimeout(() => {
           toast.success("Game or Activity Added Successfully");
         }, 1000);
@@ -173,9 +172,9 @@ export const AddGamesAndActivities = () => {
             </div>
           </div>
         </div>
-        <Toaster/>
+        <Toaster />
       </div>
-      </LayoutAdmin>
+    </LayoutAdmin>
   );
 };
 

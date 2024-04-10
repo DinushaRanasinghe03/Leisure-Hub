@@ -14,7 +14,7 @@ const gamesandactivitiesRequestSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    contactNo: {
+    regiEmail: {
       type: String,
       required: true,
     },

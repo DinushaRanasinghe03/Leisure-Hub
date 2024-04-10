@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import AdminActivityMenu from "../../components/Layout/AdminActivityMenu";
 //import toast from "react-hot-toast";
-import toast, { Toaster } from 'react-hot-toast';
+import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
-import LayoutAdmin from './../../components/Layout/LayoutAdmin';
+import LayoutAdmin from "./../../components/Layout/LayoutAdmin";
 
 export const ViewAllRequests = () => {
   const [gamesAndActivitiesRequest, setGamesAndActivitiesRequest] = useState(
@@ -102,7 +102,7 @@ export const ViewAllRequests = () => {
                         Number of Participation: {request.noParticipation}
                       </p>
                       <p className="card-text">
-                        Contact Number: {request.contactNo}
+                        Registered Email: {request.regiEmail}
                       </p>
                       <p className="card-text">
                         Preferred Date: {formatDate(request.scheduledDate)}
@@ -128,13 +128,15 @@ export const ViewAllRequests = () => {
                   onClick={downloadDailyReport}
                   disabled={loading}
                 >
-                  {loading ? "Downloading..." : "Download Pending Report"}
+                  {loading
+                    ? "Downloading..."
+                    : "Download Pending Request Report"}
                 </button>
               </div>
             </div>
           </div>
         </div>
-        <Toaster/>
+        <Toaster />
       </div>
     </LayoutAdmin>
   );

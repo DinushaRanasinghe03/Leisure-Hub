@@ -372,3 +372,22 @@ export const getAllUsersController = async (req, res) => {
     });
   }
 };
+
+//delete Activity
+export const deleteGamesAndActivityRequestController = async (req, res) => {
+  try {
+    await GamesAndActivitiesRequestModel.findByIdAndDelete(req.params.id);
+    res.status(200).send({
+      success: true,
+      message: "Request deleted successfully",
+    });
+  } catch (error) {
+    // Log and send error response if deletion fails
+    console.error(error);
+    res.status(500).send({
+      success: false,
+      message: "Error while deleting request",
+      error,
+    });
+  }
+};

@@ -31,7 +31,9 @@
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.8.2",
     "multer": "^1.4.5-lts.1",
-    "react-csv": "^2.2.2"
+    "react-csv": "^2.2.2",
+    "nodemailer": "^6.9.13",
+    "speakeasy": "^2.0.0"
 
   }
 }

@@ -56,7 +56,7 @@ const HeaderAdmin = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/pageNotFound" activeClassName="active">
+            <NavLink to="/employeeregister" activeClassName="active">
               Staff
             </NavLink>
           </li>

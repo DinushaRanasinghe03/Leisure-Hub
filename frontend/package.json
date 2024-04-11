@@ -25,6 +25,7 @@
     "react-hot-toast": "^2.4.1",
     "react-router-dom": "^6.22.3",
     "react-scripts": "5.0.1",
+    "react-to-print": "^2.15.1",
     "react-toastify": "^10.0.5",
     "recoil": "^0.7.7",
     "rsuite": "^5.57.0",

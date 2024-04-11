@@ -56,6 +56,18 @@ import EmployeeSalaryForm from './pages/Employee/EmployeeSalaryForm';
 import EmployeeSalaryList from './pages/Employee/EmployeeSalaryList';
 import UpdateEmployeeSalaryForm from './pages/Employee/UpdateEmployeeSalaryForm';
 
+
+import AddContact from "./components/Pages/ContactUs/User/AddContact/AddContact";
+import AddReply from "./components/Pages/ContactUs/Admin/AddReplyContact/AddReplyContact";
+import ContactDetails from "./components/Pages/ContactUs/Admin/ContactDetails/ContactDetails";
+import CheckContact from "./components/Pages/ContactUs/User/ReplyContact/CheckContact";
+import AddRate from "./components/Pages/Rates/Add-Rates/AddRate";
+import RateDetails from "./components/Pages/Rates/RateDetails/RateDetails";
+import FindReview from "./components/Pages/Rates/FindReview/FindReview";
+import UpdateReview from "./components/Pages/Rates/UpdateReview/UpdateReview";
+import AddFeedBack from "./components/Pages/FeedBack/User/AddFeedBack";
+import FeedBackDetails from "./components/Pages/FeedBack/Admin/FeedBackDetails";
+
 function App() {
   return (
     <>
@@ -161,6 +173,22 @@ function App() {
           <Route path="/updateEmployeeSalary/:id" element={<UpdateEmployeeSalaryForm />} />
       
       
+      {/*Contact*/}
+      
+          <Route path="/addcontact" element={<AddContact />} />
+          <Route path="/addreply/:id" element={<AddReply />} />
+          <Route path="/contactdetails" element={<ContactDetails />} />
+          <Route path="/checkcontact" element={<CheckContact />} />
+
+          {/*Ratings*/}
+          <Route path="/ratehome" element={<RateDetails />} />
+          <Route path="/addrate" element={<AddRate />} />
+          <Route path="/findrate" element={<FindReview />} />
+          <Route path="/updatereview/:id" element={<UpdateReview />} />
+
+          {/*FeedBack*/}
+          <Route path="/addfeed" element={<AddFeedBack />} />
+          <Route path="/feeddetails" element={<FeedBackDetails />} />
       
       </Routes>
     </>

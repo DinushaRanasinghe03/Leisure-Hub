@@ -14,13 +14,12 @@ import buyTicketsRoutes from "./routes/buyTicketsRoutes.js"
 import { fileURLToPath } from "url";
 import path from "path";
 import authRoutes from "./routes/authRoute.js";
-
 import EmployeeRouter from './routes/EmployeeRouter.js'
 import EmployeeLeaveRouter from './routes/EmployeeLeaveRouter.js'
 import EmployeeSalaryRouter from './routes/EmployeeSalaryRouter.js'
-
-
-
+import ContactUsRoute from "./routes/ContactUsRoute.js"
+import RateRoute from "./routes/RateRoute.js"
+import FeedbackRoute from "./routes/FeedBackRoutes.js"
 
 
 // Get directory path of the current file
@@ -52,17 +51,14 @@ app.use("/api/v1/movies",movieRoutes);
 app.use("/api/v1/movieschedule",movieScheduleRoutes )
 app.use("/api/v1/buytickets", buyTicketsRoutes);
 app.use("/api/v1/auth", authRoutes);
-
-
-//throw API to EmployeeRouter class
-//app.use('/employee', EmployeeRouter);
 app.use("/api/v1/employee",EmployeeRouter);
-
-//throw API to EmployeeLeaveRouter class
 app.use("/api/v1/employeeleave", EmployeeLeaveRouter);
-
-//throw API to EmployeeSalaryRouter class
 app.use("/api/v1/employeeSalary", EmployeeSalaryRouter);
+
+
+app.use("/contacts", ContactUsRoute);
+app.use("/rates", RateRoute);
+app.use("/feedback", FeedbackRoute);
 
 //rest api
 app.get("/", (req, res) => {

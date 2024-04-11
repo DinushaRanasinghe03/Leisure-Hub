@@ -14,7 +14,7 @@ const SearchActivity = () => {
           <h6>
             {values?.results.length < 1
               ? "No Game or Activity Found"
-              : `Found ${values?.results.length}`}
+              : `Found ${values?.results.length} related games and activities`}
           </h6>
           <div className="d-flex flex-wrap mt-4">
             {values?.results.map((g) => (

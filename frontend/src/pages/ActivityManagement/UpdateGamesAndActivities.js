@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import AdminActivityMenu from "../../components/Layout/AdminActivityMenu";
 import axios from "axios";
 //import toast from "react-hot-toast";
-import toast, { Toaster } from 'react-hot-toast';
+import toast, { Toaster } from "react-hot-toast";
 import { Select } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
-import LayoutAdmin from './../../components/Layout/LayoutAdmin';
+import LayoutAdmin from "./../../components/Layout/LayoutAdmin";
 
 const { Option } = Select;
 
@@ -86,7 +86,6 @@ export const UpdateGamesAndActivities = () => {
         gameandactivityData
       );
       if (data?.success) {
-        navigate("/adminactivitydashboard/activitymanagement/activities");
         setTimeout(() => {
           toast.success("Game or Activity Updated Successfully");
         }, 1000);
@@ -106,7 +105,7 @@ export const UpdateGamesAndActivities = () => {
       let answer = window.prompt(
         "Are you sure, want to delete this game or activity?"
       );
-      if (!answer) return;
+      if (answer !== "yes") return;
       const { data } = await axios.delete(
         `/api/v1/gameandactivity/delete-gameandactivity/${id}`
       );
@@ -238,9 +237,9 @@ export const UpdateGamesAndActivities = () => {
             </div>
           </div>
         </div>
-        <Toaster/>
+        <Toaster />
       </div>
-      </LayoutAdmin>
+    </LayoutAdmin>
   );
 };
 

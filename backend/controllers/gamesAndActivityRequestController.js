@@ -7,7 +7,7 @@ export const createGameAndActivityRequestController = async (req, res) => {
       name,
       MemberName,
       noParticipation,
-      contactNo,
+      regiEmail,
       scheduledDate,
       Time,
     } = req.fields;
@@ -22,8 +22,8 @@ export const createGameAndActivityRequestController = async (req, res) => {
         return res
           .status(500)
           .send({ error: "No of Participation is Required" });
-      case !contactNo:
-        return res.status(500).send({ error: "Contact no is Required" });
+      case !regiEmail:
+        return res.status(500).send({ error: "Registered Email is Required" });
       case !scheduledDate:
         return res.status(500).send({ error: "Schedule date is Required" });
       case !Time:
@@ -50,10 +50,10 @@ export const createGameAndActivityRequestController = async (req, res) => {
 // Function to generate HTML content for the daily report
 const generateDailyReportHTML = (requests) => {
   // Generate HTML content for the daily report based on the requests data
-  let htmlContent = `<h1>Daily Requests Report</h1>`;
-  htmlContent += `<table border="1" cellpadding="5"><tr><th>Name</th><th>Member Name</th><th>No of Participation</th><th>Contact No</th><th>Scheduled Date</th><th>Time</th></tr>`;
+  let htmlContent = `<h1>Pending User Requests Report</h1>`;
+  htmlContent += `<table border="1" cellpadding="5"><tr><th>Name</th><th>Member Name</th><th>No of Participation</th><th>Registered Email</th><th>Scheduled Date</th><th>Time</th></tr>`;
   requests.forEach((request) => {
-    htmlContent += `<tr><td>${request.name}</td><td>${request.MemberName}</td><td>${request.noParticipation}</td><td>${request.contactNo}</td><td>${request.scheduledDate}</td><td>${request.Time}</td></tr>`;
+    htmlContent += `<tr><td>${request.name}</td><td>${request.MemberName}</td><td>${request.noParticipation}</td><td>${request.regiEmail}</td><td>${request.scheduledDate}</td><td>${request.Time}</td></tr>`;
   });
   htmlContent += `</table>`;
   return htmlContent;
@@ -164,7 +164,7 @@ export const updateGameAndActivityRequestController = async (req, res) => {
       name,
       MemberName,
       noParticipation,
-      contactNo,
+      regiEmail,
       scheduledDate,
       Time,
     } = req.fields;
@@ -179,8 +179,8 @@ export const updateGameAndActivityRequestController = async (req, res) => {
         return res
           .status(500)
           .send({ error: "No of Participation is Required" });
-      case !contactNo:
-        return res.status(500).send({ error: "Contact no is Required" });
+      case !regiEmail:
+        return res.status(500).send({ error: "Registered Email is Required" });
       case !scheduledDate:
         return res.status(500).send({ error: "Schedule date is Required" });
       case !Time:
@@ -189,7 +189,7 @@ export const updateGameAndActivityRequestController = async (req, res) => {
     const gamesAndActivitiesRequest =
       await GamesAndActivitiesRequestModel.findByIdAndUpdate(
         req.params.id,
-        { name, MemberName, noParticipation, contactNo, scheduledDate, Time },
+        { name, MemberName, noParticipation, regiEmail, scheduledDate, Time },
         { new: true } // Returns the updated document
       );
     await gamesAndActivitiesRequest.save();

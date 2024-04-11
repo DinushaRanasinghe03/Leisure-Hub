@@ -57,7 +57,7 @@ const MovieDetails = () => {
               width={"250px"} />
           </div>
           <div className='col-md-6' style={{ marginLeft: '20px' }}>
-            <h2 className='text-center'>Movie Details</h2>
+          <h1 style={{ fontSize: "24px", fontWeight: "bold", textAlign: "center", marginBottom: "20px" }}>Movie Details</h1>
             <p><b>Movie Title : </b>{movie.name}</p>
             <p><b>Language : </b>{movie.language}</p>
             <p><b>Genre : </b>{movie?.genre?.name}</p>
@@ -76,7 +76,7 @@ const MovieDetails = () => {
         </div>
         <br/><br/><br/>
         <div className='row'>
-          <h4><center>Similar Movies</center></h4>
+          <h1 style={{ fontSize: "24px", fontWeight: "bold", textAlign: "center", marginBottom: "20px" }}>Similar Movies</h1>
           {relatedMovies.length > 0 ? (
             <div className='row row-cols-1 row-cols-md-4 g-4' style={{ marginLeft: '20px' }}>
               {relatedMovies.map(p => (

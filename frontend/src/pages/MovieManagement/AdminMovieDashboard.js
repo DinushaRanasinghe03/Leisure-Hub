@@ -44,7 +44,7 @@ const AdminMovieDashboard = () => {
                             <AdminMovieMenu />
                         </div>
                         <div className='col-md-9'>
-                            <h3><center>Movie Analysis</center></h3>
+                        <h1 style={{ fontSize: "30px", fontWeight: "bold", textAlign: "center", marginBottom: "20px" }}>Movie Analysis</h1>
                             <p>Loading...</p>
                         </div>
                     </div>

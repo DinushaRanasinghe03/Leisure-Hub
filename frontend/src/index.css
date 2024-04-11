@@ -462,3 +462,75 @@ h6 {
 .m-b-10 {
   margin-bottom: 10px;
 }
+
+
+
+/*=========About=============*/
+.about-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.about-heading {
+  font-size: 36px;
+  font-weight: bold;
+  color: #333;
+  text-align: center; /* Centering the heading */
+}
+
+.about-content {
+  font-size: 18px;
+  line-height: 1.6;
+  margin-top: 20px;
+  text-align: justify; /* Justify the content */
+}
+
+.about-content p {
+  margin-bottom: 20px;
+}
+
+
+
+/*========privacy==========*/
+.privacy-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.privacy-heading {
+  font-size: 36px;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+}
+
+.privacy-content {
+  font-size: 16px;
+  line-height: 1.6;
+  margin-top: 20px;
+  text-align: justify;
+}
+
+
+.privacy-content p {
+  margin-bottom: 15px;
+}
+
+.privacy-content ul {
+  margin-bottom: 15px;
+  padding-left: 20px;
+}
+
+.privacy-content li {
+  list-style-type: disc;
+}
+
+.privacy-content strong {
+  font-weight: bold;
+}
+
+.privacy-content em {
+  font-style: italic;
+}

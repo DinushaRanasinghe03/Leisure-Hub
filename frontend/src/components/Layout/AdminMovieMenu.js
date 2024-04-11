@@ -6,7 +6,7 @@ const AdminMovieMenu = () => {
     <>
     <div className='text-center'>
     <div className="list-group">
-        <h4>Movie Management Panel</h4>
+    <h1 style={{ fontSize: "20px", fontWeight: "bold", marginBottom: "20px" }}>Movie Management Panel</h1>
        <NavLink to="/adminmoviedashboard/moviemanagement/create-category" className="list-group-item list-group-item-action">Movie Genres</NavLink>
        <NavLink to="/adminmoviedashboard/moviemanagement/add-movie" className="list-group-item list-group-item-action">Add Movies</NavLink>
        <NavLink to="/adminmoviedashboard/moviemanagement/movie" className="list-group-item list-group-item-action">Movie List</NavLink>

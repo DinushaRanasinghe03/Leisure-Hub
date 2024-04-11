@@ -3,7 +3,6 @@ import AdminMovieMenu from '../../components/Layout/AdminMovieMenu';
 import toast, { Toaster } from 'react-hot-toast';
 import axios from 'axios';
 import { Select } from 'antd';
-//import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import LayoutAdmin from './../../components/Layout/LayoutAdmin';
 
@@ -49,6 +48,21 @@ const AddMovieSchedule = () => {
     }
 
     try {
+      // Check if there is any existing schedule that overlaps with the selected time period
+      const existingSchedules = await axios.get(`http://localhost:8080/api/v1/movieschedule/get-schedule-date/${date}`);
+      const overlappingSchedule = existingSchedules.data.movieSchedules.find(schedule => {
+        const scheduleStartTime = new Date(`${date}T${schedule.from}`);
+        const scheduleEndTime = new Date(`${date}T${schedule.to}`);
+        const newStartTime = new Date(`${date}T${from}`);
+        const newEndTime = new Date(`${date}T${to}`);
+        return (newStartTime >= scheduleStartTime && newStartTime < scheduleEndTime) || (newEndTime > scheduleStartTime && newEndTime <= scheduleEndTime);
+      });
+
+      if (overlappingSchedule) {
+        toast.error('A schedule already exists for the selected time period');
+        return;
+      }
+
       const movieScheduleData = new FormData();
       movieScheduleData.append('date', date);
       movieScheduleData.append('from', from);

@@ -1,22 +1,17 @@
-// import React, { Component, useEffect } from "react";
-// import { Container} from 'reactstrap'
+import React, { useEffect } from "react";
 import {useFormik} from 'formik'
-import {useParams} from 'react-router-dom'
-import {  useNavigate } from 'react-router-dom'
-import '../../pages/Employee/EmployeeForm.css'
-import '../../App.css'
-import AdminStaffMenu from "../../components/Layout/AdminStaffMenu";
+import { useParams, useNavigate } from 'react-router-dom';
+import '../../App.css';
+//import '../../pages/Employee/EmployeeForm.css';
 
 import { Form, Button, Col, Row } from "react-bootstrap";
 
+const EmployeeSalaryFormEdit = () => {
 
-const EmployeeSalaryForm = () => {
-  
-  const navigate = useNavigate();
   const params = useParams();
-  
+  const navigate = useNavigate();
 
-  const calculateOTTotal = () => {
+   const calculateOTTotal = () => {
     const otHours = parseFloat(formik.values.otHours) || 0;
     const otRate = parseFloat(formik.values.otRate) || 0;
     const basicSal = parseFloat(formik.values.basicSal) || 0;
@@ -36,12 +31,12 @@ const EmployeeSalaryForm = () => {
       if (!values.basicSal) {
         errors.basicSal = "*Required";
       }
-    //   if (!values.otHours) {
-    //     errors.otHours = "*Required";
-    //   }
-    //   if (!values.otRate) {
-    //     errors.otRate = "*Required";
-    //   }
+      // if (!values.otHours) {
+      //   errors.otHours = "*Required";
+      // }
+      // if (!values.otRate) {
+      //   errors.otRate = "*Required";
+      // }
       if (!values.bonus) {
         errors.bonus = "*Required";
       }
@@ -49,8 +44,53 @@ const EmployeeSalaryForm = () => {
       return errors;
     }
 
+    const getEmployeeSalaryDetails = async() => {
+      console.warn(params)
+      let result = await fetch(`http://localhost:8080/api/v1/EmployeeSalary/getEmployeeSalary/${params.id}`);
+      result = await result.json();
+      console.warn(result)
+
+      formik.setValues({
+        NIC: result.NIC,
+        basicSal: result.basicSal,
+        otHours: result.otHours,
+        otRate: result.otRate,
+        bonus: result.bonus,
+        month: result.month.substr(0, 7),
+        otTotal: result.otTotal,
+        totalSal: result.totalSal
+      });
+
+    }
+
+    useEffect(()=>{
+      getEmployeeSalaryDetails();
+    },[])
+
+    const updateEmployeeSalary = async(data) => {
+      console.warn(data)
+      let result = await fetch(`http://localhost:8080/api/v1/EmployeeSalary/updateEmployeeSalary/${params.id}`,{
+        method: 'PUT',
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      result = await result.json()
+      console.warn(result)
+      if(result){
+        window.alert('Data has been updated successfully');  
+      }
+      navigate(`/employeesalarylist`);
+    }
+
+  //   const handleCancel = () => {
+  //     navigate(`/employeesalarylist`);
+  // };
+
     const formik = useFormik({
       initialValues: {
+        // empId: params.id,
         NIC: "",
         basicSal: "",
         otHours: "",
@@ -62,47 +102,16 @@ const EmployeeSalaryForm = () => {
 
       },
       validate,
-      onSubmit: async(values) => {
-        
-       
-
-        try{
-            const response = await fetch(`http://localhost:8080/api/v1/EmployeeSalary/addEmployeeSalary`, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(values),
-            });
-            if(response.ok){
-              
-              window.alert('Data has been inserted successfully');
-              //window.location = "http://localhost:3000/employeeSalaryList";
-              console.log('Successfully added to list');
-              navigate('/employeesalarylist')
-            }else{
-              console.error('Failed to submit form:', response.status, response.statusText);
-            }
-          }catch(error){
-            console.error('Error submitting form:', error);
-          }
+      onSubmit: () => {
+        updateEmployeeSalary(formik.values)
       }
-
     });
 
     return (
       <body id='Body'>
-
-<div className="container-fluid m-3 p-3">
-        <div className="row">
-          <div className="col-md-3">
-            <AdminStaffMenu />
-          </div>
-          
-
       <section className="employeeForm">
       <div className='form'>
-        <h2 className="title code">Employee Salary Assignment</h2>
+        <h2 className="title code">Employee Salary Update</h2>
         <div id="role-form-outer-div">
           <Form id="form" onSubmit={formik.handleSubmit}>
 
@@ -116,9 +125,10 @@ const EmployeeSalaryForm = () => {
                     name="NIC"
                     placeholder="Employee NIC"
                     onChange={formik.handleChange}
-                    value={formik.values.empId}
+                    value={formik.values.NIC}
                     // onBlur={formik.handleBlur}
-                    required
+                    readOnly
+                    // required
                   />
                 </Col>
             </Form.Group>
@@ -224,34 +234,15 @@ const EmployeeSalaryForm = () => {
                   onChange={formik.handleChange}
                   value={formik.values.bonus}
                   onBlur={() => calculateOTTotal()}
-                  
-                />
-                {formik.touched.bonus && formik.errors.bonus ? <div className="error">{formik.errors.bonus}</div>: null}
-              </Col>
-            </Form.Group>
-
-            <Form.Group as={Row}>
-              <Form.Label column sm={2}>
-              Total Salary
-              </Form.Label>
-              <Col sm={10} className="form-input">
-                <Form.Control
-                  type="number"
-                  name="totalSal"
-                  placeholder="Total Salary"
-                  onChange={formik.handleChange}
-                  value={formik.values.totalSal}
-                //   onBlur={formik.handleBlur}
-                  readOnly
                   required
                 />
-                {formik.touched.totalSal && formik.errors.totalSal ? <div className="error">{formik.errors.totalSal}</div>: null}
+                {formik.touched.bonus && formik.errors.bonus ? <div className="error">{formik.errors.bonus}</div>: null}
               </Col>
             </Form.Group>
         
             <Form.Group as={Row} id="form-submit-button">
               <Col sm={{ span: 10, offset: 2 }}>
-                <Button disabled={formik.isSubmitting} type="submit">{formik.isSubmitting ? 'Submitting' : 'Submit'}</Button>
+                <Button disabled={formik.isSubmitting} type="submit">{formik.isSubmitting ? 'Updating' : 'Update'}</Button>
               </Col>
             </Form.Group>
             {/* <Form.Group as={Row} id="form-cancel-button">
@@ -265,10 +256,8 @@ const EmployeeSalaryForm = () => {
         </div>
       </div>
       </section>
-      </div>
-      </div>
       </body>
     );
   }
- 
-export default EmployeeSalaryForm;
+
+export default EmployeeSalaryFormEdit;

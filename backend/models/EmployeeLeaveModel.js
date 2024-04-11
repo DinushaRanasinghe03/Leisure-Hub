@@ -29,7 +29,7 @@ const EmployeeLeaveSchema = new Schema({
     },
     leaveStatus: {
         type: String,
-        required: true
+        required: false
     }
 });
 

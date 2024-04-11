@@ -3,7 +3,7 @@ import EmployeeModel from "../models/EmployeeModel.js";
 
 //Create a function to create a new employee salary
 export async function addEmployeeSalary(req, res) {
-    const empId = req.body.empId
+    const NIC = req.body.NIC
     const basicSal = req.body.basicSal
     const otHours = req.body.otHours
     const otRate = req.body.otRate
@@ -12,10 +12,10 @@ export async function addEmployeeSalary(req, res) {
     const totalSal = req.body.totalSal
     const month = req.body.month
 
-    console.log(empId,basicSal, otHours, otRate, otTotal, bonus, month) 
+    console.log(NIC,basicSal, otHours, otRate, otTotal, bonus, month) 
 
     const employeeSalary = new EmployeeSalaryModel({
-        empId : empId, 
+        NIC : NIC, 
         basicSal: basicSal,
         otHours: otHours,
         otRate: otRate,
@@ -29,9 +29,7 @@ export async function addEmployeeSalary(req, res) {
         await employeeSalary.save()
         console.log("successfully data inserted")
 
-        const employee = await EmployeeModel.findById(empId)
-        employee.totalSal = totalSal
-        await employee.save()
+        
 
         res.status(200).send("Data inserted successfully");
     } catch (err) {
@@ -46,7 +44,7 @@ export async function getAllEmployeeSalary(req, res){
     const empId = req.params.id
 
     try {
-        const employeeSalary = await EmployeeSalaryModel.find(); //{ empId }
+        const employeeSalary = await EmployeeSalaryModel.find({}); //{ empId }
         res.status(200).json(employeeSalary);
     } catch (err) {
         console.log(err);

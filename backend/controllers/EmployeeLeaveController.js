@@ -60,6 +60,39 @@ export async function getEmployeeLeave(req, res) {
     }
 }
 
+// Create a function to update employee leave by id
+export async function updateEmployeeLeave(req, res) {
+    const objectId = req.params.id;
+
+    // Check if req.body exists
+    const{
+        Name,
+        role,
+        leaveType,
+        leaveFrom,
+        leaveTo,
+        leaveStatus
+    } = req.body;
+    if (!req.body) {
+        return res.status(400).send({ message: "Request body is empty" });
+    }
+
+    try {
+        // Find the employee leave by ID and update the details
+        const updatedEmployeeLeave = await EmployeeLeaveModel.findByIdAndUpdate(objectId, req.body, { new: true });
+
+        if (!updatedEmployeeLeave) {
+            return res.status(404).send({ message: "Employee leave not found" });
+        }
+
+        console.log('Employee leave updated successfully');
+        res.status(200).json(updatedEmployeeLeave);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error occurred while updating data');
+    }
+}
+
 // Create a function to remove an employee leave by id
 export async function deleteEmployeeLeave(req, res) {
     const objectId = req.params.id;
@@ -73,4 +106,10 @@ export async function deleteEmployeeLeave(req, res) {
 }
 
 //Export all the controller functions as an object
-export default { addEmployeeLeave, getAllEmployeeLeave, getEmployeeLeave, deleteEmployeeLeave};
+export default {
+    addEmployeeLeave,
+    getAllEmployeeLeave,
+    getEmployeeLeave,
+    deleteEmployeeLeave,
+    updateEmployeeLeave
+};

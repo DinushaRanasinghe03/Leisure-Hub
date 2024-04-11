@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import moment from 'moment';
 import '../../App.css'
-import './EmployeeForm.css';
+import '../../pages/Employee/EmployeeForm.css'
 
 function UpdateEmployee() {
     const { employeeId } = useParams();

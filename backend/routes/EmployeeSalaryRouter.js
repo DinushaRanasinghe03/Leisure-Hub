@@ -9,7 +9,7 @@ console.log('IN employeeSalaryRouter');
 router.post('/addEmployeeSalary', addEmployeeSalary);
 
 // get all employees' salaries
-router.get('/getEmployeeSalary', getAllEmployeeSalary);
+router.get('/getAllEmployeeSalary', getAllEmployeeSalary);
 
 // get one employee salary by id
 router.get('/getEmployeeSalary/:id', getEmployeeSalary);

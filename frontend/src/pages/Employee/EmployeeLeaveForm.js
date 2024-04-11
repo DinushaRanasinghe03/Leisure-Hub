@@ -33,7 +33,7 @@ const EmployeeLeaveForm = () => {
 
     const formik = useFormik({
       initialValues: {
-        firstName: "",
+        Name: "",
         role: "",
         leaveType: "",
         leaveFrom: "",
@@ -46,7 +46,7 @@ const EmployeeLeaveForm = () => {
         
 
         try{
-            const response = await fetch(`http://localhost:3000/employeeLeave/addEmployeeLeave`, {
+            const response = await fetch(`http://localhost:8080/api/v1/EmployeeLeave/addEmployeeLeave`, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'
@@ -56,7 +56,7 @@ const EmployeeLeaveForm = () => {
             if(response.ok){
             //   hideLoadingSpinner();
               window.alert('Data has been inserted successfully');
-              window.location = "http://localhost:3000/employeeDashboard";
+              //window.location = "http://localhost:3000/employeeLeaveList";
               console.log('Successfully added to list');
             }else{
               console.error('Failed to submit form:', response.status, response.statusText);
@@ -78,16 +78,16 @@ const EmployeeLeaveForm = () => {
 
             <Form.Group as={Row}>
                 <Form.Label column sm={2}>
-                  First Name
+                  Name
                 </Form.Label>
                 <Col sm={10} className="form-input">
                   <Form.Control
                     type="text"
-                    name="firstName"
+                    name="Name"
                     placeholder="Employee Name"
                     onChange={formik.handleChange}
-                    value={formik.values.firstName}
-                    readOnly
+                    value={formik.values.Name}
+                    required
                   />
                 </Col>
             </Form.Group>
@@ -102,7 +102,7 @@ const EmployeeLeaveForm = () => {
                     placeholder="Role"
                     onChange={formik.handleChange}
                     value={formik.values.role}
-                    readOnly
+                    required
                     />
                 </Col>
             </Form.Group>
@@ -135,7 +135,7 @@ const EmployeeLeaveForm = () => {
               </Form.Label>
               <Col sm={10} className="form-input">
                 <Form.Control
-                  type="month"
+                  type="date"
                   name="leaveFrom"
                   placeholder="From Date"
                   onChange={formik.handleChange}
@@ -152,7 +152,7 @@ const EmployeeLeaveForm = () => {
               </Form.Label>
               <Col sm={10} className="form-input">
                 <Form.Control
-                  type="month"
+                  type="date"
                   name="leaveTo"
                   placeholder="To Date"
                   onChange={formik.handleChange}
@@ -169,13 +169,13 @@ const EmployeeLeaveForm = () => {
                 <Button disabled={formik.isSubmitting} type="submit">{formik.isSubmitting ? 'Submitting' : 'Submit'}</Button>
               </Col>
             </Form.Group>
-            <Form.Group as={Row} id="form-cancel-button">
+            {/* <Form.Group as={Row} id="form-cancel-button">
               <Col sm={{ span: 10, offset: 2 }} id="form-cancel-button-inner">
                 <Button type="reset">
                   cancel
                 </Button>
               </Col>
-            </Form.Group>
+            </Form.Group> */}
           </Form>
         </div>
       </div>

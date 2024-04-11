@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 
 const EmployeeSalarySchema = new Schema({
 
-     empId: {
+     NIC: {
         type: String,
         required: true
     },

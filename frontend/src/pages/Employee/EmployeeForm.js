@@ -1,12 +1,13 @@
-import React from "react";
+import React, { Component } from "react";
 import {useFormik} from 'formik'
 //import { Container} from 'reactstrap'
 //import Axios from 'axios';
-//import '../../pages/Employee/EmployeeForm.css'
+import '../../pages/Employee/EmployeeForm.css'
 import {  useNavigate } from 'react-router-dom';
-//import '../../App.css'
-
 import { Form, Button, Col, Row } from "react-bootstrap";
+import AdminStaffMenu from "../../components/Layout/AdminStaffMenu";
+// import '../../components/Layout/HeaderAdmin.js'
+// import '../../components/Layout/HeaderAdmin.css'
 
 
 //const API_URL = 'http://localhost:8080/api/v1/employee';
@@ -73,7 +74,7 @@ import { Form, Button, Col, Row } from "react-bootstrap";
       validate,
       onSubmit: async(values) => {
 
-        ///showLoadingSpinner();
+        
 
         try{
           const response = await fetch('http://localhost:8080/api/v1/Employee/addEmployee', {
@@ -84,9 +85,9 @@ import { Form, Button, Col, Row } from "react-bootstrap";
             body: JSON.stringify(values),
           });
           if(response.ok){
-           // hideLoadingSpinner();
+          
             window.alert('Data has been inserted successfully');
-            //window.location = "http://localhost:..../.....";
+            
             console.log('Successfully added to list');
             navigate('/employeelist')
           }else{
@@ -100,7 +101,15 @@ import { Form, Button, Col, Row } from "react-bootstrap";
     });
 
     return (
+
       <body id='Body'>
+
+<div className="container-fluid m-3 p-3">
+        <div className="row">
+          <div className="col-md-3">
+            <AdminStaffMenu />
+          </div>
+          
       <section className="employeeForm">
       <div className="form">
         <h2 className="title code">Employee Registration</h2>
@@ -158,13 +167,14 @@ import { Form, Button, Col, Row } from "react-bootstrap";
                   <option selected>
                     Select your option
                   </option>
-                  <option value="cleaner">Cleaner</option>
+                  
                   <option value="Movie manager">Movie Manager</option>
                   <option value="Activity manager">Activity manager</option>
                   <option value="customer service manager">Customer Service Manager</option>
                   <option value="membership manager">Memebership Manager</option>
                   <option value="payment manager">Payment Manager</option>
                   <option value="resourse manager">resourse Manager</option>
+                  <option value="Labour">Labour</option>
                 </Form.Control>
                 {formik.touched.role && formik.errors.role ? <div className="error">{formik.errors.role}</div>: null}
               </Col>
@@ -301,6 +311,8 @@ import { Form, Button, Col, Row } from "react-bootstrap";
         </div>
       </div>
       </section>
+      </div>
+      </div>
       </body>
     );
   }

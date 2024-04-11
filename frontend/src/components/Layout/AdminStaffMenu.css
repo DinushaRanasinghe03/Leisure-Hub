@@ -1,0 +1,50 @@
+/* Container for the left side navbar */
+.text-center {
+    text-align: center;
+}
+
+.list-group {
+    margin-top: 10px;
+}
+
+/* Style for each menu item */
+.list-group-item {
+    cursor: pointer;
+    border: none;
+    border-radius: 0;
+    padding: 10px 10px; /* Adjust padding here */
+    color: #333;
+    transition: background-color 0.3s;
+    margin-bottom: 10px; /* Add margin between menu items */
+}
+
+/* Hover effect */
+.list-group-item:hover {
+    background-color: #f0f0f0;
+}
+
+/* Active menu item */
+.list-group-item.active {
+    background-color: #007bff;
+    color: #fff;
+}
+
+/* Style for the title */
+h4 {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    color: #333;
+}
+
+/* Move navbar to the left side */
+.text-center {
+    position: fixed;
+
+    left: 0;
+    width: 250px; /* Adjust width as needed */
+    height: 55%; /* Make it full height */
+    background-color: #fff; /* Change background color if needed */
+    border-right: 1px solid #ccc; /* Add border for separation */
+    padding: 20px;
+    box-sizing: border-box;
+}

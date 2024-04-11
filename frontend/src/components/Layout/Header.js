@@ -78,11 +78,6 @@ const Header = () => {
                 </NavLink>
               </li>
 
-              {/* <li className="nav-item">
-                <NavLink to="/gamesandactivities" className="nav-link">
-                  Games & Activities
-                </NavLink>
-              </li> */}
               {auth && auth.user && (
                 <li className="nav-item">
                   <NavLink to="/gamesandactivities" className="nav-link">
@@ -97,13 +92,18 @@ const Header = () => {
                 </NavLink>
               </li>
 
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <NavLink to="/memberships" className="nav-link">
                   Memberships
                 </NavLink>
-              </li>
+              </li> */}
               {!auth || !auth.user ? (
                 <>
+                  <li className="nav-item">
+                    <NavLink to="/memberships" className="nav-link">
+                      Memberships
+                    </NavLink>
+                  </li>
                   <li className="nav-item">
                     <NavLink to="/register" className="nav-link">
                       Register

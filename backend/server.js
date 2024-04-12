@@ -7,21 +7,18 @@ import connectDB from "./config/db.js";
 import activityCategoryRoutes from "./routes/activityCategoryRoutes.js";
 import gamesAndActivitiesRoutes from "./routes/gamesAndActivitiesRoutes.js";
 import gamesAndActivitiesRequestRoutes from "./routes/gamesAndActivitiesRequestRoutes.js";
-import movieCategoryRoutes from './routes/movieCategoryRoutes.js'
-import movieRoutes from './routes/movieRoutes.js'
+import movieCategoryRoutes from "./routes/movieCategoryRoutes.js";
+import movieRoutes from "./routes/movieRoutes.js";
 import movieScheduleRoutes from "./routes/movieScheduleRoutes.js";
-import buyTicketsRoutes from "./routes/buyTicketsRoutes.js"
+import buyTicketsRoutes from "./routes/buyTicketsRoutes.js";
+import bookingsRoutes from "./routes/bookingsRoutes.js";
 import { fileURLToPath } from "url";
 import path from "path";
 import authRoutes from "./routes/authRoute.js";
 
-import EmployeeRouter from './routes/EmployeeRouter.js'
-import EmployeeLeaveRouter from './routes/EmployeeLeaveRouter.js'
-import EmployeeSalaryRouter from './routes/EmployeeSalaryRouter.js'
-
-
-
-
+import EmployeeRouter from "./routes/EmployeeRouter.js";
+import EmployeeLeaveRouter from "./routes/EmployeeLeaveRouter.js";
+import EmployeeSalaryRouter from "./routes/EmployeeSalaryRouter.js";
 
 // Get directory path of the current file
 const __filename = fileURLToPath(import.meta.url);
@@ -47,16 +44,16 @@ app.use(morgan("dev"));
 app.use("/api/v1/activitycategory", activityCategoryRoutes);
 app.use("/api/v1/gameandactivity", gamesAndActivitiesRoutes);
 app.use("/api/v1/gameandactivityRequest", gamesAndActivitiesRequestRoutes);
-app.use("/api/v1/moviecategory",movieCategoryRoutes);
-app.use("/api/v1/movies",movieRoutes);
-app.use("/api/v1/movieschedule",movieScheduleRoutes )
+app.use("/api/v1/moviecategory", movieCategoryRoutes);
+app.use("/api/v1/movies", movieRoutes);
+app.use("/api/v1/movieschedule", movieScheduleRoutes);
 app.use("/api/v1/buytickets", buyTicketsRoutes);
 app.use("/api/v1/auth", authRoutes);
-
+app.use("/api/v1/bookings", bookingsRoutes);
 
 //throw API to EmployeeRouter class
 //app.use('/employee', EmployeeRouter);
-app.use("/api/v1/employee",EmployeeRouter);
+app.use("/api/v1/employee", EmployeeRouter);
 
 //throw API to EmployeeLeaveRouter class
 app.use("/api/v1/employeeleave", EmployeeLeaveRouter);

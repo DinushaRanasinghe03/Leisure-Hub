@@ -4,7 +4,7 @@ import Layout from "./../../components/Layout/Layout";
 import { useAuth } from "../../context/auth";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
-import { Radio, Spin } from "antd";
+import { Spin } from "antd";
 
 const BookedActivities = () => {
   const [auth] = useAuth();
@@ -15,16 +15,17 @@ const BookedActivities = () => {
   const [error, setError] = useState(null);
 
   const fetchBookedActivities = async () => {
-    setLoading(true); // Start loading spinner
     try {
+      setLoading(true); // Start loading spinner
       const response = await axios.get(
         "/api/v1/gameandactivityRequest/get-gameandactivityRequest"
       );
       setGamesAndActivitiesRequests(response.data.gameandactivityRequest);
-      setLoading(false);
     } catch (error) {
       console.error("Error fetching booked activities:", error);
-      toast.error("Something went wrong while fetching requests");
+      toast.error("Something went wrong while fetching booked activities");
+    } finally {
+      setLoading(false); // Stop loading spinner regardless of success or failure
     }
   };
 
@@ -50,8 +51,8 @@ const BookedActivities = () => {
           `/api/v1/gameandactivityRequest/delete-gameandactivityRequest/${id}`
         );
         // Update the list of requests after deletion
-        //getAllGamesAndActivitiesRequest();
-        //fetchBookedActivities();
+        fetchBookedActivities();
+        // Show success toast message
         toast.success("Request deleted successfully");
       }
     } catch (error) {
@@ -60,13 +61,13 @@ const BookedActivities = () => {
     }
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  // if (loading) {
+  //   return <div>Loading...</div>;
+  // }
 
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
+  // if (error) {
+  //   return <div>Error: {error.message}</div>;
+  // }
 
   const userActivities = gamesandactivitiesrequests.filter(
     (activity) => activity.regiEmail === auth.user.email
@@ -137,6 +138,7 @@ const BookedActivities = () => {
           </div>
         </div>
       </div>
+      <Toaster />
     </Layout>
   );
 };

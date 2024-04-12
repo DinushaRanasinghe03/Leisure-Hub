@@ -56,7 +56,6 @@ import EmployeeSalaryForm from './pages/Employee/EmployeeSalaryForm';
 import EmployeeSalaryList from './pages/Employee/EmployeeSalaryList';
 import UpdateEmployeeSalaryForm from './pages/Employee/UpdateEmployeeSalaryForm';
 
-
 import AddContact from "./components/Pages/ContactUs/User/AddContact/AddContact";
 import AddReply from "./components/Pages/ContactUs/Admin/AddReplyContact/AddReplyContact";
 import ContactDetails from "./components/Pages/ContactUs/Admin/ContactDetails/ContactDetails";
@@ -67,6 +66,22 @@ import FindReview from "./components/Pages/Rates/FindReview/FindReview";
 import UpdateReview from "./components/Pages/Rates/UpdateReview/UpdateReview";
 import AddFeedBack from "./components/Pages/FeedBack/User/AddFeedBack";
 import FeedBackDetails from "./components/Pages/FeedBack/Admin/FeedBackDetails";
+
+import BasicCardDetailsForm from './pages/cardDetails/cardDetails.js';
+
+import BasicExampleAdd from './pages/AddPaymentDetails/AddPaymentDetails.js';
+import BasicExampleDelete from './pages/DeletePaymentDetails/DeletePayment.js';
+import BasicExampleTable from './pages/ShowPaymentData/ShowPaymentData.js';
+import OTPAuthenticationPage from './pages/otp/otp.js';
+import OTPVerification from "./pages/verifyOTP/OTPVerify.js";
+import PaymentSuccessMessage from "./pages/PaymentSuccess/PaymentSuccess.js"
+import MembershipAdd from "./pages/MembershipPayments/MembershipPayment.js"
+import PaymentSummaryPage from "./pages/PaymentSummary/PaymentSummary.js"
+import PaymentUnSuccessMessage from "./pages/PaymentSuccess/ReservationUnsuccess.js"
+import MemPaymentUnSuccessMessage from "./pages/MembershipPaymentStatus/MembershipPaymentUnsuccess.js"
+import MemPaymentSuccessMessage from "./pages/MembershipPaymentStatus/MembershipPaymentSuccess.js"
+import MemOTPVerification from "./pages/MembershipPaymentVerification/MembershipOTP.js"
+import MemOTPAuthenticationPage from "./pages/MembershipPaymentVerification/MembersipPaymentOTP1.js"
 
 function App() {
   return (
@@ -142,7 +157,7 @@ function App() {
 
         <Route path="/booking" element={<MovieList />} />
         <Route path="/booking/:movieId" element={<TicketBooking />} />
-        <Route path="/payment/:bookingId" element={<Payments />} />
+        {/* <Route path="/payment/:bookingId" element={<Payments />} /> */}
 
         <Route path="/dashboard" element={<PrivateRoute />}>
           <Route path="user" element={<Dashboard />} />
@@ -189,6 +204,22 @@ function App() {
           {/*FeedBack*/}
           <Route path="/addfeed" element={<AddFeedBack />} />
           <Route path="/feeddetails" element={<FeedBackDetails />} />
+
+
+      <Route path="/payment/:bookingId" element={<BasicExampleAdd/>}/>
+      <Route path="all" element={<BasicExampleTable/>}/>
+      <Route path="edit" element={<BasicExampleDelete/>}/>
+      <Route path="card" element={<BasicCardDetailsForm/>}/>
+      <Route path="otp" element={<OTPAuthenticationPage/>}/>
+      <Route path="verify" element={<OTPVerification/>}/>
+      <Route path="/end" element={<PaymentSuccessMessage/>}/>
+      <Route path="/membership" element={<MembershipAdd/>}/>
+      <Route path="/psummary" element={<PaymentSummaryPage/>}/>
+      <Route path="/resunsuccess" element={<PaymentUnSuccessMessage/>}/>
+      <Route path="/memsuccess" element={<MemPaymentSuccessMessage/>}/>
+      <Route path="/memunsuccess" element={<MemPaymentUnSuccessMessage/>}/>
+      <Route path="/memotpverification" element={<MemOTPVerification/>}/>
+      <Route path="/memOtpAuth" element={<MemOTPAuthenticationPage/>}/>
       
       </Routes>
     </>

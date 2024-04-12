@@ -21,6 +21,11 @@ import ContactUsRoute from "./routes/ContactUsRoute.js"
 import RateRoute from "./routes/RateRoute.js"
 import FeedbackRoute from "./routes/FeedBackRoutes.js"
 
+import paymentRoutes from "./routes/paymentRoutes.js";
+import cardDetailsRoute from "./routes/cardDetailsRoute.js";
+import membershipPaymentRoute from "./routes/membershipPaymentRoute.js";
+import paymentSummaryRoute from "./routes/paymentSummaryRoute.js";
+
 
 // Get directory path of the current file
 const __filename = fileURLToPath(import.meta.url);
@@ -54,11 +59,16 @@ app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/employee",EmployeeRouter);
 app.use("/api/v1/employeeleave", EmployeeLeaveRouter);
 app.use("/api/v1/employeeSalary", EmployeeSalaryRouter);
-
-
 app.use("/contacts", ContactUsRoute);
 app.use("/rates", RateRoute);
 app.use("/feedback", FeedbackRoute);
+
+app.use("/api/v1/payments", paymentRoutes);
+app.use("/api/v1/cardpayments", cardDetailsRoute);
+app.use("/api/v1/membershipPayments", membershipPaymentRoute);
+app.use("/api/v1/paymentsummaries", paymentSummaryRoute);
+
+
 
 //rest api
 app.get("/", (req, res) => {

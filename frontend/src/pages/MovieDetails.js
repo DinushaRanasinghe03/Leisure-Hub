@@ -70,7 +70,8 @@ const MovieDetails = () => {
             <center>
             <button className='btn btn-primary ms-3'
                           onClick={() => navigate(`/booking`)}>Book Now</button>
-              <button className="btn btn-secondary ms-3">Rate Now</button>
+              <button className="btn btn-secondary ms-3"
+              onClick={() => navigate(`/ratehome`)}>Rate Now</button>
             </center>
           </div>
         </div>

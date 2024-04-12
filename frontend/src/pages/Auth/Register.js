@@ -54,7 +54,7 @@ const Register = () => {
       });
 
       if (res && res.data.success) {
-        navigate("/login");
+        navigate("/membership");
         toast.success(res.data.message);
       } else {
         toast.error(res.data.message);

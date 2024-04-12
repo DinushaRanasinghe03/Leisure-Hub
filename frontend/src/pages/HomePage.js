@@ -8,9 +8,9 @@ import cricket from './../assets/cricket.jpg';
 import pooling from './../assets/pooling.jpg';
 import pottery from './../assets/pottery.jpg';
 import tabletennis from './../assets/tabletennis.jpg';
-import cinema from './../assets/cinema.jpg';
-import games from './../assets/games.png';
-import swim from './../assets/swim.jpg';
+import pop from './../assets/pop.jpg';
+import sport from './../assets/sport.jpg';
+import popcorn from './../assets/popcorn.jpg'
 import { useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
@@ -39,13 +39,13 @@ const HomePage = () => {
     <div id="carouselExampleInterval" className="carousel slide" data-bs-ride="carousel">
     <div className="carousel-inner">
     <div className="carousel-item active" data-bs-interval={10000}>
-      <img src={cinema} className="d-block w-100" alt="..." style={{ maxHeight: "350px" }} />
+      <img src={popcorn} className="d-block w-100" alt="..." style={{ maxHeight: "600px" }} />
     </div>
     <div className="carousel-item" data-bs-interval={2000}>
-      <img src={swim} className="d-block w-100" alt="..." style={{ maxHeight: "350px" }} />
+      <img src={sport} className="d-block w-100" alt="..." style={{ maxHeight: "600px" }} />
     </div>
     <div className="carousel-item">
-      <img src={games} className="d-block w-100" alt="..." style={{ maxHeight: "350px" }} />
+      <img src={pop} className="d-block w-100" alt="..." style={{ maxHeight: "600px" }} />
     </div>
     </div>
   

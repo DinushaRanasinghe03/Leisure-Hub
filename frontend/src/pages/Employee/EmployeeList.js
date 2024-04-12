@@ -74,24 +74,23 @@ function EmployeeList() {
           <AdminStaffMenu />
         </div>
         <div className="col-md-9">
-          <h2>Employee List</h2>
-          <div style={{ display: 'inline-block'}}>
-    <input
-        type="text"
-        placeholder="Search by name..."
-        value={searchQuery}
-        onChange={handleSearchInputChange}
-        style={{
-            width: '200px',
-            border: '1px solid #ced4da',
-            borderRadius: '4px',
-            padding: '8px',
-            fontSize: '16px',
-            outline: 'none'
-        }}
-    />
-</div>
-
+          <h2 className="text-center">Employee List</h2>
+          <div className="text-right mb-3">
+            <input
+              type="text"
+              placeholder="Search by name..."
+              value={searchQuery}
+              onChange={handleSearchInputChange}
+              style={{
+                width: '200px',
+                border: '1px solid #ced4da',
+                borderRadius: '4px',
+                padding: '8px',
+                fontSize: '16px',
+                outline: 'none'
+              }}
+            />
+          </div>
           <table className="table table-striped table-bordered table-hover">
             <thead>
               <tr>

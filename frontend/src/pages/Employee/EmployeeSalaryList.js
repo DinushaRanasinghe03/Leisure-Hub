@@ -52,6 +52,7 @@ function EmployeeSalaryList() {
   
     // Set up document formatting
     const pdfWidth = pdf.internal.pageSize.getWidth();
+    pdf.setFont('times');
     pdf.setFontSize(18);
     pdf.setTextColor(40);
     const title = "Employee Salary Report";
@@ -81,7 +82,9 @@ function EmployeeSalaryList() {
           <AdminStaffMenu />
         </div>
         <div className="col-md-9">
-          <h2>Employee Salary List</h2>
+          <div className="text-center">
+            <h2>Employee Salary List</h2><br></br>
+          </div>
           <table className="table table-striped table-bordered table-hover">
             <thead>
               <tr>
@@ -117,7 +120,7 @@ function EmployeeSalaryList() {
               ))}
             </tbody>
           </table>
-          <button className="btn btn-primary" onClick={generatePDF}>Download PDF</button>
+          <button className="btn btn-success" onClick={generatePDF}>Download PDF</button>
         </div>
       </div>
     </div>

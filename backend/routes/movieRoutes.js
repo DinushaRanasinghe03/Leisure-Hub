@@ -4,13 +4,13 @@ import {
   deleteMovieController,
   getMovieController,
   getMovieSchedulesController,
+  getMovieTitleController,
   getSingleMovieController,
   movieFiltersController,
   moviePosterimageController,
   relatedMovieController,
   searchMovieController,
   updateMovieController,
-  getMovieTitleController,
 } from "../controllers/movieController.js";
 import formidable from "express-formidable";
 
@@ -47,7 +47,6 @@ router.get("/related-movies/:mid/:cid", relatedMovieController);
 //get movie schedules
 router.get("/movie-schedules/:id", getMovieSchedulesController);
 
-//Tiny
 //get movie title route for the user to view
 router.get("/get-movie-title/:id", getMovieTitleController);
 

@@ -66,12 +66,12 @@ const HeaderAdmin = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/pageNotFound" activeClassName="active">
+            <NavLink to="/feeddetails" activeClassName="active">
               Customer Service
             </NavLink>
           </li>
           <li>
-            <NavLink to="/pageNotFound" activeClassName="active">
+            <NavLink to="/psummary" activeClassName="active">
               Payment
             </NavLink>
           </li>

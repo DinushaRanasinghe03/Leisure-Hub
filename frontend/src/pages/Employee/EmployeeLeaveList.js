@@ -4,11 +4,11 @@ import { useParams } from 'react-router-dom';
 import moment from 'moment';
 import AdminStaffMenu from "../../components/Layout/AdminStaffMenu";
 import LayoutAdmin from './../../components/Layout/LayoutAdmin';
-
+ 
 const EmployeeLeaveList = () => {
   const [leaveList, setLeaveList] = useState([]);
   const { employeeId } = useParams();
-
+ 
   const fetchEmployeeData = async () => {
     try {
       const response = await axios.get(`http://localhost:8080/api/v1/employeeleave/getAllEmployeeLeave`);
@@ -17,11 +17,11 @@ const EmployeeLeaveList = () => {
       console.error('Error fetching leave data:', error);
     }
   };
-
+ 
   useEffect(() => {
     fetchEmployeeData();
   }, []);
-
+ 
   return (
     <LayoutAdmin><br/>
     <div className="container-fluid m-3 p-3">
@@ -61,5 +61,6 @@ const EmployeeLeaveList = () => {
     </LayoutAdmin>
   );
 };
-
+ 
 export default EmployeeLeaveList;
+ 

@@ -55,10 +55,9 @@ const Users = () => {
     <LayoutAdmin title={"Membership Holders-Leisure Hub"}>
       <div className="container-fluid m-3 p-3 dashboard">
         <div className="row">
-          <div className="col-md-3">
-            <AdminMenu />
-          </div>
-          <div className="col-md-9">
+          {/* <div className="col-md-3"> */}
+          {/* <AdminMenu /></div> */}
+          <div className="col-md-12 mx-auto">
             <ReportGenerator users={filteredUsers} />{" "}
             {/* Render the ReportGenerator component */}
             <br />

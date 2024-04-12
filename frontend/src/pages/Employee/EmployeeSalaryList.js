@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import AdminStaffMenu from '../../components/Layout/AdminStaffMenu';
 import jsPDF from 'jspdf';
 import LayoutAdmin from './../../components/Layout/LayoutAdmin';
-
+ 
 function EmployeeSalaryList() {
   const [employeeSalaries, setEmployeeSalaries] = useState([]);
-
+ 
   useEffect(() => {
     fetchEmployeeSalaryData();
   }, []);
-
+ 
   const fetchEmployeeSalaryData = async () => {
     try {
       const response = await fetch('http://localhost:8080/api/v1/EmployeeSalary/getAllEmployeeSalary');
@@ -23,12 +23,12 @@ function EmployeeSalaryList() {
       console.error('Error fetching employee salary data:', error);
     }
   };
-
+ 
   const handleUpdate = (employeeSalaryId) => {
     // Implement update functionality here
     console.log(`Updating employee salary with ID: ${employeeSalaryId}`);
   };
-
+ 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const year = date.getFullYear();
@@ -36,22 +36,23 @@ function EmployeeSalaryList() {
     const day = String(date.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
   };
-
+ 
   const generatePDF = () => {
     // Calculate total salary sum
     const totalSalSum = employeeSalaries.reduce((acc, employeeSalary) => acc + employeeSalary.totalSal, 0);
-    
+   
     // Calculate total otHours sum
     const otHoursSum = employeeSalaries.reduce((acc, employeeSalary) => acc + employeeSalary.otHours, 0);
-  
+ 
     // Calculate total bonus sum
     const bonusSum = employeeSalaries.reduce((acc, employeeSalary) => acc + employeeSalary.bonus, 0);
-  
+ 
     // Create a new PDF document
     const pdf = new jsPDF();
-  
+ 
     // Set up document formatting
     const pdfWidth = pdf.internal.pageSize.getWidth();
+    pdf.setFont('times');
     pdf.setFontSize(18);
     pdf.setTextColor(40);
     const title = "Employee Salary Report";
@@ -68,11 +69,11 @@ function EmployeeSalaryList() {
     pdf.text(totalSumText, (pdfWidth - totalSumWidth) / 2, 40);
     pdf.text(otHoursSumText, (pdfWidth - otHoursSumWidth) / 2, 50);
     pdf.text(bonusSumText, (pdfWidth - bonusSumWidth) / 2, 60);
-  
+ 
     // Save the PDF
     pdf.save('employee_salary_report.pdf');
   };
-
+ 
   return (
     <LayoutAdmin><br/><br/>
     <div className="container-fluid m-3 p-3">
@@ -81,7 +82,9 @@ function EmployeeSalaryList() {
           <AdminStaffMenu />
         </div>
         <div className="col-md-9">
-          <h2>Employee Salary List</h2>
+          <div className="text-center">
+            <h2>Employee Salary List</h2><br></br>
+          </div>
           <table className="table table-striped table-bordered table-hover">
             <thead>
               <tr>
@@ -117,7 +120,7 @@ function EmployeeSalaryList() {
               ))}
             </tbody>
           </table>
-          <button className="btn btn-primary" onClick={generatePDF}>Download PDF</button>
+          <button className="btn btn-success" onClick={generatePDF}>Download PDF</button>
         </div>
       </div>
     </div>
@@ -125,5 +128,5 @@ function EmployeeSalaryList() {
     </LayoutAdmin>
   );
 }
-
+ 
 export default EmployeeSalaryList;

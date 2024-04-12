@@ -101,7 +101,6 @@ export const newBookingController = async (req, res) => {
   }
 };
 
-//Tiny
 //get all bookings to view from user side
 export const getBookingsController = async (req, res) => {
   try {

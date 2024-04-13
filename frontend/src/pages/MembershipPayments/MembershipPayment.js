@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import axios from "axios"
+import axios from "axios";
 import Layout from "../../components/Layout/Layout";
  
 const MembershipAdd = () => {
   const [nameOnCard, setNameOnCard] = useState('');
   const [cardNumber, setCardNumber] = useState('');
   const [expDate, setEXPDate] = useState('');
-  const [cvv, setcvv] = useState('');
+  const [cvv, setCVV] = useState('');
  
   const submitData = async () => {
     let data = {
@@ -17,7 +17,6 @@ const MembershipAdd = () => {
     };
  
     try {
-      // Assuming axios is still used
       const response = await axios.post('/api/v1/membershipPayments/', data);
       console.log('data', response.data);
       window.location.href = `/memOtpAuth?id=${response.data._id}`;
@@ -27,9 +26,7 @@ const MembershipAdd = () => {
   };
  
   return (
-    <Layout>
-<div>
-
+<Layout>
 <div className="form-container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
 <h2 style={{ textAlign: "center" }}>Membership Payments</h2>
 <input
@@ -37,28 +34,28 @@ const MembershipAdd = () => {
           placeholder="Name On Card"
           value={nameOnCard}
           onChange={(e) => { setNameOnCard(e.target.value) }}
-          style={{ margin: '10px', padding: '5px', width: '400px' }}
+          style={{ margin: '10px', padding: '10px', width: '400px', borderRadius: '5px', border: '1px solid #ccc' }}
         />
 <input
           type="text"
           placeholder="Card Number"
           value={cardNumber}
           onChange={(e) => { setCardNumber(e.target.value) }}
-          style={{ margin: '10px', padding: '5px', width: '400px' }}
+          style={{ margin: '10px', padding: '10px', width: '400px', borderRadius: '5px', border: '1px solid #ccc' }}
         />
 <input
           type="date"
           placeholder="Expire Date"
           value={expDate}
           onChange={(e) => { setEXPDate(e.target.value) }}
-          style={{ margin: '10px', padding: '5px', width: '400px' }}
+          style={{ margin: '10px', padding: '10px', width: '400px', borderRadius: '5px', border: '1px solid #ccc' }}
         />
 <input
           type="password"
           placeholder="CVV"
           value={cvv}
-          onChange={(e) => { setcvv(e.target.value) }}
-          style={{ margin: '10px', padding: '5px', width: '400px' }}
+          onChange={(e) => { setCVV(e.target.value) }}
+          style={{ margin: '10px', padding: '10px', width: '400px', borderRadius: '5px', border: '1px solid #ccc' }}
         />
 <button
           onClick={submitData}
@@ -67,9 +64,9 @@ const MembershipAdd = () => {
           Submit
 </button>
 </div>
-</div>
 </Layout>
   );
 }
  
 export default MembershipAdd;
+

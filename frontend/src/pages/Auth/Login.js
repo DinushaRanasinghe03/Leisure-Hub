@@ -41,7 +41,7 @@ const Login = () => {
           navigate(location.state || "/");
           console.log("This is  user");
         } else {
-          navigate(location.state || "/adminmoviedashboard");
+          navigate(location.state || "/aboard");
           // navigate(location.state || "/test");
           console.log("This is  admin");
         }

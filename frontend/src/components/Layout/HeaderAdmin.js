@@ -28,7 +28,7 @@ const HeaderAdmin = () => {
       <nav className="top-nav-bar">
         <ul>
           <li>
-            <NavLink to="/" activeClassName="active">
+            <NavLink to="/aboard" activeClassName="active">
               Home
             </NavLink>
           </li>
@@ -46,7 +46,7 @@ const HeaderAdmin = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/resource" activeClassName="active">
+            <NavLink to="/addResource" activeClassName="active">
               Resource
             </NavLink>
           </li>

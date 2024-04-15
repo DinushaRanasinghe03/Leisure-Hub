@@ -119,6 +119,9 @@ const Register = () => {
                           className="form-control"
                           placeholder="Phone number"
                           aria-label="Phone number"
+                          pattern="[0-9]{10}"
+                          title="Please enter a valid 10-digit phone number"
+                          required
                         />
                       </div>
                     </div>
@@ -153,7 +156,9 @@ const Register = () => {
                           className="form-control"
                           placeholder="Date of Birth"
                           aria-label="Date of Birth"
+                          required
                         />
+                        <small className="ml-2"> Date of Birth</small>
                       </div>
 
                       <div className="col-md-6">
@@ -166,6 +171,9 @@ const Register = () => {
                           placeholder="What is your favorite sport? "
                           required
                         />
+                        <small className="ml-2">
+                          This will be used for password reset.
+                        </small>
                       </div>
                     </div>
                     <div className="row mb-3">
@@ -177,6 +185,8 @@ const Register = () => {
                           className="form-control"
                           placeholder="Password"
                           aria-label="Password"
+                          pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$"
+                          title="Password must be at least 6 characters and include at least one letter and one number"
                           required
                         />
                       </div>

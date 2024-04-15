@@ -83,10 +83,16 @@ import MemPaymentSuccessMessage from "./pages/MembershipPaymentStatus/Membership
 import MemOTPVerification from "./pages/MembershipPaymentVerification/MembershipOTP.js"
 import MemOTPAuthenticationPage from "./pages/MembershipPaymentVerification/MembersipPaymentOTP1.js"
 
+import AddResource from "./pages/resources/AddResource.js";
+import DashboardAdmin from "./pages/DashboardAdmin.js";
+import Maintenance from "./pages/Maintenance.js";
+
 function App() {
   return (
     <>
       <Routes>
+     
+
         <Route path="/" element={<HomePage />} />
         <Route path="/activity/:slug" element={<ActivityDetails />} />
         <Route path="/gamesandactivities/search" element={<SearchActivity />} />
@@ -220,7 +226,10 @@ function App() {
       <Route path="/memunsuccess" element={<MemPaymentUnSuccessMessage/>}/>
       <Route path="/memotpverification" element={<MemOTPVerification/>}/>
       <Route path="/memOtpAuth" element={<MemOTPAuthenticationPage/>}/>
-      
+
+      <Route path="/addResource" element={<AddResource />} />
+      <Route path="/aboard" element={<DashboardAdmin />} />
+      <Route path="/maintenance" element={<Maintenance />}/>
       </Routes>
     </>
   );

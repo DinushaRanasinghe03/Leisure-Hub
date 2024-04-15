@@ -73,7 +73,7 @@ export const newBookingController = async (req, res) => {
     schedule.save();
 
     const total = adults * adults_price + children * children_price;
-    
+
     const booking = await new bookingModel({
       movie: schedule.movie,
       schedule: schedule_id,
@@ -98,5 +98,45 @@ export const newBookingController = async (req, res) => {
       error,
       message: "Something failed.",
     });
+  }
+};
+
+//get all bookings to view from user side
+export const getBookingsController = async (req, res) => {
+  try {
+    const bookings = await bookingModel.find();
+    res.status(201).send({
+      success: true,
+      counTotal: bookings.length,
+      message: "All games and Activity requests",
+      bookings,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error in getting requests",
+      error: error.message,
+    });
+  }
+};
+
+//delete bookings from users side
+export const deleteBookingsController = async (req, res) => {
+  try {
+    // Extract the booking ID from the request parameters
+    const { id } = req.params;
+
+    // Find the booking by ID and delete it
+    await bookingModel.findByIdAndDelete(id);
+
+    // Send a success response
+    res
+      .status(200)
+      .json({ success: true, message: "Booking deleted successfully" });
+  } catch (error) {
+    // If an error occurs, send an error response
+    console.error("Error deleting booking:", error);
+    res.status(500).json({ success: false, error: "Failed to delete booking" });
   }
 };

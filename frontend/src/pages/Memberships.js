@@ -16,7 +16,7 @@ const Memberships = () => {
   return (
     <Layout title={"Memberships - Leisure Hub"}>
       <div className="container">
-        <h1>Memberships we offer:</h1>
+        {/* <h1>Memberships we offer:</h1> */}
         <br />
         <br />
         <div className="row">

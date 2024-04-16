@@ -164,3 +164,24 @@ input[type="number"] {
 .submit-button:hover {
   background-color: #0056b3;
 }
+
+.search-container {
+  display: flex;
+  align-items: center;
+}
+
+.search-wrapper {
+  position: relative;
+}
+
+.search-input {
+  padding-right: 30px; /* Adjust based on icon width */
+}
+
+.search-icon {
+  position: absolute;
+  right: 10px; /* Adjust based on input padding */
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}

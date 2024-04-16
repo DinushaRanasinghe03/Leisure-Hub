@@ -3,14 +3,18 @@ import axios from "axios";
 import "./ResourceTable.css";
 import { toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
+import { BiSearch } from "react-icons/bi"; // Import search icon
 
 import ResourceModal from "./ResourceModal"; // Import the modal component
 
-const ResourceTable = () => {
+const ResourceTable = ({ filter }) => {
+  // Receive filter as a prop
   const [resources, setResources] = useState([]);
   const [selectedResource, setSelectedResource] = useState(null); // State to store the selected resource
   const [modalVisible, setModalVisible] = useState(false); // State to manage modal visibility
-  
+  const [searchTerm, setSearchTerm] = useState(""); // State to store search term
+  const [reportMode, setReportMode] = useState(false);
+
   // Function to handle the click event of the "View" button
   const handleView = (resource) => {
     setSelectedResource(resource); // Set the selected resource
@@ -24,7 +28,23 @@ const ResourceTable = () => {
         "http://localhost:8070/api/v1/resources/getResource"
       );
       if (response.data.success) {
-        setResources(response.data.resources);
+        let filteredResources = response.data.resources;
+
+        // Filter based on the selected filter value
+        if (filter !== "All") {
+          filteredResources = filteredResources.filter(
+            (resource) => resource.type === filter
+          );
+        }
+
+        // Filter based on search term (Item ID)
+        if (searchTerm !== "") {
+          filteredResources = filteredResources.filter((resource) =>
+            resource.itemId.toLowerCase().includes(searchTerm.toLowerCase())
+          );
+        }
+
+        setResources(filteredResources);
       } else {
         throw new Error(response.data.message || "Failed to fetch resources");
       }
@@ -36,7 +56,8 @@ const ResourceTable = () => {
 
   useEffect(() => {
     getAllResources();
-  }, []);
+    // eslint-disable-next-line
+  }, [filter, searchTerm]); // Trigger useEffect whenever filter changes
 
   // Function to delete a resource
   const deleteResource = async (id) => {
@@ -56,9 +77,31 @@ const ResourceTable = () => {
       toast.error("Error in deleting resource: " + error.message);
     }
   };
-
+  // Function to toggle report generation mode
+  const toggleReportMode = () => {
+    setReportMode(!reportMode);
+  };
+  // Function to handle printing
+  const handlePrint = () => {
+    window.print(); // Trigger browser's print functionality
+  };
   return (
     <div className="resource-table-container">
+      <div className="search-container">
+        <div className="search-wrapper">
+          <input
+            type="text"
+            placeholder="Search by Item ID"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="search-input"
+          />
+          <BiSearch className="search-icon" />
+        </div>
+        <button onClick={toggleReportMode}>
+          {reportMode ? "Exit Report Mode" : "Generate Report"}
+        </button>
+      </div>
       <table className="resource-table">
         <thead>
           <tr>
@@ -73,7 +116,8 @@ const ResourceTable = () => {
             <th>Supplier</th>
             <th>Supplier Email</th>
             <th>Date Purchased</th>
-            <th colSpan="3">Actions</th> {/* Merge three columns for actions */}
+            {!reportMode && <th colSpan="3">Actions</th>}{" "}
+            {/* Merge three columns for actions */}
           </tr>
         </thead>
         <tbody>
@@ -90,30 +134,41 @@ const ResourceTable = () => {
               <td>{r.supplier}</td>
               <td>{r.supplierEmail}</td>
               <td>{r.datePurchased}</td>
-
-              <td>
-                <button className="view-button" onClick={() => handleView(r)}>
-                  View
-                </button>
-              </td>
-              <td>
-                <Link to={`/updateResource/${r._id}`}>
-                  <button className="update-button">Update</button>
-                </Link>
-              </td>
-              <td>
-                {/* Delete button with onClick handler */}
-                <button
-                  className="delete-button"
-                  onClick={() => deleteResource(r._id)}
-                >
-                  Delete
-                </button>
-              </td>
+              {!reportMode && (
+                <>
+                  <td>
+                    <button
+                      className="view-button"
+                      onClick={() => handleView(r)}
+                    >
+                      View
+                    </button>
+                  </td>
+                  <td>
+                    <Link to={`/updateResource/${r._id}`}>
+                      <button className="update-button">Update</button>
+                    </Link>
+                  </td>
+                  <td>
+                    {/* Delete button with onClick handler */}
+                    <button
+                      className="delete-button"
+                      onClick={() => deleteResource(r._id)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </>
+              )}
             </tr>
           ))}
         </tbody>
       </table>
+      {reportMode && (
+        <button onClick={handlePrint} className="print-button">
+          Print Report
+        </button>
+      )}
       {/* Modal component */}
       {modalVisible && (
         <ResourceModal

@@ -64,7 +64,6 @@ input[type="submit"]:hover {
   color: red;
 }
 
-
 .addResource-button {
   background-color: #4caf50;
   color: white;
@@ -74,7 +73,7 @@ input[type="submit"]:hover {
   border-radius: 5px;
   cursor: pointer;
   margin: 30px;
-  
+  margin-right: 50px; /* Add margin to separate from the dropdown */
 }
 
 .addResource-button:hover {
@@ -90,9 +89,32 @@ input[type="submit"]:hover {
   border-radius: 5px;
   cursor: pointer;
   margin: 30px;
-  
 }
 
 .updateResource-button:hover {
   background-color: #45a049;
+}
+.resource-filter {
+  display: flex; /* Use flexbox */
+  align-items: center;
+}
+.resource-controls {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.resource-filter label {
+  margin-right: -25px;
+}
+
+.resource-filter select {
+  width: 200px;
+  padding: 8px;
+  font-size: 16px;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23444"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'); /* Add custom arrow icon */
+  background-repeat: no-repeat;
+  background-position: right 8px center;
 }

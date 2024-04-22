@@ -82,6 +82,7 @@ import MemPaymentUnSuccessMessage from "./pages/MembershipPaymentStatus/Membersh
 import MemPaymentSuccessMessage from "./pages/MembershipPaymentStatus/MembershipPaymentSuccess.js"
 import MemOTPVerification from "./pages/MembershipPaymentVerification/MembershipOTP.js"
 import MemOTPAuthenticationPage from "./pages/MembershipPaymentVerification/MembersipPaymentOTP1.js"
+import BankPaymentDetails from "./pages/AddPaymentDetails/BankPayments.js"
 
 import AddResource from "./pages/resources/AddResource.js";
 import DashboardAdmin from "./pages/DashboardAdmin.js";
@@ -226,6 +227,7 @@ function App() {
       <Route path="/memunsuccess" element={<MemPaymentUnSuccessMessage/>}/>
       <Route path="/memotpverification" element={<MemOTPVerification/>}/>
       <Route path="/memOtpAuth" element={<MemOTPAuthenticationPage/>}/>
+      <Route path="/bank" element={<BankPaymentDetails/>}/>
 
       <Route path="/addResource" element={<AddResource />} />
       <Route path="/aboard" element={<DashboardAdmin />} />

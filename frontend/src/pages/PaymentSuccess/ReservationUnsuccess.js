@@ -6,7 +6,7 @@ const PaymentUnSuccessMessage = ({ paymentId }) => {
   // Function to handle retry button click
   const handleRetry = () => {
     // Redirect the user to the payment page
-    window.location.href = '/payment/:bookingId';
+    window.location.href = '/booking';
   };
  
   return (

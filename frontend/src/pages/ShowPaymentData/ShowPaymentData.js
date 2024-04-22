@@ -57,46 +57,46 @@ const BasicExampleTable = () => {
   };
  
   return (
-<Layout>
-<div style={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "60vh" }}> {/* Center content */}
-<div style={{ width: "80%", marginTop: "10px" }}>
-<h2 style={{ textAlign: "center", marginBottom: "20px" }}>Payment Personal Details</h2>
-<table style={{ width: "100%", borderCollapse: "collapse" }}>
-<tbody>
+          <Layout>
+             <div style={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "60vh" }}> {/* Center content */}
+            <div style={{ width: "80%", marginTop: "10px" }}>
+            <h2 style={{ textAlign: "center", marginBottom: "20px" }}>Please confirm your  Personal Details</h2>
+            <table style={{ width: "100%", borderCollapse: "collapse" }}>
+            <tbody>
               {paymentDetails && (
-<>
-<tr>
-<td style={{ border: "1px solid #ddd", padding: "8px" }}>Name</td>
-<td style={{ border: "1px solid #ddd", padding: "8px" }}>{paymentDetails.name}</td>
-</tr>
-<tr>
-<td style={{ border: "1px solid #ddd", padding: "8px" }}>Phone Number</td>
-<td style={{ border: "1px solid #ddd", padding: "8px" }}>{paymentDetails.number}</td>
-</tr>
-<tr>
-<td style={{ border: "1px solid #ddd", padding: "8px" }}>Address</td>
-<td style={{ border: "1px solid #ddd", padding: "8px" }}>{paymentDetails.address}</td>
-</tr>
-<tr>
-<td style={{ border: "1px solid #ddd", padding: "8px" }}>Email</td>
-<td style={{ border: "1px solid #ddd", padding: "8px" }}>{paymentDetails.email}</td>
-</tr>
-<tr>
-<td colSpan="2" style={{ textAlign: "center" }}>
-<div style={{ display: "flex", justifyContent: "space-between" }}>
-<button style={{ padding: "8px 16px", background: "#007bff", color: "#fff", border: "none", borderRadius: "5px", cursor: "pointer" }} onClick={() => handleSelect(paymentDetails)}>Select</button>
-<button style={{ padding: "8px 16px", background: "#007bff", color: "#fff", border: "none", borderRadius: "5px", cursor: "pointer" }} onClick={() => handleSave(paymentDetails)}>Save</button>
-</div>
-</td>
-</tr>
-</>
+              <>
+            <tr>
+          <td style={{ border: "1px solid #ddd", padding: "8px" }}>Name</td>
+          <td style={{ border: "1px solid #ddd", padding: "8px" }}>{paymentDetails.name}</td>
+          </tr>
+          <tr>
+          <td style={{ border: "1px solid #ddd", padding: "8px" }}>Phone Number</td>
+          <td style={{ border: "1px solid #ddd", padding: "8px" }}>{paymentDetails.number}</td>
+          </tr>
+          <tr>
+          <td style={{ border: "1px solid #ddd", padding: "8px" }}>Address</td>
+          <td style={{ border: "1px solid #ddd", padding: "8px" }}>{paymentDetails.address}</td>
+          </tr>
+          <tr>
+          <td style={{ border: "1px solid #ddd", padding: "8px" }}>Email</td>
+          <td style={{ border: "1px solid #ddd", padding: "8px" }}>{paymentDetails.email}</td>
+          </tr>
+          <tr>
+         <td colSpan="2" style={{ textAlign: "center" }}>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <button style={{ padding: "8px 16px", background: "#007bff", color: "#fff", border: "none", borderRadius: "5px", cursor: "pointer" }} onClick={() => handleSelect(paymentDetails)}>Select</button>
+        <button style={{ padding: "8px 16px", background: "#007bff", color: "#fff", border: "none", borderRadius: "5px", cursor: "pointer" }} onClick={() => handleSave(paymentDetails)}>Save</button>
+        </div>
+        </td>
+        </tr>
+        </>
               )}
-</tbody>
-</table>
-</div>
-</div>
-</Layout>
-  );
+        </tbody>
+       </table>
+       </div>
+       </div>
+       </Layout>
+        );
 }
  
 export default BasicExampleTable;

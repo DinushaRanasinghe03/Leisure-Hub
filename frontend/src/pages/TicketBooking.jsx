@@ -51,10 +51,12 @@ const TicketBooking = () => {
           return plusSignRegex.test(value);
         }
       ),
-    contactNo: Yup.string().required("Mobile number is required"),
+    contactNo: Yup.string().required("Mobile number is required")
+    .matches(/^\d{10}$/, "Mobile number must be exactly 10 digits"),
     name: Yup.string()
       .required("Name is required")
-      .max(50, "Full name must be exactly 50 characters long"),
+      .max(50, "Full name must be exactly 50 characters long")
+      .matches(/^[A-Za-z\s]+$/, 'Only letters are allowed in the name field'),
   });
 
   const {

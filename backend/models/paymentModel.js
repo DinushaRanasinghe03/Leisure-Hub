@@ -21,7 +21,11 @@ const paymentSchema = new mongoose.Schema({
         type: Boolean,
         required: true,
         default: false
-    }
+    },booking: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'booking',
+        required: false,
+    }
 }, { timestamps: true }
 );
 

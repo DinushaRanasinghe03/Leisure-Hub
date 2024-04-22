@@ -2,7 +2,7 @@ import paymentModel from "../models/paymentModel.js";
 
 export const getPayments = async (req, res) => {
     try {
-        const payments = await paymentModel.find();
+        const payments = await paymentModel.find().populate('booking');
         res.json(payments);
     } catch (err) {
         console.error(err.message);
@@ -17,6 +17,7 @@ export const addPayment = async (req, res) => {
             number: req.body.number,
             address: req.body.address,
             email: req.body.email,
+            booking: req.body.booking,
             is_card_payment: req.body.is_card_payment
         });
         const payment = await newPayment.save();
@@ -42,7 +43,7 @@ export const deletePayment = async (req, res) => {
 
 export const getPaymentById = async (req, res) => {
     try {
-        const payment = await paymentModel.findById(req.params.id);
+        const payment = await paymentModel.findById(req.params.id).populate('booking');
         if (!payment) {
             return res.status(404).json({ msg: 'Payment not found' });
         }

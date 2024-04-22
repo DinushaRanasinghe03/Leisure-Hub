@@ -22,6 +22,7 @@ const cardPaymentSchema  = new mongoose.Schema({
         ref: 'Payment',
         required: true
     },
+    
 }, { timestamps: true }
 );
 

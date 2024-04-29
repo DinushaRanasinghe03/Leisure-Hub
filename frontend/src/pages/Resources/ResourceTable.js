@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./ResourceTable.css";
 import { toast } from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+//import { Link } from "react-router-dom";
 import { BiSearch } from "react-icons/bi"; // Import search icon
-
 import ResourceModal from "./ResourceModal"; // Import the modal component
 
 const ResourceTable = ({ filter }) => {
@@ -14,11 +14,15 @@ const ResourceTable = ({ filter }) => {
   const [modalVisible, setModalVisible] = useState(false); // State to manage modal visibility
   const [searchTerm, setSearchTerm] = useState(""); // State to store search term
   const [reportMode, setReportMode] = useState(false);
-
+const navigate = useNavigate();
   // Function to handle the click event of the "View" button
   const handleView = (resource) => {
     setSelectedResource(resource); // Set the selected resource
     setModalVisible(true); // Show the modal
+  };
+
+  const handleUpdate = (id) => {
+    navigate(`/updateResource/${id}`);
   };
 
   // Function to fetch all resources
@@ -98,9 +102,6 @@ const ResourceTable = ({ filter }) => {
           />
           <BiSearch className="search-icon" />
         </div>
-        <button onClick={toggleReportMode}>
-          {reportMode ? "Exit Report Mode" : "Generate Report"}
-        </button>
       </div>
       <table className="resource-table">
         <thead>
@@ -110,7 +111,7 @@ const ResourceTable = ({ filter }) => {
             <th>Item Name</th>
             <th>Type</th>
             <th>Quantity</th>
-            <th>Unit Price</th>
+            <th>Unit Price (LKR)</th>
             <th>Description</th>
             <th>Alert Quantity</th>
             <th>Supplier</th>
@@ -145,9 +146,12 @@ const ResourceTable = ({ filter }) => {
                     </button>
                   </td>
                   <td>
-                    <Link to={`/updateResource/${r._id}`}>
-                      <button className="update-button">Update</button>
-                    </Link>
+                    <button
+                      className="update-button"
+                      onClick={() => handleUpdate(r._id)}
+                    >
+                      Update
+                    </button>
                   </td>
                   <td>
                     {/* Delete button with onClick handler */}
@@ -169,6 +173,9 @@ const ResourceTable = ({ filter }) => {
           Print Report
         </button>
       )}
+      <button className="report-button" onClick={toggleReportMode}>
+        {reportMode ? "Exit Report Mode" : "Generate Report"}
+      </button>
       {/* Modal component */}
       {modalVisible && (
         <ResourceModal

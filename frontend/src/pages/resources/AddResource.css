@@ -65,9 +65,9 @@ input[type="submit"]:hover {
 }
 
 .addResource-button {
-  background-color: #4caf50;
+  background-color: #157918;
   color: white;
-  padding: 10px 20px;
+  padding: 8px 20px;
   font-size: 16px;
   border: none;
   border-radius: 5px;
@@ -94,6 +94,21 @@ input[type="submit"]:hover {
 .updateResource-button:hover {
   background-color: #45a049;
 }
+.cancelResource-button {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 30px;
+}
+
+.cancelResource-button:hover {
+  background-color: #45a049;
+}
+
 .resource-filter {
   display: flex; /* Use flexbox */
   align-items: center;
@@ -110,11 +125,35 @@ input[type="submit"]:hover {
 
 .resource-filter select {
   width: 200px;
-  padding: 8px;
+  padding: 7px;
   font-size: 16px;
   border: 2px solid #ccc;
   border-radius: 10px;
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23444"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'); /* Add custom arrow icon */
   background-repeat: no-repeat;
   background-position: right 8px center;
+}
+.report-button {
+  background-color: #4c5f08;
+  color: white;
+  padding: 8px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 30px;
+}
+
+.print-button {
+  background-color: #0c446f;
+  color: white;
+  padding: 8px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 30px;
+  margin-left: 1150px;
+ margin-right: 20px;
+ 
 }

@@ -15,7 +15,7 @@ export const createResourceController = async (req, res) => {
       supplier,
       supplierEmail,
       datePurchased,
-    } = req.fields;
+    } = req.body;
 
     //validation
     switch (true) {
@@ -43,7 +43,7 @@ export const createResourceController = async (req, res) => {
         return res.status(500).send({ error: "Date Purchased is Required" });
     }
 
-    const resources = new resourcesModel({ ...req.fields });
+    const resources = new resourcesModel({ ...req.body });
     await resources.save();
     res.status(201).send({
       success: true,
@@ -84,8 +84,6 @@ export const getResourceController = async (req, res) => {
   }
 };
 
-
-
 //Get single resource
 export const getSingleResourceController = async (req, res) => {
   try {
@@ -111,11 +109,11 @@ export const deleteResourceController = async (req, res) => {
   try {
     let resourceId = req.params.id;
     const deletedResource = await resourcesModel.findByIdAndDelete(resourceId);
-    
+
     if (!deletedResource) {
       return res.status(404).send({ error: "Resource not found" });
     }
-    
+
     res.status(200).send({
       success: true,
       message: "Resource deleted successfully",
@@ -145,7 +143,7 @@ export const updateResourceController = async (req, res) => {
       supplier,
       supplierEmail,
       datePurchased,
-    } = req.fields;
+    } = req.body;
 
     //validation
     switch (true) {
@@ -173,21 +171,20 @@ export const updateResourceController = async (req, res) => {
         return res.status(500).send({ error: "Date Purchased is Required" });
     }
 
-    const resourceId = req.params.id;
-    const updatedResource = await resourcesModel.findByIdAndUpdate(
-      resourceId,
-      { ...req.fields },
+    const resources = await resourcesModel.findByIdAndUpdate(
+      req.params.id,
+      { ...req.body },
       { new: true }
     );
 
-    if (!updatedResource) {
+    if (!resources) {
       return res.status(404).send({ error: "Resource not found" });
     }
-    
+
     res.status(201).send({
       success: true,
       message: "Resource updated successfully",
-      resources: updatedResource,
+      resources,
     });
   } catch (error) {
     console.log(error);

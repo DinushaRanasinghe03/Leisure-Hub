@@ -6,14 +6,13 @@ import {
   getSingleResourceController,
   updateResourceController,
 } from "./../controllers/resourceController.js";
-import formidable from "express-formidable";
 
 //router object
 const router = express.Router();
 
 //routing
 //Add resources || Method POST
-router.post("/createResource", formidable(), createResourceController);
+router.post("/createResource", createResourceController);
 
 //Get resource
 router.get("/getResource", getResourceController);
@@ -24,7 +23,7 @@ router.get("/getResource/:id", getSingleResourceController);
 //delete resource
 router.delete("/deleteResource/:id", deleteResourceController);
 
-//Update resource
-router.put("/updateResource/:id", formidable(), updateResourceController);
+// Update resource
+router.put("/updateResource/:id", updateResourceController);
 
 export default router;

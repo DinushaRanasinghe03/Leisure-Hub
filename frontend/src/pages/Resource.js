@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Layout from "../components/layout/LayoutAdmin";
-import ResourceTable from "../components/layout/ResourceTable";
+import ResourceTable from "./Resources/ResourceTable";
 import { Link } from "react-router-dom";
 import "./Resources/AddResource.css";
 
@@ -34,7 +34,7 @@ const Resource = () => {
         <ResourceTable filter={filter} />{" "}
         {/* Pass the filter value to ResourceTable */}
       </div>
-    </Layout>
+       </Layout>
   );
 };
 

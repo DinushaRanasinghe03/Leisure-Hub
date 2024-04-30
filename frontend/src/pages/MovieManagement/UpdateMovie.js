@@ -132,9 +132,10 @@ const UpdateMovie = () => {
             <AdminMovieMenu />
           </div>
           <div className="col-md-9">
-            <h4 align="center">Update movies Details</h4>
+            <h4 align="center"><legend>Update movies Details</legend></h4>
             <div className="m-1 w-75">
               <div className="mb-3">
+              <label><b>Movie title : </b></label>
                 <input
                   type="text"
                   value={name}
@@ -143,7 +144,8 @@ const UpdateMovie = () => {
                   onChange={(e) => setName(e.target.value)}
                 />
               </div>
-
+              
+              <label><b>Movie Poster Image : </b></label>
               <div className="mb-3">
                 <label className="btn btn-outline-secondary col-md-12">
                   {poster_image ? poster_image.name : "Upload poster image"}
@@ -179,6 +181,7 @@ const UpdateMovie = () => {
                 )}
               </div>
 
+              <label><b>Movie Genre : </b></label>
               <Select
                 variant={false}
                 placeholder="select a Genre"
@@ -197,6 +200,7 @@ const UpdateMovie = () => {
                 ))}
               </Select>
 
+              <label><b>Language : </b></label>
               <div className="mb-3">
                 <input
                   type="text"
@@ -207,6 +211,7 @@ const UpdateMovie = () => {
                 />
               </div>
 
+              <label><b>Movie Directed By : </b></label>
               <div className="mb-3">
                 <input
                   type="text"
@@ -217,6 +222,7 @@ const UpdateMovie = () => {
                 />
               </div>
 
+              <label><b>Movie Produced By : </b></label>
               <div className="mb-3">
                 <input
                   type="text"
@@ -227,6 +233,7 @@ const UpdateMovie = () => {
                 />
               </div>
 
+              <label><b>Music Composed By : </b></label>
               <div className="mb-3">
                 <input
                   type="text"
@@ -237,6 +244,7 @@ const UpdateMovie = () => {
                 />
               </div>
 
+              <label><b>Movie Release Date : </b></label>
               <div className="mb-3">
                 <input
                   type="date"
@@ -246,7 +254,8 @@ const UpdateMovie = () => {
                   onChange={(e) => setReleasedate(e.target.value)}
                 />
               </div>
-
+              
+              <label><b>Movie Description : </b></label>
               <div className="mb-3">
                 <textarea
                   value={description}

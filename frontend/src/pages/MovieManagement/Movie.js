@@ -32,7 +32,7 @@ const Movie = () => {
                     <AdminMovieMenu />
                 </div>
                 <div className='col-md-9'>
-                    <h2 className='text-center'>All Movie List</h2>
+                    <h2 className='text-center'><legend>All Movie List</legend></h2>
                     
                     <div className='row row-cols-1 row-cols-md-4 g-4'>
                         {movies?.map(p => (

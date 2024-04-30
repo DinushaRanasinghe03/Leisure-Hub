@@ -94,9 +94,10 @@ const AddMovies = () => {
           <AdminMovieMenu />
         </div>
         <div className="col-md-9">
-          <h4 className="text-center">Add movies</h4>
+          <h4 className="text-center"><legend>Add movies</legend></h4>
           <div className="m-1 w-75">
             <div className="mb-3">
+              <label>Movie Title :</label>
               <input
                 type="text"
                 value={name}
@@ -107,6 +108,7 @@ const AddMovies = () => {
               {errors.name && <div className="text-danger">{errors.name}</div>}
             </div>
 
+            <label>Movie Genre :</label>
             <Select
               variant={false}
               placeholder="Select a Genre"
@@ -124,7 +126,8 @@ const AddMovies = () => {
               ))}
             </Select>
             {errors.genre && <div className="text-danger">{errors.genre}</div>}
-
+            
+            <label>Language :</label>
             <div className="mb-3">
               <input
                 type="text"
@@ -135,7 +138,8 @@ const AddMovies = () => {
               />
               {errors.language && <div className="text-danger">{errors.language}</div>}
             </div>
-
+            
+            <label>Directed By :</label>
             <div className="mb-3">
               <input
                 type="text"
@@ -146,7 +150,8 @@ const AddMovies = () => {
               />
               {errors.director && <div className="text-danger">{errors.director}</div>}
             </div>
-
+            
+            <label>Produced By :</label>
             <div className="mb-3">
               <input
                 type="text"
@@ -158,6 +163,7 @@ const AddMovies = () => {
               {errors.producer && <div className="text-danger">{errors.producer}</div>}
             </div>
 
+            <label>Music Composed By :</label>
             <div className="mb-3">
               <input
                 type="text"
@@ -169,6 +175,7 @@ const AddMovies = () => {
               {errors.music && <div className="text-danger">{errors.music}</div>}
             </div>
 
+            <label>Movie Release Date :</label>
             <div className="mb-3">
               <input
                 type="date"
@@ -180,6 +187,7 @@ const AddMovies = () => {
               {errors.release_date && <div className="text-danger">{errors.release_date}</div>}
             </div>
 
+            <label>Movie Description :</label>
             <div className="mb-3">
               <textarea
                 value={description}
@@ -191,6 +199,7 @@ const AddMovies = () => {
               {errors.description && <div className="text-danger">{errors.description}</div>}
             </div>
 
+            <label>Poster Image :</label>
             <div className="mb-3">
               <label className="btn btn-outline-secondary col-md-12">
                 {poster_image ? poster_image.name : 'Upload poster image'}
@@ -233,3 +242,6 @@ const AddMovies = () => {
 };
 
 export default AddMovies;
+
+
+

@@ -1,10 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import React from "react";
+import HeaderAdmin from "./HeaderAdmin";
 
 const Form = ({ type, resource, setResource, submitting, handleSubmit }) => {
   const navigate = useNavigate();
 
   return (
+    <div>
+      <HeaderAdmin />
     <section>
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-gray-900 to-black">
         <div className="max-w-md w-full bg-gray-800 p-8 rounded-lg shadow-md md:max-w-lg">
@@ -251,6 +254,7 @@ const Form = ({ type, resource, setResource, submitting, handleSubmit }) => {
         </div>
       </div>
     </section>
+    </div>
   );
 };
 

@@ -31,14 +31,31 @@ const Resource = () => {
 
   return (
     <Layout title={"Admin Resources - LeisureHub"}>
-      <h2>Total Resources: {totalCount}</h2> {/* Display total count */}
-      <h2>Total Amount Spent: {totalAmountSpent}</h2>{" "}
-      {/* Display total amount spent */}
-      <h2>
-        <Link to={`/zeroQuantityResources`}>
-          Low Stock: {zeroQuantityCount}
-        </Link>
-      </h2>
+      <div style={styles.container1}>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <div style={styles.container}>
+            <h2 style={styles.heading}>Total Resources: {totalCount}</h2>
+          </div>
+          <div
+            style={{
+              ...styles.container,
+              marginLeft: "5px",
+              marginRight: "5px",
+            }}
+          >
+            <h2 style={styles.heading}>
+              Total Amount Spent: {totalAmountSpent}
+            </h2>
+          </div>
+          <div style={styles.container}>
+            <h2 style={styles.heading}>
+              <Link to={`/zeroQuantityResources`} style={styles.link}>
+                Low Stock {zeroQuantityCount}
+              </Link>
+            </h2>
+          </div>
+        </div>
+      </div>
       <div className="resource-controls">
         <Link to={`/addResource`} className="addResource-link">
           <button className="addResource-button">Add Resource</button>
@@ -68,3 +85,27 @@ const Resource = () => {
 };
 
 export default Resource;
+
+const styles = {
+  container: {
+    flex: "1",
+    backgroundColor: "#A6C4D1",
+    borderRadius: "10px",
+    padding: "5px",
+    textAlign: "center",
+    marginLeft: "5px",
+    marginRight: "5px",
+  },
+  container1: {
+    marginTop: "15px",
+  },
+  heading: {
+    color: "black",
+    fontWeight: "bold",
+    fontSize: "18px",
+  },
+  link: {
+    color: "black",
+    textDecoration: "none",
+  },
+};

@@ -15,6 +15,7 @@ const ResourceTable = ({ filter }) => {
   const [searchTerm, setSearchTerm] = useState(""); // State to store search term
   const [reportMode, setReportMode] = useState(false);
 const navigate = useNavigate();
+
   // Function to handle the click event of the "View" button
   const handleView = (resource) => {
     setSelectedResource(resource); // Set the selected resource
@@ -29,7 +30,7 @@ const navigate = useNavigate();
   const getAllResources = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:8070/api/v1/resources/getResource"
+        "http://localhost:8080/api/v1/resources/getResource"
       );
       if (response.data.success) {
         let filteredResources = response.data.resources;
@@ -67,7 +68,7 @@ const navigate = useNavigate();
   const deleteResource = async (id) => {
     try {
       const response = await axios.delete(
-        `http://localhost:8070/api/v1/resources/deleteResource/${id}`
+        `http://localhost:8080/api/v1/resources/deleteResource/${id}`
       );
       if (response.data.success) {
         toast.success("Resource deleted successfully");

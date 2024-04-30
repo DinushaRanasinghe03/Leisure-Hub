@@ -27,7 +27,7 @@ const AddResource = () => {
     console.log(resource);
     try {
       const { data } = await axios.post(
-        "http://localhost:8070/api/v1/resources/createResource",
+        "http://localhost:8080/api/v1/resources/createResource",
         resource
       );
 

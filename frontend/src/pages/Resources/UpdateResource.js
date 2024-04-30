@@ -26,7 +26,7 @@ const UpdateResource = () => {
   useEffect(() => {
     const getResource = async () => {
       const data = await axios.get(
-        `http://localhost:8070/api/v1/resources/getResource/${id}`
+        `http://localhost:8080/api/v1/resources/getResource/${id}`
       );
 
       var response;
@@ -63,7 +63,7 @@ const UpdateResource = () => {
 
     try {
       const { data } = await axios.put(
-        `http://localhost:8070/api/v1/resources/updateResource/${id}`,
+        `http://localhost:8080/api/v1/resources/updateResource/${id}`,
         resource
       );
       console.log(data); // Log response from the server

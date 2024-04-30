@@ -15,7 +15,7 @@ const Resource = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8070/api/v1/resources/getResource"
+          "http://localhost:8080/api/v1/resources/getResource"
         );
         const { countTotal, totalAmountSpent, zeroQuantityCount } =
           response.data; // Extract total count from response
@@ -34,7 +34,9 @@ const Resource = () => {
       <div style={styles.container1}>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <div style={styles.container}>
-            <h2 style={styles.heading}>Total Resources: {totalCount}</h2>
+            <h2 style={styles.heading}>
+              Total Number of Resources : {totalCount}
+            </h2>
           </div>
           <div
             style={{
@@ -44,13 +46,13 @@ const Resource = () => {
             }}
           >
             <h2 style={styles.heading}>
-              Total Amount Spent: {totalAmountSpent}
+              Total Amount Spent : Rs.{totalAmountSpent}
             </h2>
           </div>
           <div style={styles.container}>
             <h2 style={styles.heading}>
               <Link to={`/zeroQuantityResources`} style={styles.link}>
-                Low Stock {zeroQuantityCount}
+                Low Stock : {zeroQuantityCount}
               </Link>
             </h2>
           </div>
@@ -61,7 +63,7 @@ const Resource = () => {
           <button className="addResource-button">Add Resource</button>
         </Link>
         <div className="resource-filter">
-          <label htmlFor="filter">Filter by Type:</label>
+          <label htmlFor="filter">Filter by Type </label>
           {/* Dropdown filter */}
           <select
             id="filter"
@@ -80,6 +82,7 @@ const Resource = () => {
         <ResourceTable filter={filter} />{" "}
         {/* Pass the filter value to ResourceTable */}
       </div>
+      
     </Layout>
   );
 };
@@ -91,13 +94,18 @@ const styles = {
     flex: "1",
     backgroundColor: "#A6C4D1",
     borderRadius: "10px",
-    padding: "5px",
+    padding: "0",
     textAlign: "center",
-    marginLeft: "5px",
-    marginRight: "5px",
+    marginLeft: "20px", // Auto margin to horizontally center the container
+    marginRight: "20px", // Auto margin to horizontally center the container
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center", // Center the content horizontally
   },
   container1: {
-    marginTop: "15px",
+    marginTop: "20px",
+    marginLeft: "20px", // Auto margin to horizontally center the container
+    marginRight: "20px", // Auto margin to horizontally center the container
   },
   heading: {
     color: "black",
@@ -105,7 +113,7 @@ const styles = {
     fontSize: "18px",
   },
   link: {
-    color: "black",
+    color: "red",
     textDecoration: "none",
   },
 };

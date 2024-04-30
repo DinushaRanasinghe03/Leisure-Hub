@@ -9,8 +9,8 @@ const Form = ({ type, resource, setResource, submitting, handleSubmit }) => {
     <div>
       <HeaderAdmin />
     <section>
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-gray-900 to-black">
-        <div className="max-w-md w-full bg-gray-800 p-8 rounded-lg shadow-md md:max-w-lg">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-white to-gray-300">
+        <div className="max-w-md w-full bg-gray-900 p-8 rounded-lg shadow-md md:max-w-lg">
           <h2 className="text-2xl font-semibold mb-6 text-center text-white">
             {type} Resource
           </h2>

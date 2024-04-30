@@ -4,9 +4,10 @@
 }
 
 .resource-table {
-  width: 100%;
+  width: 98%;
   border-collapse: collapse;
   margin-top: 20px;
+  margin-left: 20px;
 }
 
 .resource-table th {
@@ -44,28 +45,32 @@
 .resource-table .action-column button {
   padding: 5px 10px;
   margin: 0 5px;
-  border: none;
   cursor: pointer;
   border-radius: 4px;
 }
 
-.resource-table .action-column button:hover {
+.resource-table .view-button:hover,
+.resource-table .update-button:hover,
+.resource-table .delete-button:hover {
   filter: brightness(85%);
 }
 
 .resource-table .view-button {
-  background-color: rgb(174, 174, 78);
+  background-color: rgb(203, 203, 69);
   color: black;
+  border: 1px solid #b0bc30;
 }
 
 .resource-table .update-button {
-  background-color: rgb(95, 152, 95);
+  background-color: rgb(57, 153, 57);
   color: black;
+  border: 1px solid #1f8620;
 }
 
 .resource-table .delete-button {
-  background-color: rgb(177, 96, 96);
+  background-color: rgb(198, 57, 57);
   color: black;
+  border: 1px solid #e35538;
 }
 
 .modal-container {
@@ -93,12 +98,31 @@
   align-items: center;
   margin-bottom: 10px;
 }
+.modal-header h2 {
+  font-weight: bold; /* Make the header text bold */
+}
+
+.close-button-container {
+  background-color: rgb(199, 196, 196); /* Red background color */
+  padding: 5px; /* Add some padding around the button */
+  border-radius: 5px; /* Add rounded corners to the container */
+}
 
 .close-button {
   background: none;
-  border: none;
+  border: 2px solid black;
   cursor: pointer;
-  font-size: 24px;
+  font-size: 50px;
+  width: 20px; /* Increase the width */
+  height: 15px; /* Increase the height */
+  color: rgb(3, 3, 3); /* Black text color */
+   display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-body p {
+  margin-bottom: 5px; /* Add some spacing between paragraphs */
 }
 
 .update-modal-container {
@@ -168,21 +192,28 @@ input[type="number"] {
 .search-container {
   display: flex;
   align-items: center;
+  width: 3000px;
 }
 
 .search-wrapper {
   position: relative;
+  margin-left: 1300px;
+  margin-top: -150px;
+  padding: 10px;
 }
 
 .search-input {
+  width: 100%; /* Use 100% width to fill the container */
+  padding: 8px;
+  border: 1px solid black; /* Add black border */
+  width: 500px;
   padding-right: 30px; /* Adjust based on icon width */
 }
 
 .search-icon {
   position: absolute;
-  right: 10px; /* Adjust based on input padding */
+  right: 20px; /* Adjust based on input padding */
   top: 50%;
   transform: translateY(-50%);
   cursor: pointer;
 }
-

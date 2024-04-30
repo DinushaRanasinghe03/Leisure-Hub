@@ -73,7 +73,8 @@ input[type="submit"]:hover {
   border-radius: 5px;
   cursor: pointer;
   margin: 30px;
-  margin-right: 50px; /* Add margin to separate from the dropdown */
+  margin-right: 50px;
+  margin-left: 40px; /* Add margin to separate from the dropdown */
 }
 
 .addResource-button:hover {
@@ -124,14 +125,15 @@ input[type="submit"]:hover {
 }
 
 .resource-filter select {
-  width: 200px;
-  padding: 7px;
+  width: 150px;
+  padding: 3px;
   font-size: 16px;
   border: 2px solid #ccc;
-  border-radius: 10px;
+  border-radius: 5px;
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23444"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'); /* Add custom arrow icon */
   background-repeat: no-repeat;
   background-position: right 8px center;
+  margin-left: 10px;
 }
 .report-button {
   background-color: #4c5f08;
@@ -142,6 +144,7 @@ input[type="submit"]:hover {
   border-radius: 5px;
   cursor: pointer;
   margin-top: 30px;
+  margin-left: 20px;
 }
 
 .print-button {
@@ -154,6 +157,6 @@ input[type="submit"]:hover {
   cursor: pointer;
   margin-top: 30px;
   margin-left: 1150px;
- margin-right: 20px;
+  margin-right: 5px;
  
 }

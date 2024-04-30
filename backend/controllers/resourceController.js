@@ -68,9 +68,26 @@ export const getResourceController = async (req, res) => {
       .populate("type")
       .limit(12)
       .sort({ createdAt: -1 });
+
+    // Calculate total amount spent
+    let totalAmountSpent = 0;
+    resources.forEach((resource) => {
+      totalAmountSpent += resource.quantity * resource.unitPrice;
+    });
+
+    // Calculate total count
+    const totalCount = resources.length;
+
+    // Count resources with Quantity = 0
+    const zeroQuantityCount = resources.filter(
+      (resource) => resource.quantity === 0
+    ).length;
+
     res.status(200).send({
       success: true,
-      countTotal: resources.length,
+      totalAmountSpent: totalAmountSpent, // Send total amount spent in response
+      countTotal: totalCount, // Send total count in response
+      zeroQuantityCount: zeroQuantityCount, // Send count of resources with Quantity = 0
       message: "All resources displayed successfully",
       resources,
     });

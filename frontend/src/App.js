@@ -84,9 +84,13 @@ import MemOTPVerification from "./pages/MembershipPaymentVerification/Membership
 import MemOTPAuthenticationPage from "./pages/MembershipPaymentVerification/MembersipPaymentOTP1.js"
 import BankPaymentDetails from "./pages/AddPaymentDetails/BankPayments.js"
 
-import AddResource from "./pages/resources/AddResource.js";
+
 import DashboardAdmin from "./pages/DashboardAdmin.js";
-import Maintenance from "./pages/Maintenance.js";
+
+import Resource from "./pages/Resource";
+import UpdateResource from "./pages/Resources/UpdateResource";
+import ZeroQuantityResourceTable from "./pages/Resources/ZeroQuantityResourceTable";
+import AddResource from './pages/Resources/AddResources.js';
 
 function App() {
   return (
@@ -229,9 +233,16 @@ function App() {
       <Route path="/memOtpAuth" element={<MemOTPAuthenticationPage/>}/>
       <Route path="/bank" element={<BankPaymentDetails/>}/>
 
-      <Route path="/addResource" element={<AddResource />} />
+      
       <Route path="/aboard" element={<DashboardAdmin />} />
-      <Route path="/maintenance" element={<Maintenance />}/>
+      
+      <Route path="/resource" element={<Resource />} />
+        <Route path="/addResource" element={<AddResource />} />
+        <Route path="/updateResource/:id" element={<UpdateResource />} />
+        <Route
+          path="/zeroQuantityResources"
+          element={<ZeroQuantityResourceTable/>}
+        />
       </Routes>
     </>
   );

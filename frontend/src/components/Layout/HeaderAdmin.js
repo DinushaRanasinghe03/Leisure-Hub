@@ -46,13 +46,8 @@ const HeaderAdmin = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/addResource" activeClassName="active">
+            <NavLink to="/resource" activeClassName="active">
               Resource
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/maintenance" activeClassName="active">
-              Maintenance
             </NavLink>
           </li>
           <li>

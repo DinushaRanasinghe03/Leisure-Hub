@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import AdminActivityMenu from "../../components/Layout/AdminActivityMenu";
 import axios from "axios";
-//import toast from "react-hot-toast";
 import toast, { Toaster } from "react-hot-toast";
 import { Select } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
@@ -20,6 +19,7 @@ export const UpdateGamesAndActivities = () => {
   const navigate = useNavigate();
   const params = useParams();
   const [id, setId] = useState("");
+  const [errors, setErrors] = useState({});
 
   //get single activity
   const getSingleActivity = async () => {
@@ -65,9 +65,34 @@ export const UpdateGamesAndActivities = () => {
     getAllCategory();
   }, []);
 
+  // Validation function
+  const validate = () => {
+    const errors = {};
+    if (!name) errors.name = "Name is required";
+    if (!gameoractivitycategory) errors.category = "Category is required";
+    if (!description) errors.description = "Description is required";
+    if (!guidelines) errors.guidelines = "Guidelines are required";
+    if (!instructors) errors.instructors = "Instructors are required";
+    if (!activityimage) errors.image = "Image is required";
+    setErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  // Handle file input change
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file && file.type.startsWith("image/")) {
+      setaImage(file);
+    } else {
+      toast.error("Please select a valid image file");
+    }
+  };
+
   //add games and activities function
   const handleUpdate = async (e) => {
     e.preventDefault();
+    if (!validate()) return;
+
     try {
       const gameandactivityData = new FormData();
       gameandactivityData.append(
@@ -78,11 +103,10 @@ export const UpdateGamesAndActivities = () => {
       gameandactivityData.append("description", description);
       gameandactivityData.append("guidelines", guidelines);
       gameandactivityData.append("instructors", instructors);
-      activityimage &&
-        gameandactivityData.append("activityimage", activityimage);
+      gameandactivityData.append("activityimage", activityimage);
 
       const { data } = await axios.put(
-        ` /api/v1/gameandactivity/update-gameandactivity/${id}`,
+        `/api/v1/gameandactivity/update-gameandactivity/${id}`,
         gameandactivityData
       );
       if (data?.success) {
@@ -101,7 +125,6 @@ export const UpdateGamesAndActivities = () => {
   //delete a product
   const handleDelete = async () => {
     try {
-      //prompt message  to delete game or activity
       let answer = window.prompt(
         "Are you sure, want to delete this game or activity?"
       );
@@ -111,13 +134,14 @@ export const UpdateGamesAndActivities = () => {
       );
       navigate("/adminactivitydashboard/activitymanagement/activities");
       setTimeout(() => {
-        toast.success("Game or Activity Deleted successefully");
+        toast.success("Game or Activity Deleted successfully");
       }, 1000);
     } catch (error) {
       console.log(error);
       toast.error("Something went wrong");
     }
   };
+
   return (
     <LayoutAdmin>
       <div className="container-fluid m-3 p-3">
@@ -145,6 +169,9 @@ export const UpdateGamesAndActivities = () => {
                   </Option>
                 ))}
               </Select>
+              {errors.category && (
+                <div className="text-danger">{errors.category}</div>
+              )}
               <div className="mb-3">
                 <label className="btn btn-outline-secondary col-md-12">
                   {activityimage
@@ -155,11 +182,14 @@ export const UpdateGamesAndActivities = () => {
                     type="file"
                     name="photo"
                     accept="image/*"
-                    onChange={(e) => setaImage(e.target.files[0])}
+                    onChange={handleImageChange}
                     hidden
                   />
                 </label>
               </div>
+              {errors.image && (
+                <div className="text-danger">{errors.image}</div>
+              )}
               <div className="mb-3">
                 {activityimage ? (
                   <div className="text-center">
@@ -189,24 +219,33 @@ export const UpdateGamesAndActivities = () => {
                   className="form-control"
                   onChange={(e) => setName(e.target.value)}
                 />
+                {errors.name && (
+                  <div className="text-danger">{errors.name}</div>
+                )}
               </div>
               <div className="mb-3">
                 <input
                   type="text"
                   value={description}
-                  placeholder="write a desciption about the game or activity"
+                  placeholder="write a description about the game or activity"
                   className="form-control"
                   onChange={(e) => setDescription(e.target.value)}
                 />
+                {errors.description && (
+                  <div className="text-danger">{errors.description}</div>
+                )}
               </div>
               <div className="mb-3">
                 <input
                   type="text"
                   value={guidelines}
-                  placeholder="write guidlines for the game or activity"
+                  placeholder="write guidelines for the game or activity"
                   className="form-control"
                   onChange={(e) => setGuidelines(e.target.value)}
                 />
+                {errors.guidelines && (
+                  <div className="text-danger">{errors.guidelines}</div>
+                )}
               </div>
               <div className="mb-3">
                 <Select
@@ -223,6 +262,9 @@ export const UpdateGamesAndActivities = () => {
                   <Option value="1">Instructor Available</Option>
                   <Option value="0">Instructor Not Available</Option>
                 </Select>
+                {errors.instructors && (
+                  <div className="text-danger">{errors.instructors}</div>
+                )}
               </div>
               <div className="mb-3">
                 <button className="btn btn-primary" onClick={handleUpdate}>

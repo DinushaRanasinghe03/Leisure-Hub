@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import AdminActivityMenu from "../../components/Layout/AdminActivityMenu";
 import axios from "axios";
-//import toast from "react-hot-toast";
 import toast, { Toaster } from "react-hot-toast";
 import { Select } from "antd";
 import { useNavigate } from "react-router-dom";
@@ -11,12 +10,14 @@ const { Option } = Select;
 export const AddGamesAndActivities = () => {
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
-  const [activityimage, setaImage] = useState("");
+  const [activityimage, setActivityImage] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [gameoractivitycategory, setGameoractivitycategory] = useState("");
   const [guidelines, setGuidelines] = useState("");
   const [instructors, setInstructor] = useState("");
+  const [imageValidationError, setImageValidationError] = useState("");
+  const [errors, setErrors] = useState({});
 
   //get all games categories
   const getAllCategory = async () => {
@@ -38,10 +39,46 @@ export const AddGamesAndActivities = () => {
     getAllCategory();
   }, []);
 
+  // Validation function to check if the file is an image
+  const validateImageFile = (file) => {
+    return file.type.startsWith("image");
+  };
+
+  // Handle file input change
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setActivityImage(file);
+    if (file && !validateImageFile(file)) {
+      setImageValidationError("Please upload only image files.");
+    } else {
+      setImageValidationError("");
+    }
+  };
+
   //add games and activities function
   const handleCreate = async (e) => {
     e.preventDefault();
     try {
+      const errors = {};
+      if (!name) errors.name = "Name is required";
+      if (!description) errors.description = "Description is required";
+      if (!guidelines) errors.guidelines = "Guidelines are required";
+      if (!instructors) errors.instructors = "Instructors are required";
+      if (!activityimage) errors.activityimage = "Image is required";
+      if (!gameoractivitycategory)
+        errors.gameoractivitycategory = "Category is required";
+
+      if (Object.keys(errors).length > 0) {
+        setErrors(errors);
+        return;
+      }
+
+      // Check if the selected file is an image
+      if (activityimage && !validateImageFile(activityimage)) {
+        setImageValidationError("Please upload only image files.");
+        return; // Prevent form submission
+      }
+
       const gameandactivityData = new FormData();
       gameandactivityData.append("name", name);
       gameandactivityData.append("description", description);
@@ -61,7 +98,7 @@ export const AddGamesAndActivities = () => {
           toast.success("Game or Activity Added Successfully");
         }, 1000);
       } else {
-        toast.error("Somthing");
+        toast.error("Something went wrong");
       }
     } catch (error) {
       console.log(error);
@@ -77,38 +114,57 @@ export const AddGamesAndActivities = () => {
             <AdminActivityMenu />
           </div>
           <div className="col-md-9">
-            <h1>Add Games And Activities</h1>
+            <h4 className="text-center">
+              <legend>Add Games And Activities</legend>
+            </h4>
             <div className="m-1 w-75">
-              <Select
-                bordered={false}
-                placeholder="Select game or activity category"
-                size="large"
-                showSearch
-                className="form-select mb-3"
-                onChange={(value) => {
-                  setGameoractivitycategory(value);
-                }}
-              >
-                {categories?.map((c) => (
-                  <Option key={c._id} value={c._id}>
-                    {c.name}
-                  </Option>
-                ))}
-              </Select>
               <div className="mb-3">
-                <label className="btn btn-outline-secondary col-md-12">
+                <label>Category:</label>
+                <Select
+                  bordered={false}
+                  placeholder="Select game or activity category"
+                  size="large"
+                  showSearch
+                  className="form-select mb-3"
+                  onChange={(value) => {
+                    setGameoractivitycategory(value);
+                  }}
+                >
+                  {categories?.map((c) => (
+                    <Option key={c._id} value={c._id}>
+                      {c.name}
+                    </Option>
+                  ))}
+                </Select>
+                {errors.gameoractivitycategory && (
+                  <div className="text-danger">
+                    {errors.gameoractivitycategory}
+                  </div>
+                )}
+              </div>
+              <div className="mb-3">
+                <label
+                  htmlFor="activityimage"
+                  className="btn btn-outline-secondary col-md-12"
+                >
                   {activityimage
                     ? activityimage.name
                     : " Upload game or activity image"}
-
                   <input
+                    id="activityimage"
                     type="file"
                     name="photo"
                     accept="image/*"
-                    onChange={(e) => setaImage(e.target.files[0])}
+                    onChange={handleFileChange}
                     hidden
                   />
                 </label>
+                {errors.activityimage && (
+                  <div className="text-danger">{errors.activityimage}</div>
+                )}
+                {imageValidationError && (
+                  <div className="text-danger">{imageValidationError}</div>
+                )}
               </div>
               <div className="mb-3">
                 {activityimage && (
@@ -123,6 +179,7 @@ export const AddGamesAndActivities = () => {
                 )}
               </div>
               <div className="mb-3">
+                <label>Name:</label>
                 <input
                   type="text"
                   value={name}
@@ -130,26 +187,38 @@ export const AddGamesAndActivities = () => {
                   className="form-control"
                   onChange={(e) => setName(e.target.value)}
                 />
+                {errors.name && (
+                  <div className="text-danger">{errors.name}</div>
+                )}
               </div>
               <div className="mb-3">
+                <label>Description:</label>
                 <input
                   type="text"
                   value={description}
-                  placeholder="write a desciption about the game or activity"
+                  placeholder="write a description about the game or activity"
                   className="form-control"
                   onChange={(e) => setDescription(e.target.value)}
                 />
+                {errors.description && (
+                  <div className="text-danger">{errors.description}</div>
+                )}
               </div>
               <div className="mb-3">
+                <label>Guidelines:</label>
                 <input
                   type="text"
                   value={guidelines}
-                  placeholder="write guidlines for the game or activity"
+                  placeholder="write guidelines for the game or activity"
                   className="form-control"
                   onChange={(e) => setGuidelines(e.target.value)}
                 />
+                {errors.guidelines && (
+                  <div className="text-danger">{errors.guidelines}</div>
+                )}
               </div>
               <div className="mb-3">
+                <label>Availability of Instructor:</label>
                 <Select
                   bordered={false}
                   placeholder="Availability of Instructor"
@@ -163,6 +232,9 @@ export const AddGamesAndActivities = () => {
                   <Option value="1">Instructor Available</Option>
                   <Option value="0">Instructor Not Available</Option>
                 </Select>
+                {errors.instructors && (
+                  <div className="text-danger">{errors.instructors}</div>
+                )}
               </div>
               <div className="mb-3">
                 <button className="btn btn-primary" onClick={handleCreate}>

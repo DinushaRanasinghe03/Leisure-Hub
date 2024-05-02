@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import AdminActivityMenu from "../../components/Layout/AdminActivityMenu";
 import axios from "axios";
 //import toast from "react-hot-toast";
-import toast, { Toaster } from 'react-hot-toast';
+import toast, { Toaster } from "react-hot-toast";
 import ActivityCategoryForm from "../../components/Form/ActivityCategoryForm";
 import { Modal } from "antd";
-import LayoutAdmin from './../../components/Layout/LayoutAdmin';
+import LayoutAdmin from "./../../components/Layout/LayoutAdmin";
 
 export const CreateActivityCategory = () => {
   const [categories, setCategories] = useState([]);
@@ -77,6 +77,12 @@ export const CreateActivityCategory = () => {
   };
   //delete games and activity category
   const handleDelete = async (pId) => {
+    // Ask for confirmation before deleting
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this request?"
+    );
+    if (!confirmed) return; // If not confirmed, do nothing
+
     try {
       const { data } = await axios.delete(
         `/api/v1/activitycategory/delete-activitycategory/${pId}`
@@ -160,9 +166,9 @@ export const CreateActivityCategory = () => {
             </Modal>
           </div>
         </div>
-        <Toaster/>
+        <Toaster />
       </div>
-      </LayoutAdmin>
+    </LayoutAdmin>
   );
 };
 

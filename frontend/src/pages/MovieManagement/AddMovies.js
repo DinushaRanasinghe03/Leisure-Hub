@@ -134,7 +134,16 @@ const AddMovies = () => {
                 value={language}
                 placeholder="Movie Language"
                 className="form-control"
-                onChange={(e) => setLanguage(e.target.value)}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  // Check if the input contains only letters
+                  if (/^[A-Za-z\s]*$/.test(value)) {
+                    setLanguage(value); // Set the value if it contains only letters
+                    setErrors({}); // Clear any previous errors
+                 } else {
+                    setErrors({ language: 'Only strings are allowed' }); // Set error if input contains other characters
+                  }
+                }}
               />
               {errors.language && <div className="text-danger">{errors.language}</div>}
             </div>
@@ -146,7 +155,16 @@ const AddMovies = () => {
                 value={director}
                 placeholder="Film Director"
                 className="form-control"
-                onChange={(e) => setDirector(e.target.value)}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  // Check if the input contains only letters, spaces, and periods
+                  if (/^[A-Za-z\s.,]*$/.test(value)) {
+                    setDirector(value); // Set the value if it contains only letters, spaces, and periods
+                    setErrors({}); // Clear any previous errors
+                 } else {
+                    setErrors({ director: 'Only strings are allowed' }); // Set error if input contains other characters
+                  }
+                }}
               />
               {errors.director && <div className="text-danger">{errors.director}</div>}
             </div>
@@ -158,7 +176,16 @@ const AddMovies = () => {
                 value={producer}
                 placeholder="Film Producer"
                 className="form-control"
-                onChange={(e) => setProducer(e.target.value)}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  // Check if the input contains only letters, spaces, and periods
+                  if (/^[A-Za-z\s.,]*$/.test(value)) {
+                    setProducer(value); // Set the value if it contains only letters, spaces, and periods
+                    setErrors({}); // Clear any previous errors
+                 } else {
+                    setErrors({ producer: 'Only strings are allowed' }); // Set error if input contains other characters
+                  }
+                }}
               />
               {errors.producer && <div className="text-danger">{errors.producer}</div>}
             </div>
@@ -170,7 +197,16 @@ const AddMovies = () => {
                 value={music}
                 placeholder="Music by"
                 className="form-control"
-                onChange={(e) => setMusic(e.target.value)}
+                onChange={(e) =>  {
+                  const value = e.target.value;
+                  // Check if the input contains only letters, spaces, and periods
+                  if (/^[A-Za-z\s.,]*$/.test(value)) {
+                    setMusic(value); // Set the value if it contains only letters, spaces, and periods
+                    setErrors({}); // Clear any previous errors
+                 } else {
+                    setErrors({ music: 'Only strings are allowed' }); // Set error if input contains other characters
+                  }
+                }}
               />
               {errors.music && <div className="text-danger">{errors.music}</div>}
             </div>
@@ -201,17 +237,27 @@ const AddMovies = () => {
 
             <label>Poster Image :</label>
             <div className="mb-3">
-              <label className="btn btn-outline-secondary col-md-12">
-                {poster_image ? poster_image.name : 'Upload poster image'}
+            <label className="btn btn-outline-secondary col-md-12">
+              {poster_image ? poster_image.name : 'Upload poster image'}
                 <input
                   type="file"
                   name="photo"
                   accept="image/*"
-                  onChange={(e) => setPosterimage(e.target.files[0])}
+                  onChange={(e) => {
+                  const file = e.target.files[0];
+                  // Validate if file is an image
+                     if (!file || !file.type.startsWith('image/')) {
+                          setPosterimage(null); // Clear poster image
+                          setErrors({ poster_image: 'Only image files are allowed' });
+                      return;
+                      }
+                  // If it's an image, set poster image
+                    setPosterimage(file);
+                   }}
                   hidden
-                />
-              </label>
-              {errors.poster_image && <div className="text-danger">{errors.poster_image}</div>}
+                 />
+            </label>
+            {errors.poster_image && <div className="text-danger">{errors.poster_image}</div>}
             </div>
 
             <div className="mb-3">

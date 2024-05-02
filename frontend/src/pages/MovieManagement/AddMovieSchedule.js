@@ -129,7 +129,7 @@ const AddMovieSchedule = () => {
           <AdminMovieMenu />
         </div>
         <div className="col-md-9 ">
-          <h3 className="text-center">Schedule Movie Showtime</h3>
+          <h3 className="text-center"><legend>Schedule Movie Showtime</legend></h3>
 
           <div className="m-1 w-75 ">
             <label>Select a date :</label>
@@ -194,7 +194,13 @@ const AddMovieSchedule = () => {
                 value={unavailableSeats}
                 placeholder="Unavailable seats"
                 className="form-control"
-                onChange={(e) => setUnavailableSeats(e.target.value)}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  // Check if the input contains only numbers and commas
+                  if (/^[0-9,]*$/.test(value)) {
+                    setUnavailableSeats(value); // Set the value if it contains only numbers and commas
+                  }
+                  }}
               />
             </div>
 

@@ -4,7 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import "../../styles/AuthStyles.css";
-
+ 
 const Register = () => {
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
@@ -17,25 +17,32 @@ const Register = () => {
   const [membership, setMembership] = useState("");
   const [answer, setAnswer] = useState("");
   const [profilePic, setProfilePic] = useState();
+  const [fnameError, setFnameError] = useState("");
+  const [lnameError, setLnameError] = useState("");
+  const [emailError, setEmailError] = useState("");
   const navigate = useNavigate();
-
+ 
   const location = window.location.pathname;
-
+ 
   // Use useEffect to set membership state based on URL parameter
   useEffect(() => {
     if (location.state && location.state.membershipType) {
       setMembership(location.state.membershipType);
     }
   }, [location.state]);
-
+ 
   const handleMembershipChange = (event) => {
     setMembership(event.target.value);
   };
-
-  const handleProfilePicChange = (event) => {
-    setProfilePic(event.target.files[0]); // Update state with selected file
+  const validateEmail = (email) => {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailPattern.test(email);
   };
-
+ 
+  // const handleProfilePicChange = (event) => {
+  //   setProfilePic(event.target.files[0]); // Update state with selected file
+  // };
+ 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -52,7 +59,7 @@ const Register = () => {
         answer,
         profilePic,
       });
-
+ 
       if (res && res.data.success) {
         navigate("/membership");
         toast.success(res.data.message);
@@ -64,7 +71,43 @@ const Register = () => {
       console.log("Something went wrong");
     }
   };
-
+  // Handle email change and validate format
+  const handleEmailChange = (e) => {
+    const input = e.target.value;
+    setEmail(input);
+ 
+    // Check if the email is valid and update emailError state
+    if (!validateEmail(input)) {
+      setEmailError("Please enter a valid email address.");
+    } else {
+      setEmailError("");
+    }
+  };
+ 
+  // Function to handle first name change and validation
+  const handleFnameChange = (e) => {
+    const input = e.target.value;
+    setFname(input);
+ 
+    // Regular expression to check if input contains only letters
+    const isValid = /^[A-Za-z]+$/.test(input);
+ 
+    // Update error state based on validation result
+    setFnameError(isValid ? "" : "Please enter a valid first name");
+  };
+ 
+  // Function to handle last name change and validation
+  const handleLnameChange = (e) => {
+    const input = e.target.value;
+    setLname(input);
+ 
+    // Regular expression to check if input contains only letters
+    const isValid = /^[A-Za-z]+$/.test(input);
+ 
+    // Update error state based on validation result
+    setLnameError(isValid ? "" : "Please enter a valid last name");
+  };
+ 
   return (
     <Layout title="Register-Leisure Hub">
       <div className="register">
@@ -80,23 +123,33 @@ const Register = () => {
                         <input
                           type="text"
                           value={fname}
-                          onChange={(e) => setFname(e.target.value)}
+                          // onChange={(e) => setFname(e.target.value)}
+                          onChange={handleFnameChange}
                           className="form-control"
                           placeholder="First name"
                           aria-label="First name"
                           required
                         />
+                        {fnameError && (
+                          <p style={{ color: "red" }}>{fnameError}</p>
+                        )}{" "}
+                        {/* Display error message */}
                       </div>
                       <div className="col-md-6">
                         <input
                           type="text"
                           value={lname}
-                          onChange={(e) => setLname(e.target.value)}
+                          //onChange={(e) => setLname(e.target.value)}
+                          onChange={handleLnameChange}
                           className="form-control"
                           placeholder="Last name"
                           aria-label="Last name"
                           required
                         />
+                        {lnameError && (
+                          <p style={{ color: "red" }}>{lnameError}</p>
+                        )}{" "}
+                        {/* Display error message */}
                       </div>
                     </div>
                     <div className="row mb-3">
@@ -104,12 +157,17 @@ const Register = () => {
                         <input
                           type="email"
                           value={email}
-                          onChange={(e) => setEmail(e.target.value)}
+                          // onChange={(e) => setEmail(e.target.value)}
+                          onChange={handleEmailChange}
                           className="form-control"
                           placeholder="Email"
                           aria-label="Email"
                           required
                         />
+                        {/* Display error message for email */}
+                        {emailError && (
+                          <p style={{ color: "red" }}>{emailError}</p>
+                        )}
                       </div>
                       <div className="col-md-6">
                         <input
@@ -160,7 +218,7 @@ const Register = () => {
                         />
                         <small className="ml-2"> Date of Birth</small>
                       </div>
-
+ 
                       <div className="col-md-6">
                         <input
                           type="text"
@@ -202,7 +260,7 @@ const Register = () => {
                         />
                       </div>
                     </div> */}
-
+ 
                     <div className="additional-content">
                       <h5>Membership Types</h5>
                       <div>
@@ -258,7 +316,7 @@ const Register = () => {
                       </div>
                     </div>
                     <br />
-
+ 
                     <button type="submit" className="form-button">
                       Submit
                     </button>
@@ -340,5 +398,5 @@ const Register = () => {
     </Layout>
   );
 };
-
+ 
 export default Register;

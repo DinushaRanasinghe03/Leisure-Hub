@@ -134,13 +134,14 @@ const AddMovieSchedule = () => {
           <div className="m-1 w-75 ">
             <label>Select a date :</label>
             <div className="mb-3">
-              <input
-                type="date"
-                value={date}
-                placeholder="date"
-                className={`form-control ${errors.date && 'is-invalid'}`}
-                onChange={(e) => setDate(e.target.value)}
-              />
+            <input
+              type="date"
+              value={date}
+              min={new Date().toISOString().split('T')[0]} // Set min attribute to current date
+              placeholder="date"
+              className={`form-control ${errors.date && 'is-invalid'}`}
+              onChange={(e) => setDate(e.target.value)}
+            />
               {errors.date && <div className="invalid-feedback">{errors.date}</div>}
             </div>
 

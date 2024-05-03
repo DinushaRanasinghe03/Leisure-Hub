@@ -76,8 +76,14 @@ const UpdateMovie = () => {
   // create product function
   const handleUpdate = async (e) => {
     e.preventDefault();
-
+  
     try {
+      const allowedTypes = ["image/jpeg", "image/png", "image/gif"]; // Define allowed image types
+      if (poster_image && !allowedTypes.includes(poster_image.type)) {
+        toast.error("Please select a valid image file (JPEG, PNG, GIF)");
+        return;
+      }
+  
       const movieData = new FormData();
       movieData.append("name", name);
       movieData.append("genre", genre);
@@ -88,12 +94,12 @@ const UpdateMovie = () => {
       movieData.append("release_date", release_date);
       movieData.append("description", description);
       poster_image && movieData.append("poster_image", poster_image);
-
+  
       const { data } = await axios.put(
         `http://localhost:8080/api/v1/movies/update-movie/${id}`,
         movieData
       );
-
+  
       if (data?.success) {
         // Show success toast notification
         showSuccessToast();
@@ -105,6 +111,7 @@ const UpdateMovie = () => {
       toast.error("Something went wrong");
     }
   };
+  
 
   // delete a movie
   const handleDelete = async () => {

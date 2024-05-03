@@ -40,10 +40,11 @@ const ShowtimeScheduling = () => {
                         <div className="mb-3">
                             <label className="form-label"><h5>Select Your Preferred Date:</h5></label>
                             <DatePicker
-                                value={selectedDate}
-                                onChange={(date) => setSelectedDate(date)}
-                                dateFormat="yyyy-MM-dd"
-                                className="form-control"
+                              value={selectedDate}
+                              onChange={(date) => setSelectedDate(date)}
+                              dateFormat="yyyy-MM-dd"
+                              minDate={new Date()}
+                              className="form-control"
                             />
                         </div>
                         <br /><br />

@@ -1,21 +1,20 @@
 import React from "react";
-import "./ResourceTable.css"; // Add CSS for modal styles
 
 const ResourceModal = ({ resource, onClose }) => {
   return (
-    <div className="modal-container">
-      <div className="modal-content">
+    <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
+      <div className="bg-white p-8 rounded-lg shadow-md">
         {/* Modal header */}
-        <div className="modal-header">
-          <h2>Resource Details</h2>
-          <div className="close-button-container">
-            <button className="close-button" onClick={onClose}>
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="font-bold">Resource Details</h2>
+          <div className="bg-gray-300 rounded-full h-8 w-8 flex justify-center items-center">
+            <button className="text-black text-3xl" onClick={onClose}>
               &times;
             </button>
           </div>
         </div>
         {/* Modal body */}
-        <div className="modal-body">
+        <div className="space-y-2">
           {/* Display resource details */}
           <p>Number Order: {resource.numberOrder}</p>
           <p>Item ID: {resource.itemId}</p>

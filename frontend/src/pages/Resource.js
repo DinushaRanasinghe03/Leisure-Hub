@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
 import Layout from "../components/layout/LayoutAdmin";
+
+import React, { useState, useEffect } from "react";
 import ResourceTable from "./Resources/ResourceTable";
 import { Link } from "react-router-dom";
-import "./Resources/AddResource.css";
 import axios from "axios";
 
 const Resource = () => {
@@ -58,18 +58,50 @@ const Resource = () => {
           </div>
         </div>
       </div>
-      <div className="resource-controls">
+      <div
+        className="resource-controls"
+        style={{ display: "flex", alignItems: "center", marginBottom: "20px" }}
+      >
         <Link to={`/addResource`} className="addResource-link">
-          <button className="addResource-button">Add Resource</button>
+          <button
+            className="addResource-button"
+            style={{
+              backgroundColor: "#458B5D",
+              color: "white",
+              padding: "8px 20px",
+              fontSize: "16px",
+              border: "none",
+              borderRadius: "5px",
+              cursor: "pointer",
+              margin: "30px",
+              marginRight: "50px",
+              marginLeft: "40px",
+            }}
+          >
+            + Add Resource
+          </button>
         </Link>
-        <div className="resource-filter">
-          <label htmlFor="filter">Filter by Type </label>
+        <div
+          className="resource-filter"
+          style={{ display: "flex", alignItems: "center" }}
+        >
+          <label htmlFor="filter" style={{ marginRight: "-25px" }}>
+            Filter by Type{" "}
+          </label>
           {/* Dropdown filter */}
           <select
             id="filter"
             name="filter"
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
+            style={{
+              width: "150px",
+              padding: "3px",
+              fontSize: "16px",
+              border: "2px solid #ccc",
+              borderRadius: "5px",
+              marginLeft: "30px",
+            }}
           >
             <option value="All">All</option>
             <option value="Activities">Activities</option>
@@ -82,7 +114,6 @@ const Resource = () => {
         <ResourceTable filter={filter} />{" "}
         {/* Pass the filter value to ResourceTable */}
       </div>
-      
     </Layout>
   );
 };
@@ -96,16 +127,16 @@ const styles = {
     borderRadius: "10px",
     padding: "0",
     textAlign: "center",
-    marginLeft: "20px", // Auto margin to horizontally center the container
-    marginRight: "20px", // Auto margin to horizontally center the container
+    marginLeft: "20px",
+    marginRight: "20px",
     display: "flex",
     alignItems: "center",
-    justifyContent: "center", // Center the content horizontally
+    justifyContent: "center",
   },
   container1: {
     marginTop: "20px",
-    marginLeft: "20px", // Auto margin to horizontally center the container
-    marginRight: "20px", // Auto margin to horizontally center the container
+    marginLeft: "20px",
+    marginRight: "20px",
   },
   heading: {
     color: "black",

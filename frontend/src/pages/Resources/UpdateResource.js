@@ -1,8 +1,11 @@
+import Form from "../../components/layout/Form";
+
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import Form from "../../components/layout/Form";
+import * as Yup from "yup";
 import { toast } from "react-hot-toast";
+import { schema } from "../../dto/resourceDTO"; // Import the Yup schema
 
 const UpdateResource = () => {
   const navigate = useNavigate();
@@ -55,27 +58,61 @@ const UpdateResource = () => {
     if (id) getResource();
   }, [id]);
 
-  const updateNote = async (e) => {
+  const validateField = async (fieldName, value) => {
+    try {
+      await Yup.reach(schema, fieldName).validate(value);
+      return "";
+    } catch (error) {
+      return error.message;
+    }
+  };
+
+  const handleChange = async (e) => {
+    const { name, value } = e.target;
+    setResource({ ...resource, [name]: value });
+
+    // Validate field onBlur
+    const errorMessage = await validateField(name, value);
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: errorMessage,
+    }));
+  };
+
+  const [errors, setErrors] = useState({});
+
+  const updateResource = async (e) => {
     e.preventDefault();
     setSubmitting(true);
 
-    if (!id) return alert("Note to be updated not found!");
+    if (!id) return alert("Resource to be updated not found!");
 
     try {
+      // Perform validation using Yup schema
+      await schema.validate(resource, { abortEarly: false });
+
       const { data } = await axios.put(
         `http://localhost:8080/api/v1/resources/updateResource/${id}`,
         resource
       );
-      console.log(data); // Log response from the server
+
       if (data?.success) {
-        toast.success("Resource updated successfully"); // Show success message
+        toast.success("Resource updated successfully");
         navigate("/resource");
       } else {
         throw new Error(data?.message || "Failed to update resource");
       }
     } catch (error) {
-      console.error("Error updating resource:", error.response); // Log error
-      toast.error("Error updating resource: " + error.message); // Show error message
+      console.error("Error updating resource:", error.response);
+      toast.error("Error updating resource: " + error.message);
+      if (error.inner && error.inner.length > 0) {
+        // Yup validation error occurred, set errors object
+        const yupErrors = {};
+        error.inner.forEach((err) => {
+          yupErrors[err.path] = err.message;
+        });
+        setErrors(yupErrors);
+      }
     } finally {
       setSubmitting(false);
     }
@@ -87,7 +124,9 @@ const UpdateResource = () => {
       resource={resource}
       setResource={setResource}
       submitting={submitting}
-      handleSubmit={updateNote}
+      handleSubmit={updateResource}
+      handleChange={handleChange}
+      errors={errors}
     />
   );
 };

@@ -1,8 +1,8 @@
+import Layout from "../../components/layout/LayoutAdmin";
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import "./ResourceTable.css";
-import Layout from "../../components/layout/LayoutAdmin";
 
 const ZeroQuantityResourceTable = () => {
   const [filteredResources, setFilteredResources] = useState([]);
@@ -36,86 +36,49 @@ const ZeroQuantityResourceTable = () => {
   return (
     <Layout title={"Admin Resources - LeisureHub"}>
       <div>
-        
-        <div className="resource-table-container">
+        <div className="m-20">
           <h1
             style={{
               fontWeight: "bold",
               fontSize: "24px",
-              marginLeft: "15px",
+              marginLeft: "5px",
               marginTop: "15px",
+              marginBottom: "20px",
             }}
           >
             Low Stock
           </h1>
-          <table className="resource-table">
+          <table className="border-collapse border border-gray-300">
             <thead>
-              <tr>
-                <th>Number Order</th>
-                <th>Item ID</th>
-                <th>Item Name</th>
-                <th>Supplier</th>
-                <th>Supplier Email</th>
+              <tr className="bg-gray-200">
+                <th className="border px-4 py-2">Number Order</th>
+                <th className="border px-4 py-2">Item ID</th>
+                <th className="border px-4 py-2">Item Name</th>
+                <th className="border px-4 py-2">Supplier</th>
+                <th className="border px-4 py-2">Supplier Email</th>
               </tr>
             </thead>
             <tbody>
               {filteredResources.map((resource) => (
                 <tr key={resource._id}>
-                  <td>{resource.numberOrder}</td>
-                  <td>{resource.itemId}</td>
-                  <td>{resource.itemName}</td>
-                  <td>{resource.supplier}</td>
-                  <td>{resource.supplierEmail}</td>
+                  <td className="border px-4 py-2">{resource.numberOrder}</td>
+                  <td className="border px-4 py-2">{resource.itemId}</td>
+                  <td className="border px-4 py-2">{resource.itemName}</td>
+                  <td className="border px-4 py-2">{resource.supplier}</td>
+                  <td className="border px-4 py-2">{resource.supplierEmail}</td>
                 </tr>
               ))}
             </tbody>
           </table>
-          <div
-            style={{
-              display: "inline-block",
-              marginTop: "20px",
-              marginLeft: "1300px",
-            }}
-          >
+          <div className="mt-6 ml-auto">
             <button
-              style={{
-                marginRight: "10px",
-                backgroundColor: "#3FA450",
-                color: "#000",
-                padding: "8px 16px",
-                borderRadius: "6px",
-                border: "1px solid #000",
-                cursor: "pointer",
-                fontWeight: "bold",
-              }}
+              className="mr-2 bg-blue-200 text-black py-0.5 px-2 rounded-md border border-black font-bold hover:border-blue-600 hover:shadow-md"
               onClick={handleContact}
-              onMouseOver={(e) => {
-                e.target.style.backgroundColor = "#45BA57";
-              }}
-              onMouseOut={(e) => {
-                e.target.style.backgroundColor = "#3FA450";
-              }}
             >
               Contact
             </button>
             <Link to="/resource">
-              <button
-                style={{
-                  backgroundColor: "#6E9C9F",
-                  color: "#000",
-                  padding: "8px 16px",
-                  borderRadius: "6px",
-                  border: "1px solid #000",
-                  cursor: "pointer",
-                  fontWeight: "bold",
-                }}
-                onMouseOver={(e) => {
-                  e.target.style.backgroundColor = "#668F92";
-                }}
-                onMouseOut={(e) => {
-                  e.target.style.backgroundColor = "#6E9C9F";
-                }}
-              >
+              <button className=" text-black py-0.5 px-2 rounded-md border border-black font-bold hover:border-blue-600 hover:shadow-md">
                 Back
               </button>
             </Link>

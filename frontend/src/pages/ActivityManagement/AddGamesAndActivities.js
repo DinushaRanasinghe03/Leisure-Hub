@@ -60,9 +60,12 @@ export const AddGamesAndActivities = () => {
     e.preventDefault();
     try {
       const errors = {};
-      if (!name) errors.name = "Name is required";
-      if (!description) errors.description = "Description is required";
-      if (!guidelines) errors.guidelines = "Guidelines are required";
+      if (!name.trim()) errors.name = "Name is required";
+      else if (!/^[a-zA-Z\s]+$/.test(name.trim())) {
+        errors.name = "Name must contain only letters";
+      }
+      if (!description.trim()) errors.description = "Description is required";
+      if (!guidelines.trim()) errors.guidelines = "Guidelines are required";
       if (!instructors) errors.instructors = "Instructors are required";
       if (!activityimage) errors.activityimage = "Image is required";
       if (!gameoractivitycategory)

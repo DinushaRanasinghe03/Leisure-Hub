@@ -34,6 +34,8 @@ const Gamesandactivitiesrequests = () => {
       case "MemberName":
         if (!value.trim()) {
           return "Please enter the contact person's name";
+        } else if (!/^[a-zA-Z\s]+$/.test(value.trim())) {
+          return "Member name must contain only letters";
         }
         break;
       case "noParticipation":

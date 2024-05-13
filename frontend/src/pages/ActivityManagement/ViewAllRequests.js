@@ -51,6 +51,12 @@ export const ViewAllRequests = () => {
   };
 
   const deleteRequest = async (id) => {
+    // Ask for confirmation before deleting
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this request?"
+    );
+    if (!confirmed) return; // If not confirmed, do nothing
+
     try {
       await axios.delete(
         `/api/v1/gameandactivityRequest/delete-gameandactivityRequest/${id}`
@@ -83,7 +89,9 @@ export const ViewAllRequests = () => {
           </div>
           <div className="col-md-9">
             <div className="row mt-3">
-              <h1 className="text-center">All User Requests</h1>
+              <h4 className="text-center">
+                <legend>All User Requests</legend>
+              </h4>
               <div className="d-flex flex-wrap">
                 {gamesAndActivitiesRequest.map((request) => (
                   <div

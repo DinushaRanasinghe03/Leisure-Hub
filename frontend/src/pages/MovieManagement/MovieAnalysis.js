@@ -1,11 +1,15 @@
 import React from 'react';
-import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
+import { Page, Text, View, Document, StyleSheet, Image } from '@react-pdf/renderer';
+import LEISUREHUB_LOGO from "./../../assets/LEISUREHUB_LOGO.jpg";
 
 // Define styles
 const styles = StyleSheet.create({
   page: {
     flexDirection: 'row',
-    backgroundColor: '#ffffff' 
+    backgroundColor: '#ffffff',
+    borderWidth: 1,
+    borderStyle: 'solid',
+    borderColor: 'black'
   },
   section: {
     margin: 10,
@@ -13,46 +17,50 @@ const styles = StyleSheet.create({
     flexGrow: 1
   },
   heading: {
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: 'bold',
     marginBottom: 5,
-    color: '#000000', 
-    textAlign: 'left' 
+    color: '#000000',
+    textAlign: 'left'
   },
   centeredHeading: {
-    textAlign: 'center' 
+    textAlign: 'center'
   },
   normalText: {
-    fontSize: 12,
+    fontSize: 10,
     marginBottom: 3,
-    color: '#000000' 
+    color: '#000000'
   },
   bulletPoint: {
-    fontSize: 12,
+    fontSize: 10,
     marginBottom: 3,
-    color: '#000000', 
-    marginLeft: 10 
+    color: '#000000',
+    marginLeft: 10
   },
   table: {
-    border: '1 solid black', 
+    border: '1px solid black', // Corrected border style
     marginBottom: 15
   },
   tableRow: {
     flexDirection: 'row',
     borderBottomWidth: 1,
-    borderBottomColor: '#000000', 
+    borderBottomColor: '#000000',
     alignItems: 'center'
   },
   tableCell: {
     width: '25%',
     padding: 5,
-    fontSize: 12, 
-    borderRightWidth: 1, 
-    borderRightColor: '#000000' 
+    fontSize: 10,
+    borderRightWidth: 1,
+    borderRightColor: '#000000'
   },
   tableHeader: {
     fontWeight: 'bold',
-    fontSize: 12
+    fontSize: 11
+  },
+  separator: {
+    borderBottom: '1 solid black',
+    marginBottom: 10,
   }
 });
 
@@ -69,7 +77,21 @@ const PdfDocument = ({ movieReport }) => {
   return (
     <Document>
       <Page size="A4" style={styles.page}>
+        {/* Header */}
         <View style={styles.section}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 }}>
+            {/* Left-hand side with company details */}
+              <Text style={{ fontSize: 11 }}>
+                LEISUREHUB{'\n'}
+                Address: A810,Kaduwela{'\n'}
+                Contact: 0786453567{'\n'}
+                Email: info@leisurehub.gov.lk
+              </Text>
+            {/* Right-hand side with company logo */}
+              <Image src={LEISUREHUB_LOGO} style={{ width: 60, height: 60 }} />
+          </View>
+          <View style={styles.separator} />
+          {/* Content */}
           <Text style={[styles.heading, styles.centeredHeading]}>
             {'\n'} 
             Movie Analysis

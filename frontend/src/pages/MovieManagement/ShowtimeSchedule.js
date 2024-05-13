@@ -61,7 +61,7 @@ const ShowtimeSchedule = () => {
                     <AdminMovieMenu />
                 </div>
                 <div className='col-md-9 '>
-                    <h3 className="text-center">Movie Showtime Schedule</h3>
+                    <h3 className="text-center"><legend>Movie Showtime Schedule</legend></h3>
                     <div className="mb-3">
                         <label className="form-label">Select Date:</label>
                         <DatePicker

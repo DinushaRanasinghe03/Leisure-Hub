@@ -7,7 +7,7 @@ import { jsPDF } from "jspdf"; // Import jsPDF for PDF generation
 import "jspdf-autotable"; // Import autotable plugin for tabular data
 import ReportGenerator from "./ReportGenerator";
 import LayoutAdmin from "./../../components/Layout/LayoutAdmin";
-
+ 
 const Users = () => {
   const [auth] = useAuth();
   const [users, setUsers] = useState([]);
@@ -15,7 +15,13 @@ const Users = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedMembership, setSelectedMembership] = useState(""); // State for selected membership type
-
+ 
+  // Function to format the date from the date string
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toISOString().split("T")[0]; // Get the date part in YYYY-MM-DD format
+  };
+ 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -31,10 +37,10 @@ const Users = () => {
         setLoading(false);
       }
     };
-
+ 
     fetchUsers();
   }, []);
-
+ 
   useEffect(() => {
     // Filter users based on selectedMembership
     if (selectedMembership) {
@@ -46,11 +52,11 @@ const Users = () => {
       setFilteredUsers(users);
     }
   }, [selectedMembership, users]);
-
+ 
   const handleMembershipChange = (event) => {
     setSelectedMembership(event.target.value);
   };
-
+ 
   return (
     <LayoutAdmin title={"Membership Holders-Leisure Hub"}>
       <div className="container-fluid m-3 p-3 dashboard">
@@ -109,7 +115,7 @@ const Users = () => {
                         <td>
                           {user.address1} {user.address2}
                         </td>
-                        <td>{user.dob}</td>
+                        <td>{formatDate(user.dob)}</td>
                         <td>{user.membership}</td>
                       </tr>
                     ))}
@@ -125,5 +131,5 @@ const Users = () => {
     </LayoutAdmin>
   );
 };
-
+ 
 export default Users;

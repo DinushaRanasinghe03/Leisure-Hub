@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useFormik } from "formik";
-import { useParams, useNavigate } from "react-router-dom"; // Importing useNavigate
+import { useParams, useNavigate } from "react-router-dom";
 import moment from 'moment';
  
 const EmployeeLeaveForm = () => {
   const params = useParams();
-  const navigate = useNavigate(); // Using useNavigate to navigate
+  const navigate = useNavigate();
  
   const validate = (values) => {
     const errors = {};
@@ -80,9 +80,6 @@ const EmployeeLeaveForm = () => {
   }, []);
  
   const handleLogout = () => {
-    // Implement your logout logic here
-    console.log("Logout clicked");
-    // Navigate to the home page
     navigate("/");
   };
  
@@ -107,8 +104,8 @@ const EmployeeLeaveForm = () => {
                 <td>{leave.Name}</td>
                 <td>{leave.role}</td>
                 <td>{leave.leaveType}</td>
-                <td>{moment(leave.leavefrom).format("YYYY-MM-DD")}</td>
-                <td>{moment(leave.leaveto).format("YYYY-MM-DD")}</td>
+                <td>{moment(leave.leaveFrom).format("YYYY-MM-DD")}</td>
+                <td>{moment(leave.leaveTo).format("YYYY-MM-DD")}</td>
                 <td>{leave.leaveStatus}</td>
               </tr>
             ))}
@@ -212,4 +209,3 @@ const EmployeeLeaveForm = () => {
 };
  
 export default EmployeeLeaveForm;
- 

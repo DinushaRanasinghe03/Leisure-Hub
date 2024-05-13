@@ -24,39 +24,86 @@ const Gamesandactivitiesrequests = () => {
     }
   }, [location.state]);
 
-  const validateForm = () => {
-    const errors = {};
-    if (!name.trim()) {
-      errors.name = "Please enter a name for the game or activity";
+  const validateField = (fieldName, value) => {
+    switch (fieldName) {
+      case "name":
+        if (!value.trim()) {
+          return "Please enter a name for the game or activity";
+        }
+        break;
+      case "MemberName":
+        if (!value.trim()) {
+          return "Please enter the contact person's name";
+        } else if (!/^[a-zA-Z\s]+$/.test(value.trim())) {
+          return "Member name must contain only letters";
+        }
+        break;
+      case "noParticipation":
+        if (!value.trim()) {
+          return "Please enter the number of participants";
+        } else if (!/^\d+$/.test(value.trim())) {
+          return "Number of participants must be a valid number";
+        }
+        break;
+      case "regiEmail":
+        if (!value.trim()) {
+          return "Please enter your registered email address";
+        } else if (!/^\S+@\S+\.\S+$/.test(value.trim())) {
+          return "Please enter a valid email address";
+        }
+        break;
+      case "scheduledDate":
+        if (!value) {
+          return "Please select a preferred date";
+        }
+        break;
+      case "Time":
+        if (!value) {
+          return "Please select a preferred time";
+        }
+        break;
+      default:
+        return null;
     }
-    if (!MemberName.trim()) {
-      errors.MemberName = "Please enter the contact person's name";
-    }
-    if (!noParticipation.trim()) {
-      errors.noParticipation = "Please enter the number of participants";
-    } else if (!/^\d+$/.test(noParticipation.trim())) {
-      errors.noParticipation = "Number of participants must be a valid number";
-    }
-    if (!regiEmail.trim()) {
-      errors.regiEmail = "Please enter your registered email address";
-    } else if (!/^\S+@\S+\.\S+$/.test(regiEmail.trim())) {
-      errors.regiEmail = "Please enter your registered email address";
-    }
+    return null;
+  };
 
-    if (!scheduledDate) {
-      errors.scheduledDate = "Please select a preferred date";
+  const handleInputChange = (fieldName, value) => {
+    const newErrors = { ...errors };
+    const errorMessage = validateField(fieldName, value);
+    if (errorMessage) {
+      newErrors[fieldName] = errorMessage;
+    } else {
+      delete newErrors[fieldName];
     }
-    if (!Time) {
-      errors.Time = "Please select a preferred time";
-    }
-
-    setErrors(errors);
-    return Object.keys(errors).length === 0;
+    setErrors(newErrors);
   };
 
   const handleCreate = async (e) => {
     e.preventDefault();
-    if (!validateForm()) return;
+    const formFields = {
+      name,
+      MemberName,
+      noParticipation,
+      regiEmail,
+      scheduledDate,
+      Time,
+    };
+
+    let isValid = true;
+    Object.keys(formFields).forEach((fieldName) => {
+      const errorMessage = validateField(fieldName, formFields[fieldName]);
+      if (errorMessage) {
+        isValid = false;
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          [fieldName]: errorMessage,
+        }));
+      }
+    });
+
+    if (!isValid) return;
+
     try {
       const gameandactivityRequestData = new FormData();
       gameandactivityRequestData.append("name", name);
@@ -75,7 +122,7 @@ const Gamesandactivitiesrequests = () => {
         }, 1000);
         navigate("/gamesandactivities");
       } else {
-        toast.error("Somthing went wrong");
+        toast.error("Something went wrong");
       }
     } catch (error) {
       console.log(error);
@@ -97,7 +144,10 @@ const Gamesandactivitiesrequests = () => {
                     value={name}
                     placeholder="Game or Activity name"
                     className="form-control"
-                    onChange={(e) => setName(e.target.value)}
+                    onChange={(e) => {
+                      setName(e.target.value);
+                      handleInputChange("name", e.target.value);
+                    }}
                   />
                   {errors.name && (
                     <div className="text-danger">{errors.name}</div>
@@ -109,7 +159,10 @@ const Gamesandactivitiesrequests = () => {
                     value={MemberName}
                     placeholder="Contact person name"
                     className="form-control"
-                    onChange={(e) => setMemberName(e.target.value)}
+                    onChange={(e) => {
+                      setMemberName(e.target.value);
+                      handleInputChange("MemberName", e.target.value);
+                    }}
                   />
                   {errors.MemberName && (
                     <div className="text-danger">{errors.MemberName}</div>
@@ -121,7 +174,10 @@ const Gamesandactivitiesrequests = () => {
                     value={noParticipation}
                     placeholder="Number of participants"
                     className="form-control"
-                    onChange={(e) => setNoParticipation(e.target.value)}
+                    onChange={(e) => {
+                      setNoParticipation(e.target.value);
+                      handleInputChange("noParticipation", e.target.value);
+                    }}
                   />
                   {errors.noParticipation && (
                     <div className="text-danger">{errors.noParticipation}</div>
@@ -133,7 +189,10 @@ const Gamesandactivitiesrequests = () => {
                     value={regiEmail}
                     placeholder="Enter registered email"
                     className="form-control"
-                    onChange={(e) => setRegiEmail(e.target.value)}
+                    onChange={(e) => {
+                      setRegiEmail(e.target.value);
+                      handleInputChange("regiEmail", e.target.value);
+                    }}
                   />
                   {errors.regiEmail && (
                     <div className="text-danger">{errors.regiEmail}</div>
@@ -143,9 +202,13 @@ const Gamesandactivitiesrequests = () => {
                   <DatePicker
                     selected={scheduledDate}
                     placeholderText="Select preferred date"
-                    onChange={(date) => setScheduledDate(date)}
+                    onChange={(date) => {
+                      setScheduledDate(date);
+                      handleInputChange("scheduledDate", date);
+                    }}
                     className="form-control"
                     dateFormat="MM/dd/yyyy"
+                    minDate={new Date()} // Restrict to today and future dates
                   />
                   {errors.scheduledDate && (
                     <div className="text-danger">{errors.scheduledDate}</div>
@@ -155,7 +218,10 @@ const Gamesandactivitiesrequests = () => {
                   <DatePicker
                     selected={Time}
                     placeholderText="Select preferred time"
-                    onChange={(time) => setTime(time)}
+                    onChange={(time) => {
+                      setTime(time);
+                      handleInputChange("Time", time);
+                    }}
                     showTimeSelect
                     showTimeSelectOnly
                     dateFormat="h:mm aa"

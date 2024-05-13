@@ -1,95 +1,116 @@
 import React, { useState } from "react";
 import AdminStaffMenu from "../../components/Layout/AdminStaffMenu";
-import '../../pages/Employee/EmployeeForm.css';
 import { useNavigate } from 'react-router-dom';
 import LayoutAdmin from './../../components/Layout/LayoutAdmin';
-
+ 
 const EmployeeForm = () => {
   const [formData, setFormData] = useState({
-      Name: "",
-      NIC: "",
-      role: "",
-      DOB: "",
-      contactNo: "",
-      email: "",
-      address: "",
-      joinedDate: ""
+    Name: "",
+    NIC: "",
+    role: "",
+    DOB: "",
+    contactNo: "",
+    email: "",
+    address: "",
+    joinedDate: ""
   });
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
-
+ 
   const validate = () => {
-      const errors = {};
-      if (!formData.Name) {
-          errors.Name = "*Required";
+    const errors = {};
+    if (!formData.Name) {
+      errors.Name = "*Required";
+    }
+    if (!formData.NIC) {
+      errors.NIC = "*Required";
+    } else if (!/^\d{9}[Vv]?$/.test(formData.NIC) && !/^\d{12}$/.test(formData.NIC)) {
+      errors.NIC = "*Must be in XXXXXXXXXV or XXXXXXXXXXXX format";
+    }
+    if (!formData.role) {
+      errors.role = "*Required";
+    }
+    if (!formData.DOB) {
+      errors.DOB = "*Required";
+    } else {
+      const dobDate = new Date(formData.DOB);
+      const currentDate = new Date();
+      if (dobDate >= currentDate) {
+        errors.DOB = "*Invalid date of birth";
       }
-      if (!formData.NIC) {
-          errors.NIC = "*Required";
-      } else if (!/^\d{9}[Vv]?$/.test(formData.NIC) && !/^\d{12}$/.test(formData.NIC)) {
-          errors.NIC = "*Must be in XXXXXXXXXV or XXXXXXXXXXXX format";
+    }
+    if (!formData.contactNo) {
+      errors.contactNo = "*Required";
+    } else if (formData.contactNo.length !== 10) {
+      errors.contactNo = "*Must be 10 digits";
+    } else if (!/^\d+$/.test(formData.contactNo)) {
+      errors.contactNo = "*Contact number must contain only digits";
+    }
+    if (!formData.email) {
+      errors.email = "*Required";
+    } else if (formData.email.length < 5) {
+      errors.email = "*Must be 5 characters or more";
+    } else if (formData.email.indexOf('@') === -1) {
+      errors.email = "*Must contain an '@' symbol";
+    }
+    if (!formData.address) {
+      errors.address = "*Required";
+    }
+    if (!formData.joinedDate) {
+      errors.joinedDate = "*Required";
+    } else {
+      const joinedDate = new Date(formData.joinedDate);
+      const currentDate = new Date();
+      if (joinedDate > currentDate) {
+        errors.joinedDate = "*Joined date cannot be a future date";
       }
-      if (!formData.role) {
-          errors.role = "*Required";
-      }
-      if (!formData.DOB) {
-          errors.DOB = "*Required";
-      }
-      if (!formData.contactNo) {
-          errors.contactNo = "*Required";
-      } else if (formData.contactNo.length !== 10) {
-          errors.contactNo = "*Must be 10 digits";
-      } else if (!/^\d+$/.test(formData.contactNo)) {
-          errors.contactNo = "*Contact number must contain only digits";
-      }
-      if (!formData.email) {
-          errors.email = "*Required";
-      } else if (formData.email.length < 5) {
-          errors.email = "*Must be 5 characters or more";
-      } else if (formData.email.indexOf('@') === -1) {
-          errors.email = "*Must contain an '@' symbol";
-      }
-      if (!formData.address) {
-          errors.address = "*Required";
-      }
-      if (!formData.joinedDate) {
-          errors.joinedDate = "*Required";
-      }
-      setErrors(errors);
-      return errors;
+    }
+    setErrors(errors);
+    return errors;
   }
-
+ 
   const handleChange = (e) => {
-      setFormData({
-          ...formData,
-          [e.target.name]: e.target.value
-      });
+    // Clear the error message for the corresponding input field
+    setErrors({
+      ...errors,
+      [e.target.name]: ""
+    });
+ 
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
   }
-
+ 
+  const handleBlur = (e) => {
+    validate();
+  }
+ 
   const handleSubmit = async (e) => {
-      e.preventDefault();
-      const validationErrors = validate();
-      if (Object.keys(validationErrors).length === 0) {
-          try {
-              const response = await fetch('http://localhost:8080/api/v1/Employee/addEmployee', {
-                  method: 'POST',
-                  headers: {
-                      'Content-Type': 'application/json'
-                  },
-                  body: JSON.stringify(formData),
-              });
-              if (response.ok) {
-                  window.alert('Data has been inserted successfully');
-                  console.log('Successfully added to list');
-                  navigate('/employeelist');
-              } else {
-                  console.error('Failed to submit form:', response.status, response.statusText);
-              }
-          } catch (error) {
-              console.error('Error submitting form:', error);
-          }
+    e.preventDefault();
+    const validationErrors = validate();
+    if (Object.keys(validationErrors).length === 0) {
+      try {
+        const response = await fetch('http://localhost:8080/api/v1/Employee/addEmployee', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formData),
+        });
+        if (response.ok) {
+          window.alert('Data has been inserted successfully');
+          console.log('Successfully added to list');
+          navigate('/employeelist');
+        } else {
+          console.error('Failed to submit form:', response.status, response.statusText);
+        }
+      } catch (error) {
+        console.error('Error submitting form:', error);
       }
+    }
   }
-
+ 
   return (
     <LayoutAdmin><br/><br/>
       <div className="container-fluid">
@@ -112,9 +133,10 @@ const EmployeeForm = () => {
                                           placeholder="Name"
                                           value={formData.Name}
                                           onChange={handleChange}
+                                          onBlur={handleBlur}
                                           required
                                       />
-                                      {errors.Name && <div className="error">{errors.Name}</div>}
+                                      {errors.Name && <div style={{ color: 'red' }}>{errors.Name}</div>}
                                   </div>
                                   <br/>
                                   <div className="form-group">
@@ -126,9 +148,10 @@ const EmployeeForm = () => {
                                           placeholder="NIC"
                                           value={formData.NIC}
                                           onChange={handleChange}
+                                          onBlur={handleBlur}
                                           required
                                       />
-                                      {errors.NIC && <div className="error">{errors.NIC}</div>}
+                                      {errors.NIC && <div style={{ color: 'red' }}>{errors.NIC}</div>}
                                   </div>
                                   <br/>
                                   <div className="form-group">
@@ -140,9 +163,10 @@ const EmployeeForm = () => {
                                           placeholder="Role"
                                           value={formData.role}
                                           onChange={handleChange}
+                                          onBlur={handleBlur}
                                           required
                                       />
-                                      {errors.role && <div className="error">{errors.role}</div>}
+                                      {errors.role && <div style={{ color: 'red' }}>{errors.role}</div>}
                                   </div>
                                   <br/>
                                   <div className="form-group">
@@ -154,9 +178,10 @@ const EmployeeForm = () => {
                                           placeholder="Date of Birth"
                                           value={formData.DOB}
                                           onChange={handleChange}
+                                          onBlur={handleBlur}
                                           required
                                       />
-                                      {errors.DOB && <div className="error">{errors.DOB}</div>}
+                                      {errors.DOB && <div style={{ color: 'red' }}>{errors.DOB}</div>}
                                   </div>
                                   <br/>
                                   <div className="form-group">
@@ -168,9 +193,10 @@ const EmployeeForm = () => {
                                           placeholder="Contact No"
                                           value={formData.contactNo}
                                           onChange={handleChange}
+                                          onBlur={handleBlur}
                                           required
                                       />
-                                      {errors.contactNo && <div className="error">{errors.contactNo}</div>}
+                                      {errors.contactNo && <div style={{ color: 'red' }}>{errors.contactNo}</div>}
                                   </div>
                                   <br/>
                                   <div className="form-group">
@@ -182,9 +208,10 @@ const EmployeeForm = () => {
                                           placeholder="Email"
                                           value={formData.email}
                                           onChange={handleChange}
+                                          onBlur={handleBlur}
                                           required
                                       />
-                                      {errors.email && <div className="error">{errors.email}</div>}
+                                      {errors.email && <div style={{ color: 'red' }}>{errors.email}</div>}
                                   </div>
                                   <br/>
                                   <div className="form-group">
@@ -196,11 +223,12 @@ const EmployeeForm = () => {
                                           placeholder="Address"
                                           value={formData.address}
                                           onChange={handleChange}
+                                          onBlur={handleBlur}
                                           required
                                       />
-                                      {errors.address && <div className="error">{errors.address}</div>}
+                                      {errors.address && <div style={{ color: 'red' }}>{errors.address}</div>}
                                   </div>
-                              <br/>
+                                  <br/>
                                   <div className="form-group">
                                       <label>Date Of Joining</label>
                                       <input
@@ -210,9 +238,10 @@ const EmployeeForm = () => {
                                           placeholder="Date Of Joining"
                                           value={formData.joinedDate}
                                           onChange={handleChange}
+                                          onBlur={handleBlur}
                                           required
                                       />
-                                      {errors.joinedDate && <div className="error">{errors.joinedDate}</div>}
+                                      {errors.joinedDate && <div style={{ color: 'red' }}>{errors.joinedDate}</div>}
                                   </div>
                                   <br/>
                                   <div className="row">
@@ -220,7 +249,6 @@ const EmployeeForm = () => {
                                   <button type="submit" className="btn btn-primary">Submit</button>
                                   </div>
                                   </div>
-
                               </form>
                           </div>
                       </div>
@@ -232,5 +260,6 @@ const EmployeeForm = () => {
       </LayoutAdmin>
   );
 }
-
+ 
 export default EmployeeForm;
+ 

@@ -23,13 +23,33 @@ const EmployeeSalaryForm = () => {
  
   const validate = (values) => {
     const errors = {};
- 
+   
     if (!values.month) {
       errors.month = '*Required';
+    } else {
+      const selectedDate = new Date(values.month);
+      const currentDate = new Date();
+      if (selectedDate > currentDate) {
+        errors.month = 'Month cannot be a future month';
+      }
     }
+ 
     if (!values.basicSal) {
       errors.basicSal = '*Required';
     }
+ 
+    if (!values.otHours) {
+      errors.otHours = '*Required';
+    } else if (parseFloat(values.otHours) < 0) {
+      errors.otHours = 'OT Hours cannot be a negative value';
+    }
+ 
+    if (!values.otRate) {
+      errors.otRate = '*Required';
+    } else if (parseFloat(values.otRate) < 0) {
+      errors.otRate = 'OT Rate cannot be a negative value';
+    }
+ 
     if (!values.bonus) {
       errors.bonus = '*Required';
     }
@@ -94,7 +114,7 @@ const EmployeeSalaryForm = () => {
                     className="form-control"
                     required
                   />
-                  {formik.touched.NIC && formik.errors.NIC ? <div className="error">{formik.errors.NIC}</div> : null}
+                  {formik.touched.NIC && formik.errors.NIC ? <div className="error" style={{ color: 'red' }}>{formik.errors.NIC}</div> : null}
                 </div>
                 <br/>
                 <div className="form-group">
@@ -109,7 +129,7 @@ const EmployeeSalaryForm = () => {
                     className="form-control"
                     required
                   />
-                  {formik.touched.month && formik.errors.month ? <div className="error">{formik.errors.month}</div> : null}
+                  {formik.touched.month && formik.errors.month ? <div className="error" style={{ color: 'red' }}>{formik.errors.month}</div> : null}
                 </div>
                 <br/>
                 <div className="form-group">
@@ -129,7 +149,7 @@ const EmployeeSalaryForm = () => {
                     className="form-control"
                     required
                   />
-                  {formik.touched.basicSal && formik.errors.basicSal ? <div className="error">{formik.errors.basicSal}</div> : null}
+                  {formik.touched.basicSal && formik.errors.basicSal ? <div className="error" style={{ color: 'red' }}>{formik.errors.basicSal}</div> : null}
                 </div>
                 <br/>
                 <div className="form-group">
@@ -149,7 +169,7 @@ const EmployeeSalaryForm = () => {
                     className="form-control"
                     required
                   />
-                  {formik.touched.otHours && formik.errors.otHours ? <div className="error">{formik.errors.otHours}</div> : null}
+                  {formik.touched.otHours && formik.errors.otHours ? <div className="error" style={{ color: 'red' }}>{formik.errors.otHours}</div> : null}
                 </div>
                 <br/>
                 <div className="form-group">
@@ -169,7 +189,7 @@ const EmployeeSalaryForm = () => {
                     className="form-control"
                     required
                   />
-                  {formik.touched.otRate && formik.errors.otRate ? <div className="error">{formik.errors.otRate}</div> : null}
+                  {formik.touched.otRate && formik.errors.otRate ? <div className="error" style={{ color: 'red' }}>{formik.errors.otRate}</div> : null}
                 </div>
                 <br/>
                 <div className="form-group">
@@ -189,7 +209,7 @@ const EmployeeSalaryForm = () => {
                     className="form-control"
                     required
                   />
-                  {formik.touched.bonus && formik.errors.bonus ? <div className="error">{formik.errors.bonus}</div> : null}
+                  {formik.touched.bonus && formik.errors.bonus ? <div className="error" style={{ color: 'red' }}>{formik.errors.bonus}</div> : null}
                 </div>
                 <br/>
                 <div className="form-group">
@@ -241,3 +261,4 @@ const EmployeeSalaryForm = () => {
 };
  
 export default EmployeeSalaryForm;
+ 

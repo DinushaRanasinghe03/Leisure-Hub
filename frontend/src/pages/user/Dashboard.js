@@ -2,9 +2,15 @@ import React from "react";
 import Layout from "../../components/Layout/Layout";
 import UserMenu from "../../components/Layout/UserMenu";
 import { useAuth } from "../../context/auth";
-
+ 
 const Dashboard = () => {
   const [auth] = useAuth();
+ 
+  // Function to format the date from the date string
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toISOString().split("T")[0]; // Get the date part in YYYY-MM-DD format
+  };
   return (
     <Layout title={"User Dashboard - Leisure Hub"}>
       <div className="container-flui m-3 p-3 dashboard">
@@ -12,7 +18,7 @@ const Dashboard = () => {
           <div className="col-md-3">
             <UserMenu />
           </div>
-
+ 
           <div class="col-sm-8">
             <div class="card-block">
               <h4 class="m-b-20 p-b-5 b-b-default f-w-600">
@@ -35,9 +41,11 @@ const Dashboard = () => {
                     {auth?.user?.address1} {auth?.user?.address2}
                   </h6>
                 </div>
-                <div class="col-sm-6">
-                  <h4 class="m-b-10 f-w-600">Date of Birth</h4>
-                  <h6 class="text-muted f-w-400">{auth?.user?.dob}</h6>
+                <div className="col-sm-6">
+                  <h4 className="m-b-10 f-w-600">Date of Birth</h4>
+                  <h6 className="text-muted f-w-400">
+                    {formatDate(auth?.user?.dob)}
+                  </h6>
                 </div>
               </div>
               <div class="row">
@@ -53,5 +61,5 @@ const Dashboard = () => {
     </Layout>
   );
 };
-
+ 
 export default Dashboard;

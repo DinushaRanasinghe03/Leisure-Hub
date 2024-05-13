@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import AdminActivityMenu from "../../components/Layout/AdminActivityMenu";
 import axios from "axios";
-//import toast from "react-hot-toast";
 import toast, { Toaster } from "react-hot-toast";
 import { Select } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
@@ -17,6 +16,8 @@ export const UpdateGamesAndActivities = () => {
   const [gameoractivitycategory, setGameoractivitycategory] = useState("");
   const [guidelines, setGuidelines] = useState("");
   const [instructors, setInstructor] = useState("");
+  const [nameError, setNameError] = useState("");
+  const [imageError, setImageError] = useState("");
   const navigate = useNavigate();
   const params = useParams();
   const [id, setId] = useState("");
@@ -65,9 +66,48 @@ export const UpdateGamesAndActivities = () => {
     getAllCategory();
   }, []);
 
-  //add games and activities function
+  const validateImage = (file) => {
+    if (!file) {
+      setImageError("Please upload an image");
+      return false;
+    }
+    const acceptedImageTypes = ["image/jpeg", "image/png"];
+    if (!acceptedImageTypes.includes(file.type)) {
+      setImageError("Please upload a valid image file (JPEG, PNG)");
+      return false;
+    }
+    setImageError("");
+    return true;
+  };
+
+  const validateName = (name) => {
+    if (!name) {
+      setNameError("Please enter a name");
+      return false;
+    }
+    if (!/^[a-zA-Z ]+$/.test(name)) {
+      setNameError("Name should contain only letters");
+      return false;
+    }
+    setNameError("");
+    return true;
+  };
+
   const handleUpdate = async (e) => {
     e.preventDefault();
+    const isNameValid = validateName(name);
+    const isImageValid = activityimage ? validateImage(activityimage) : true; // Validate image only if it's being updated or if name is being updated
+    if (
+      !gameoractivitycategory ||
+      !isNameValid ||
+      !isImageValid ||
+      !description ||
+      !guidelines ||
+      !instructors
+    ) {
+      toast.error("Please fill in all fields correctly");
+      return;
+    }
     try {
       const gameandactivityData = new FormData();
       gameandactivityData.append(
@@ -82,7 +122,7 @@ export const UpdateGamesAndActivities = () => {
         gameandactivityData.append("activityimage", activityimage);
 
       const { data } = await axios.put(
-        ` /api/v1/gameandactivity/update-gameandactivity/${id}`,
+        `/api/v1/gameandactivity/update-gameandactivity/${id}`,
         gameandactivityData
       );
       if (data?.success) {
@@ -155,10 +195,14 @@ export const UpdateGamesAndActivities = () => {
                     type="file"
                     name="photo"
                     accept="image/*"
-                    onChange={(e) => setaImage(e.target.files[0])}
+                    onChange={(e) => {
+                      setaImage(e.target.files[0]);
+                      validateImage(e.target.files[0]);
+                    }}
                     hidden
                   />
                 </label>
+                {imageError && <p className="text-danger">{imageError}</p>}
               </div>
               <div className="mb-3">
                 {activityimage ? (
@@ -187,8 +231,12 @@ export const UpdateGamesAndActivities = () => {
                   value={name}
                   placeholder="write game or activity name"
                   className="form-control"
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={(e) => {
+                    setName(e.target.value);
+                    validateName(e.target.value);
+                  }}
                 />
+                {nameError && <p className="text-danger">{nameError}</p>}
               </div>
               <div className="mb-3">
                 <input

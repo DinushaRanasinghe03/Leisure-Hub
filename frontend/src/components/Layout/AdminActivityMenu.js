@@ -6,7 +6,15 @@ const AdminActivityMenu = () => {
     <>
       <div className="text-center">
         <div className="list-group">
-          <h4>Games And Activities Management Panel</h4>
+          <h1
+            style={{
+              fontSize: "20px",
+              fontWeight: "bold",
+              marginBottom: "20px",
+            }}
+          >
+            Games And Activities Management Panel
+          </h1>
           <NavLink
             to="/adminactivitydashboard/activitymanagement/create-category"
             className="list-group-item list-group-item-action"

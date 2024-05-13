@@ -4,7 +4,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 //import SearchInputActivity from "../../components/Form/SearchInputActivity";
-import LayoutAdmin from './../../components/Layout/LayoutAdmin';
+import LayoutAdmin from "./../../components/Layout/LayoutAdmin";
 
 export const AllGamesAndActivities = () => {
   const [gamesandactivities, setGameandactivity] = useState([]);
@@ -35,7 +35,9 @@ export const AllGamesAndActivities = () => {
           </div>
           <div className="col-md-9 ">
             <div className="row mt-3">
-              <h1 className="text-center">All Games And Activities</h1>
+              <h4 className="text-center">
+                <legend>All Games And Activities</legend>
+              </h4>
               <div className="d-flex flex-wrap">
                 {gamesandactivities?.map((g) => (
                   <Link
@@ -83,7 +85,7 @@ export const AllGamesAndActivities = () => {
           </div>
         </div>
       </div>
-      </LayoutAdmin>
+    </LayoutAdmin>
   );
 };
 

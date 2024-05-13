@@ -48,8 +48,8 @@ const EmployeeLeaveList = () => {
                   <td>{leave.Name}</td>
                   <td>{leave.role}</td>
                   <td>{leave.leaveType}</td>
-                  <td>{moment(leave.leavefrom).format("YYYY-MM-DD")}</td>
-                  <td>{moment(leave.leaveto).format("YYYY-MM-DD")}</td>
+                  <td>{moment(leave.leaveFrom).format("YYYY-MM-DD")}</td>
+                  <td>{moment(leave.leaveTo).format("YYYY-MM-DD")}</td>
                   <td>{leave.leaveStatus}</td>
                 </tr>
               ))}
@@ -63,4 +63,3 @@ const EmployeeLeaveList = () => {
 };
  
 export default EmployeeLeaveList;
- 
